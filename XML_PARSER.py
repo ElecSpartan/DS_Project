@@ -158,6 +158,6 @@ def parsing_with_correcting_errors(address):
 
 
 end_file, g = parsing_with_correcting_errors(r'E:\College\Data structures\Project\DS_Project\sample.xml')
-print('\n******************************\n')
+print('\n****************************\n')
 print(end_file)
 
