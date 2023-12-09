@@ -1,7 +1,7 @@
 class Graph:
     def __init__(self):
         self.users = {}
-        self.followers_of_user = {}  # {user_id(string) : list of ids(strings)}
+        self.followers_of_user = {}  # {user_id(int) : list of ids(int)}
         self.visited = set()
 
     def add_user(self, user_id, user):
@@ -11,12 +11,5 @@ class Graph:
 
     def add_follower(self, user_id, follower_id):
         # Assuming distinct ids?
-        self.followers_of_user[int(user_id)].append(follower_id)
+        self.followers_of_user[int(user_id)].append(int(follower_id))
 
-    def dfs(self, start_user_id):
-        self.visited.add(start_user_id)
-        print(f"Visiting user {start_user_id}")
-
-        for follower_id in self.followers_of_user[start_user_id]:
-            if follower_id not in self.visited:
-                self.dfs(int(follower_id))
