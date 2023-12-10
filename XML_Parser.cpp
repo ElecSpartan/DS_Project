@@ -76,18 +76,35 @@ pair<string,Graph> parsing_with_correcting_errors(string address,vector<int>&lin
         }
 
         if (nextIsOpening && !nextIsClosing) {
-            string temp = initial_file.substr(index,expected[expectedIndex].size());
-            if(temp != expected[expectedIndex]){
-                cout<<"error\n";
-                return {endFile,g};
+            bool flag = true;
+            bool endl_needed = false;
+            int len = 0;
+            for(int i=index;initial_file[i]!='\n';i++)
+                len++;
+            if(len < expected[expectedIndex].size() ){
+                flag = false;
+                endl_needed = true;
+            }
+            else{
+                string temp = initial_file.substr(index,expected[expectedIndex].size());
+                if(temp != expected[expectedIndex]){
+                    flag = false;
+                    if(temp[0]=='<'){
+                        for(index ; temp[index]!='>' ; index++ )
+                            continue;
+                        index++;
+                    }
+                }
             }
 
             lastOpening.push(expected[expectedIndex]);
             for (char ch: expected[expectedIndex]) {
                 endFile += ch;
-                index++;
+                if(flag)
+                    index++;
             }
-
+            if(endl_needed)
+                endFile += '\n';
             if (expected[expectedIndex] == "<id>" || expected[expectedIndex] == "<name>" ||
                 expected[expectedIndex] == "<body>" || expected[expectedIndex] == "<topic>") {
                 nextIsOpening = false;
