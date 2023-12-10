@@ -76,8 +76,11 @@ pair<string,Graph> parsing_with_correcting_errors(string address,vector<int>&lin
         }
 
         if (nextIsOpening && !nextIsClosing) {
-            string temp = initial_file.substr(index,index+expected[expectedIndex].size());
-
+            string temp = initial_file.substr(index,expected[expectedIndex].size());
+            if(temp != expected[expectedIndex]){
+                cout<<"error\n";
+                return {endFile,g};
+            }
 
             lastOpening.push(expected[expectedIndex]);
             for (char ch: expected[expectedIndex]) {
@@ -96,7 +99,8 @@ pair<string,Graph> parsing_with_correcting_errors(string address,vector<int>&lin
             } else if (expectedIndex == 11) {
                 expectedIndex--;
             }
-        } else if (!nextIsOpening && !nextIsClosing) {
+        }
+        else if (!nextIsOpening && !nextIsClosing) {
             string txt;
             while (initial_file[index] != '<') {
                 endFile += initial_file[index];
@@ -111,20 +115,24 @@ pair<string,Graph> parsing_with_correcting_errors(string address,vector<int>&lin
                 if (firstId) {
                     firstId = false;
                     id = stoi(txt);
-                } else {
-                    followersIds.push_back(stoi(trim(txt)));
                 }
-            } else if (lastOpening.top() == "<name>") {
-                name = trim(txt);
-            } else if (lastOpening.top() == "<body>") {
-                body = trim(txt);
-            } else if (lastOpening.top() == "<topic>") {
-                topics.push_back(trim(txt));
+                else
+                    followersIds.push_back(stoi(trim(txt)));
+
             }
+            else if (lastOpening.top() == "<name>")
+                name = trim(txt);
+
+            else if (lastOpening.top() == "<body>")
+                body = trim(txt);
+
+            else if (lastOpening.top() == "<topic>")
+                topics.push_back(trim(txt));
 
             nextIsOpening = false;
             nextIsClosing = true;
-        } else {
+        }
+        else {
             std::string openTag = lastOpening.top();
             string fc = string(1, openTag[0]);
             std::string closeTag = fc + "/" + openTag.substr(1);
