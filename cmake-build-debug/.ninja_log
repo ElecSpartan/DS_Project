@@ -1,0 +1,11 @@
+# ninja log v5
+9	1111	7239190020064462	CMakeFiles/DS_Project.dir/Post.cpp.obj	edc1d14d1d0a75ce
+14	1274	7239190021695759	CMakeFiles/DS_Project.dir/User.cpp.obj	c732b98dc41045fc
+10	1499	7239191283979589	CMakeFiles/DS_Project.dir/Graph.cpp.obj	fe42040f7808881a
+15	1793	7239191286921721	CMakeFiles/DS_Project.dir/XML_Parser.cpp.obj	466b30b67dde9ad4
+14	1124	7239193134329524	CMakeFiles/DS_Project.dir/Post.cpp.obj	edc1d14d1d0a75ce
+26	1244	7239193135536308	CMakeFiles/DS_Project.dir/User.cpp.obj	c732b98dc41045fc
+10	1434	7239193137431237	CMakeFiles/DS_Project.dir/Graph.cpp.obj	fe42040f7808881a
+19	1768	7239193140773323	CMakeFiles/DS_Project.dir/XML_Parser.cpp.obj	466b30b67dde9ad4
+4	1207	7239193559191379	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
+1208	1695	7239193564043880	DS_Project.exe	cb39b16a7c3493fc
