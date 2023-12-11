@@ -1,9 +1,8 @@
-//
-// Created by Mazen on 10-Dec-23.
-//
-
 #include "Post.h"
 
+Post::Post() {
+    body = "";
+}
 
 Post::Post(std::string &body,vector<string> &topics) {
     this->body = body;
@@ -16,4 +15,11 @@ string Post::get_body() {
 
 vector<string> Post::get_topics() {
     return topics;
+}
+
+void Post::set_body(string &body2) {
+    body = body2;
+}
+void Post::set_topics(vector<std::string> &topics2) {
+    topics = topics2;
 }

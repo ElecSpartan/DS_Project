@@ -4,11 +4,10 @@
 #include<fstream>
 #include<stack>
 
-void write_to_file(string& address,string &content);
+void write_to_file(string address,string &content);
 string read_file(string address);
 bool temp_is_dummy(string &temp);
 string trim(string&x);
-
-
-
+vector<string> divide_string(string &file);
+Graph parse(string &file);
 #endif

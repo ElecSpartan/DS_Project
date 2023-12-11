@@ -20,10 +20,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added cpp files&quot;">
+    <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added some code for parsing&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graph.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graph.h" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Post.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Post.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Post.h" beforeDir="false" afterPath="$PROJECT_DIR$/Post.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User.h" beforeDir="false" afterPath="$PROJECT_DIR$/User.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/XML_Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/XML_Parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XML_Parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/XML_Parser.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +107,7 @@
       <workItem from="1702235239884" duration="12000" />
       <workItem from="1702249118101" duration="749000" />
       <workItem from="1702294678661" duration="13000" />
-      <workItem from="1702304920333" duration="1367000" />
+      <workItem from="1702304920333" duration="1987000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Added cpp files&quot;">
       <created>1702216220857</created>
@@ -117,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702216306269</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="&quot;Added some code for parsing&quot;">
+      <created>1702306748582</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702306748582</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +149,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="&quot;Added cpp files&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;Added cpp files&quot;" />
+    <MESSAGE value="&quot;Added some code for parsing&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;Added some code for parsing&quot;" />
   </component>
 </project>

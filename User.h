@@ -8,10 +8,13 @@ class User {
     vector<Post> posts;
 public:
     User();
-    User(int& userId,string& name,vector<Post>& posts);
+    User(int userId,string& name,vector<Post>& posts);
     int get_user_id();
     string get_name();
     vector<Post> get_posts();
+    void set_user_id(int userId);
+    void set_name(string &name2);
+    void set_posts(vector<Post>&posts2);
 };
 
 

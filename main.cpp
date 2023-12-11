@@ -1,9 +1,6 @@
-#include "XML_Parser.H"
+#include "XML_Parser.h"
 int main() {
-    vector<int>errors_in_line;
-    pair<string, Graph> p = parsing_with_correcting_errors("E:\\College\\Data structures\\Project\\DS_Project\\sample.xml",errors_in_line);
-    string endFile = p.first;
-    Graph g = p.second;
-    cout << endFile;
+    string file = read_file("E:\\College\\Data structures\\Project\\DS_Project\\sample.xml");
+    Graph g = parse(file);
     return 0;
 }

@@ -1,5 +1,5 @@
 #include "XML_Parser.h"
-void write_to_file(string& address, string& content) {
+void write_to_file(string address, string& content) {
     ofstream file(address);
     if (file.is_open()) {
         file << content;
@@ -86,4 +86,20 @@ vector<string> divide_string(string &file) {
         index++;
     }
     return divided_file;
+}
+Graph parse(string &file) {
+    Graph g;
+
+
+
+
+
+
+
+
+
+
+
+
+    return g;
 }
