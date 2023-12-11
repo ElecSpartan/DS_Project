@@ -20,17 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added some code for parsing&quot;">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graph.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graph.h" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Post.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Post.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Post.h" beforeDir="false" afterPath="$PROJECT_DIR$/Post.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User.h" beforeDir="false" afterPath="$PROJECT_DIR$/User.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XML_Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/XML_Parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XML_Parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/XML_Parser.h" afterDir="false" />
-    </list>
+    <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added some code for parsing&quot;" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,7 +97,7 @@
       <workItem from="1702235239884" duration="12000" />
       <workItem from="1702249118101" duration="749000" />
       <workItem from="1702294678661" duration="13000" />
-      <workItem from="1702304920333" duration="1987000" />
+      <workItem from="1702304920333" duration="2289000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Added cpp files&quot;">
       <created>1702216220857</created>
@@ -130,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702306748582</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="&quot;Added some code for parsing&quot;">
+      <created>1702307517102</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702307517102</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
