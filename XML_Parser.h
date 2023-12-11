@@ -4,10 +4,10 @@
 #include<fstream>
 #include<stack>
 
-void write_to_file(string& address,string &content);
-pair<string,Graph>  parsing_with_correcting_errors(string address,vector<int>&line_num_error);
-string readFile(string address);
-string trim(string x);
-
-
+void write_to_file(string address,string &content);
+string read_file(string address);
+bool temp_is_dummy(string &temp);
+string trim(string&x);
+vector<string> divide_string(string &file);
+Graph parse(string &file);
 #endif

@@ -7,8 +7,8 @@ class Graph {
     vector<vector<int>> followersOfUser;
 public:
     Graph();
-    void add_user(const int& userId, const User& user);
-    void add_follower(const int userId, const int& followerId);
+    void add_user(int userId, User& user);
+    void add_follower(int userId, int followerId);
 };
 
 #endif

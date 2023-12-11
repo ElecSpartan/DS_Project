@@ -76,35 +76,15 @@ pair<string,Graph> parsing_with_correcting_errors(string address,vector<int>&lin
         }
 
         if (nextIsOpening && !nextIsClosing) {
-            bool flag = true;
-            bool endl_needed = false;
-            int len = 0;
-            for(int i=index;initial_file[i]!='\n';i++)
-                len++;
-            if(len < expected[expectedIndex].size() ){
-                flag = false;
-                endl_needed = true;
-            }
-            else{
-                string temp = initial_file.substr(index,expected[expectedIndex].size());
-                if(temp != expected[expectedIndex]){
-                    flag = false;
-                    if(temp[0]=='<'){
-                        for(index ; temp[index]!='>' ; index++ )
-                            continue;
-                        index++;
-                    }
-                }
-            }
+            string temp = initial_file.substr(index,index+expected[expectedIndex].size());
+
 
             lastOpening.push(expected[expectedIndex]);
             for (char ch: expected[expectedIndex]) {
                 endFile += ch;
-                if(flag)
-                    index++;
+                index++;
             }
-            if(endl_needed)
-                endFile += '\n';
+
             if (expected[expectedIndex] == "<id>" || expected[expectedIndex] == "<name>" ||
                 expected[expectedIndex] == "<body>" || expected[expectedIndex] == "<topic>") {
                 nextIsOpening = false;
@@ -116,8 +96,7 @@ pair<string,Graph> parsing_with_correcting_errors(string address,vector<int>&lin
             } else if (expectedIndex == 11) {
                 expectedIndex--;
             }
-        }
-        else if (!nextIsOpening && !nextIsClosing) {
+        } else if (!nextIsOpening && !nextIsClosing) {
             string txt;
             while (initial_file[index] != '<') {
                 endFile += initial_file[index];
@@ -132,24 +111,20 @@ pair<string,Graph> parsing_with_correcting_errors(string address,vector<int>&lin
                 if (firstId) {
                     firstId = false;
                     id = stoi(txt);
-                }
-                else
+                } else {
                     followersIds.push_back(stoi(trim(txt)));
-
-            }
-            else if (lastOpening.top() == "<name>")
+                }
+            } else if (lastOpening.top() == "<name>") {
                 name = trim(txt);
-
-            else if (lastOpening.top() == "<body>")
+            } else if (lastOpening.top() == "<body>") {
                 body = trim(txt);
-
-            else if (lastOpening.top() == "<topic>")
+            } else if (lastOpening.top() == "<topic>") {
                 topics.push_back(trim(txt));
+            }
 
             nextIsOpening = false;
             nextIsClosing = true;
-        }
-        else {
+        } else {
             std::string openTag = lastOpening.top();
             string fc = string(1, openTag[0]);
             std::string closeTag = fc + "/" + openTag.substr(1);
