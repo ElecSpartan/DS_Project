@@ -6,11 +6,11 @@ int main() {
     stringstream buffer;
     buffer << in.rdbuf();
 
-    string s;
-    int i = 0, j;
+    string s = "<";
+    int i = 1, j;
     string input_string = buffer.str();
-    int indentation_level = -1;
-    bool open_tag = false, close_tag = false, flag = false;
+    int indentation_level = 0;
+    bool open_tag = false, close_tag = false, text = false, flag = false;
 
     
     while(i < input_string.length()) {
@@ -28,11 +28,12 @@ int main() {
             for(int j = 0; j < indentation_level; j++) s += "    ";
         }
 
-        if (input_string[i] == '>' && input_string[i+1] != '<') {
-            indentation_level++;
+        // this part can be optimised further
+        if (input_string[i] == '>' && input_string[i + 1] != '<') {
+            text = true;
             flag = true;
+            indentation_level++;
         }
-
         
         
         s += input_string[i];
@@ -42,12 +43,25 @@ int main() {
             flag = false;
         }
 
+        if (text) {
+            text = false;
+            int data_start_index = input_string.find_first_not_of(" \n\r\t", i + 1);
+            if(data_start_index == -1) {
+                i++;
+                continue;
+            }
+            int closing_tag_start_index = input_string.find_first_of('<', i + 1);
+            int data_end_index = input_string.find_last_not_of(" \n\r\t", closing_tag_start_index - 1);
+            s += input_string.substr(data_start_index, data_end_index - data_start_index + 1);
+            i = closing_tag_start_index - 1;
+        }
+
         i++;
     }
 
-    cout << s;
+    // cout << s;
 
-    ofstream out("output.xml");
+    ofstream out("output_pretty.xml");
     out << s;
     out.close();
 
