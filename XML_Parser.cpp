@@ -74,7 +74,8 @@ vector<string> divide_string(string &file) {
                 temp = "";
                 start = true;
             }
-        } else {
+        }
+        else {
             if (file[index + 1] == '<') {
                 if (!temp_is_dummy(temp)) {
                     divided_file.push_back(trim(temp));
@@ -89,17 +90,29 @@ vector<string> divide_string(string &file) {
 }
 Graph parse(string &file) {
     Graph g;
+    vector<string> divided_file = divide_string(file);
+    User* obj_ptr;
+    Post* post_ptr;
+    for(int i=0;i<divided_file.size();i++){
+        string s = divided_file[i];
+        if(s=="<user>")
+            obj_ptr = new User;
+        if(s=="<id>")
+            obj_ptr->set_user_id(stoi(divided_file[i+1]));
+        if(s=="<name>")
+            obj_ptr->set_name(divided_file[i+1]);
+        if(s=="<posts>"){
+            post_ptr = new Post;
+            if(divided_file[i+1]!="<body>")
+                post_ptr->set_body(divided_file[i+1]);
+        }
+        if(s=="<body>")
+            post_ptr->set_body(divided_file[i+1]);
 
-
-
-
-
-
-
-
-
-
-
-
+        if(s=="</user>"){
+            g.add_user(obj_ptr->get_user_id(),*obj_ptr);
+            delete obj_ptr;
+        }
+    }
     return g;
 }
