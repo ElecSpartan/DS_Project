@@ -5,8 +5,7 @@
 
 bool xml_is_correct(string &detected_file);
 void correct_xml(vector<string>&file);
-void correct_general_xml(vector<string>&file);
-void correct_users_xml(vector<string>&file);
+
 
 
 #endif

@@ -49,16 +49,6 @@ bool xml_is_correct(string &detected_file) {
 
     return true;
 }
-void correct_users_xml(vector<string>&file) {
-
-}
-void correct_general_xml(vector<string>&file) {
-
-
-}
 void correct_xml(vector<string>&file) {
-    if (file[0] == "<users>" || file[file.size() - 1] == "</users")
-        correct_users_xml(file);
-    else
-        correct_general_xml(file);
+
 }
