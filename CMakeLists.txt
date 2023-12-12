@@ -13,5 +13,5 @@ add_executable(DS_Project
         Graph.h
         User.h
         Post.h
-        Error_detction.h
-        Error_detection.cpp)
+        Error_detection_and_correction.h
+        Error_detection_and_correction.cpp)

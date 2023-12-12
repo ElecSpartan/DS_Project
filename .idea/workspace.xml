@@ -21,6 +21,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added some code for parsing&quot;">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Error_detction.h" beforeDir="false" afterPath="$PROJECT_DIR$/Error_detection_and_correction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Error_detection.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Error_detection_and_correction.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,12 +76,12 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="DS_Project" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DS_Project" TARGET_NAME="DS_Project" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DS_Project" RUN_TARGET_NAME="DS_Project">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DS_Project" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DS_Project" TARGET_NAME="DS_Project" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DS_Project" RUN_TARGET_NAME="DS_Project">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -108,7 +113,8 @@
       <workItem from="1702330228175" duration="3000" />
       <workItem from="1702331437729" duration="684000" />
       <workItem from="1702392559908" duration="335000" />
-      <workItem from="1702406969241" duration="2216000" />
+      <workItem from="1702406969241" duration="3694000" />
+      <workItem from="1702410732658" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Added cpp files&quot;">
       <created>1702216220857</created>
@@ -166,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702409134602</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="&quot;Added some code for parsing&quot;">
+      <created>1702409511624</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1702409511624</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

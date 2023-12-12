@@ -1,21 +1,8 @@
 # ninja log v5
-14	1124	7239193134329524	CMakeFiles/DS_Project.dir/Post.cpp.obj	edc1d14d1d0a75ce
-10	1434	7239193137431237	CMakeFiles/DS_Project.dir/Graph.cpp.obj	fe42040f7808881a
-26	1244	7239193135536308	CMakeFiles/DS_Project.dir/User.cpp.obj	c732b98dc41045fc
-1208	1695	7239193564043880	DS_Project.exe	cb39b16a7c3493fc
-19	1768	7239193140773323	CMakeFiles/DS_Project.dir/XML_Parser.cpp.obj	466b30b67dde9ad4
-4	1207	7239193559191379	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
-1	1533	7241118223394362	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
 11	1541	7241118223464176	CMakeFiles/DS_Project.dir/Post.cpp.obj	edc1d14d1d0a75ce
-16	1553	7241118223583851	CMakeFiles/DS_Project.dir/Error_detection.cpp.obj	5bb2a7908508ed85
-27	1605	7241118224122405	CMakeFiles/DS_Project.dir/User.cpp.obj	c732b98dc41045fc
 6	1703	7241118225089820	CMakeFiles/DS_Project.dir/Graph.cpp.obj	fe42040f7808881a
-21	1784	7241118225907640	CMakeFiles/DS_Project.dir/XML_Parser.cpp.obj	466b30b67dde9ad4
-1784	2348	7241118231519636	DS_Project.exe	fe7ed1c17b7925fe
-4	1105	7241118893005683	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
-1106	1448	7241118896396619	DS_Project.exe	fe7ed1c17b7925fe
-4	1294	7241121940026280	CMakeFiles/DS_Project.dir/XML_Parser.cpp.obj	466b30b67dde9ad4
-1295	1648	7241121943532553	DS_Project.exe	fe7ed1c17b7925fe
-4	1042	7241126745305168	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
 9	1099	7241126745873677	CMakeFiles/DS_Project.dir/Error_detection.cpp.obj	5bb2a7908508ed85
+27	1605	7241118224122405	CMakeFiles/DS_Project.dir/User.cpp.obj	c732b98dc41045fc
 1099	1435	7241126749191715	DS_Project.exe	fe7ed1c17b7925fe
+4	1294	7241121940026280	CMakeFiles/DS_Project.dir/XML_Parser.cpp.obj	466b30b67dde9ad4
+4	1042	7241126745305168	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
