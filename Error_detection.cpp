@@ -12,10 +12,10 @@ bool detection_function(string address){
                 opened_tag++;
         }
         if(closed_tag > opened_tag)
-            return false;
+            return true;
     }
     if(closed_tag != opened_tag)
-        return false;
+        return true;
 
     stack<string> name_check;
 
@@ -29,7 +29,7 @@ bool detection_function(string address){
                         break;
                 }
                 if(name_check.empty() || name_check.top().substr(1,name_check.top().size()-2) != tag.substr(2,tag.size()-3))
-                    return false;
+                    return true;
                 name_check.pop();
             }
             else{
@@ -45,8 +45,8 @@ bool detection_function(string address){
     }
 
     if(!name_check.empty())
-        return false;
+        return true;
 
 
-    return true;
+    return false;
 }
