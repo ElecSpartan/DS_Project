@@ -12,4 +12,6 @@ add_executable(DS_Project
         XML_Parser.h
         Graph.h
         User.h
-        Post.h)
+        Post.h
+        Error_detction.h
+        Error_detection.cpp)

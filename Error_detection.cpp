@@ -1,6 +1,5 @@
 #include "XML_Parser.h"
 
-
 bool detection_function(string address){
     string detected_file = read_file(address);
     int opened_tag = 0;
