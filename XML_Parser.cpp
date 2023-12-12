@@ -95,6 +95,7 @@ Graph parse(string &file) {
     Post* post_ptr;
     vector<int> followers;
     vector<string> topics;
+    vector<Post> posts;
     for(int i=0;i<divided_file.size();i++){
         string s = divided_file[i];
         if(s=="<user>")
@@ -108,7 +109,7 @@ Graph parse(string &file) {
             obj_ptr->set_name(divided_file[i+1]);
 
 
-        if(s=="<posts>"){
+        if(s=="<post>"){
             post_ptr = new Post;
             if(divided_file[i+1]!="<body>")
                 post_ptr->set_body(divided_file[i+1]);
@@ -119,12 +120,14 @@ Graph parse(string &file) {
             topics.push_back(divided_file[i+1]);
         if(s=="</topics>"){
             post_ptr->set_topics(topics);
-            topics.clear()
+            topics.clear();
         }
 
 
-
-
+        if(s=="</post>"){
+            posts.push_back(*post_ptr);
+            delete post_ptr;
+        }
 
         if(s=="</user>"){
             g.add_user(obj_ptr->get_user_id(),*obj_ptr);
