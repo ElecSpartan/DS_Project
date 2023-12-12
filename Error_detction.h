@@ -3,6 +3,6 @@
 #include "XML_Parser.h"
 
 
-bool detection_function(string address);
+bool xml_is_correct(string &detected_file);
 
 #endif //DS_PROJECT_ERROR_DETCTION_H
