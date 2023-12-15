@@ -52,7 +52,7 @@ string trim(string&x) {
     }
     return y;
 }
-vector<string> divide_string(string &file) {
+vector<string> divide_string_for_graph(string &file) {
     vector<string> divided_file;
     string temp = "";
     bool start = true;
@@ -88,9 +88,43 @@ vector<string> divide_string(string &file) {
     }
     return divided_file;
 }
+vector<string> divide_string_for_correction(string &file) {
+    vector<string> divided_file;
+    string temp = "";
+    bool start = true;
+    bool tag;
+    int index = 0;
+    while (index < file.size()) {
+        if (start) {
+            if (file[index] == '<')
+                tag = true;
+            else
+                tag = false;
+
+            start = false;
+        }
+        temp += file[index];
+        if (tag) {
+            if (file[index] == '>') {
+                divided_file.push_back(temp);
+                temp = "";
+                start = true;
+            }
+        } else {
+            if (file[index + 1] == '<') {
+                divided_file.push_back(temp);
+
+                temp = "";
+                start = true;
+            }
+        }
+        index++;
+    }
+    return divided_file;
+}
 Graph parse(string &file) {
     Graph g;
-    vector<string> divided_file = divide_string(file);
+    vector<string> divided_file = divide_string_for_graph(file);
     User* obj_ptr;
     Post* post_ptr;
     vector<string> topics;
