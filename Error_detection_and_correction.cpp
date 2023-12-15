@@ -1,8 +1,10 @@
 #include "XML_Parser.h"
 
-bool xml_is_correct(string &detected_file) {
+vector<int> xml_is_correct(string &detected_file) {
     int opened_tag = 0;
     int closed_tag = 0;
+    int line = 0;
+    vector<int> v;
     for (int i = 0; i < detected_file.size(); i++) {
         if (detected_file[i] == '<') {
             if (detected_file[i + 1] == '/')
@@ -11,10 +13,10 @@ bool xml_is_correct(string &detected_file) {
                 opened_tag++;
         }
         if (closed_tag > opened_tag)
-            return false;
+            v.push_back(line);
     }
     if (closed_tag != opened_tag)
-        return false;
+        v.push_back(line);
 
     stack<string> name_check;
 
@@ -27,9 +29,8 @@ bool xml_is_correct(string &detected_file) {
                     if (detected_file[j] == '>')
                         break;
                 }
-                if (name_check.empty() ||
-                    name_check.top().substr(1, name_check.top().size() - 2) != tag.substr(2, tag.size() - 3))
-                    return false;
+                if (name_check.empty() || name_check.top().substr(1, name_check.top().size() - 2) != tag.substr(2, tag.size() - 3))
+                    v.push_back(line);
                 name_check.pop();
             } else {
                 string tag = "<";
@@ -44,10 +45,10 @@ bool xml_is_correct(string &detected_file) {
     }
 
     if (!name_check.empty())
-        return false;
+        v.push_back(line);
 
 
-    return true;
+    return v;
 }
 
 
