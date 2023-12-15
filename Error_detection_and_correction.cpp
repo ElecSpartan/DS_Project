@@ -1,54 +1,11 @@
 #include "XML_Parser.h"
-
-vector<int> xml_is_correct(string &detected_file) {
-    int opened_tag = 0;
-    int closed_tag = 0;
-    int line = 0;
-    vector<int> v;
-    for (int i = 0; i < detected_file.size(); i++) {
-        if (detected_file[i] == '<') {
-            if (detected_file[i + 1] == '/')
-                closed_tag++;
-            else
-                opened_tag++;
-        }
-        if (closed_tag > opened_tag)
-            v.push_back(line);
+bool contains_new_line(string &x) {
+    bool b = false;
+    for (int i = 0; i < x.size(); i++) {
+        if (x[i] == '\n')
+            b = true;
     }
-    if (closed_tag != opened_tag)
-        v.push_back(line);
-
-    stack<string> name_check;
-
-    for (int i = 0; i < detected_file.size(); i++) {
-        if (detected_file[i] == '<') {
-            if (detected_file[i + 1] == '/') {
-                string tag = "</";
-                for (int j = i + 2; j < detected_file.size(); j++) {
-                    tag.push_back(detected_file[j]);
-                    if (detected_file[j] == '>')
-                        break;
-                }
-                if (name_check.empty() || name_check.top().substr(1, name_check.top().size() - 2) != tag.substr(2, tag.size() - 3))
-                    v.push_back(line);
-                name_check.pop();
-            } else {
-                string tag = "<";
-                for (int j = i + 1; j < detected_file.size(); j++) {
-                    tag.push_back(detected_file[j]);
-                    if (detected_file[j] == '>')
-                        break;
-                }
-                name_check.push(tag);
-            }
-        }
-    }
-
-    if (!name_check.empty())
-        v.push_back(line);
-
-
-    return v;
+    return b;
 }
 bool is_tag(string &s) {
     return (s[0] == '<' && s[s.size() - 1] == '>');
@@ -176,4 +133,44 @@ string correct_xml(string &xml_file) {
 
 
     return add_new_lines(valid_file);
+}
+vector<pair<pair<int, int>, string>> errors(string &xml_file) {
+    vector<string> file = divide_string_for_correction(xml_file);
+
+    int line = 1;
+    vector<pair<pair<int, int>, string>> v; // line error , num of errors , string to print
+    stack<string> s;
+
+    for (int i = 0; i < file.size(); i++) {
+        if (contains_new_line(file[i]))
+            line++;
+
+        if (!is_tag(file[i]) && !temp_is_dummy(file[i])) {
+            if (!is_the_same(file[i - 1], file[i + 1])) {
+                if (is_open_tag(file[i - 1])) {
+                    v.push_back({{line, 1}, "Missing 1 closed tag in line " + to_string(line) + "."});
+                } else {
+                    v.push_back({{line - 1, 1}, "Missing 1 open tag in line " + to_string(line) + "."});
+                }
+            }
+        } else {
+            if (is_open_tag(file[i])) {
+                s.push(file[i]);
+            } else {
+                if (!s.empty() && is_the_same(s.top(), file[i]))
+                    s.pop();
+                else {
+                    v.push_back({{line, 1}, "Missing 1 open tag in line " + to_string(line) + "."});
+                }
+            }
+        }
+    }
+
+    int num = 0;
+    while (!s.empty()) {
+        num++;
+        s.pop();
+    }
+    v.push_back({{line, num}, "Missing " + to_string(num) + " closed tag in line " + to_string(line) + "."});
+    return v;
 }

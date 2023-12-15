@@ -21,7 +21,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added code for correction&quot;">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Error_detection_and_correction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Error_detection_and_correction.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Error_detection_and_correction.h" beforeDir="false" afterPath="$PROJECT_DIR$/Error_detection_and_correction.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +110,7 @@
       <workItem from="1702412175589" duration="630000" />
       <workItem from="1702581624989" duration="3000" />
       <workItem from="1702583558376" duration="17000" />
-      <workItem from="1702640386947" duration="7286000" />
+      <workItem from="1702640386947" duration="8750000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Added cpp files&quot;">
       <created>1702216220857</created>
@@ -236,7 +238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702649587591</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="&quot;Added code for correction&quot;">
+      <created>1702649765382</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1702649765382</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
