@@ -1,4 +1,5 @@
 #include "XML_Parser.h"
+
 int num_of_new_lines(string &x) {
     int num = 0;
     for (int i = 0; i < x.size(); i++) {
@@ -59,33 +60,75 @@ string add_new_lines(vector<string>&file) {
     }
     return valid_file;
 }
-vector<string> values_correction(vector<string>&file) {
+pair<vector<string>,int> values_correction(vector<string>&file) {
     vector<string> v;
+    int x = 2;
+    if(is_open_tag(file[0]) && is_open_tag(file[file.size()-1]))
+        x = 1;
+    else if(is_closed_tag(file[0]) && is_closed_tag(file[file.size()-1]))
+        x = 0;
+
+
     for (int i = 0; i < file.size(); i++) {
         if (!is_tag(file[i]) && !temp_is_dummy(file[i])) {
-            if (!is_the_same(file[i - 1], file[i + 1])) {
-                if (i!=1 && is_open_tag(file[i - 1])) {
+            if(i==1) {
+                if (x == 1 || x == 0) {
+                    v.push_back(get_open_from_closed(file[i + 1]));
+                    v.push_back(file[i]);
+                } else {
+                    if (is_closed_tag(file[i + 1])) {
+                        v.push_back(get_open_from_closed(file[i + 1]));
+                        v.push_back(file[i]);
+                    }
+                    else {
+                        v.push_back(file[i]);
+                        v.push_back(get_closed_from_open(file[i - 1]));
+                        x = 0;
+                    }
+                }
+            }
+            else if(i==file.size()-2) {
+                if (x == 1 || x == 0) {
                     v.push_back(file[i]);
                     v.push_back(get_closed_from_open(file[i - 1]));
                 } else {
-                    v.push_back(get_open_from_closed(file[i + 1]));
-                    v.push_back(file[i]);
+                    if (is_open_tag(file[i - 1])) {
+                        v.push_back(file[i]);
+                        v.push_back(get_closed_from_open(file[i - 1]));
+                    } else {
+                        v.push_back(get_open_from_closed(file[i + 1]));
+                        v.push_back(file[i]);
+                        x = 1;
+                    }
                 }
-            } else
-                v.push_back(file[i]);
+            }
+            else {
+                if (!is_the_same(file[i - 1], file[i + 1])) {
+                    if (is_open_tag(file[i - 1])) {
+                        v.push_back(file[i]);
+                        v.push_back(get_closed_from_open(file[i - 1]));
+                    } else {
+                        v.push_back(get_open_from_closed(file[i + 1]));
+                        v.push_back(file[i]);
+                    }
+                }
+            }
         } else
             v.push_back(file[i]);
+
     }
-    return v;
+    return {v,x};
 }
 string correct_xml(string &xml_file) {
     vector<string>file = divide_string_for_correction(xml_file);
-    file = values_correction(file);
-    vector<string> valid_file;
-    int x = 2; //  push both ( 1 >> push open / 0 >> push last )
+    pair<vector<string>,int> p = values_correction(file);
+    file = p.first;
+    vector<string>valid_file;
+    int must_be = p.second;
+    int x = 2;
     string to_push;
-    if (!is_the_same(file[0], file[file.size() - 1])) {
-        if (is_open_tag(file[0])) {
+    if (!is_the_same(file[0], file[file.size() - 1]) || must_be!=2) {
+        if (must_be == 1) {
             x = 0;
             to_push = get_closed_from_open(file[0]);
         } else {
@@ -134,7 +177,7 @@ string correct_xml(string &xml_file) {
 
     return add_new_lines(valid_file);
 }
-vector<pair<pair<int, int>, string>> errors(string &xml_file) {
+vector<int> get_errors(string &xml_file) {
     vector<string> file = divide_string_for_correction(xml_file);
     vector<pair<pair<int, int>, string>> v; // line error , num of errors , string to print
     int add = 0;

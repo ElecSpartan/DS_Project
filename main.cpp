@@ -3,9 +3,8 @@
 int main() {
 
     string file = read_file("E:\\jj.txt");
-    vector<pair<pair<int, int>, string>> errorss = errors(file);
-    for(auto &x : errorss)
-        cout<<x.second<<'\n';
+
+
 
 
     cout<<'\n';
