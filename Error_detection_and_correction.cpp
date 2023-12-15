@@ -50,8 +50,6 @@ vector<int> xml_is_correct(string &detected_file) {
 
     return v;
 }
-
-
 bool is_tag(string &s) {
     return (s[0] == '<' && s[s.size() - 1] == '>');
 }
