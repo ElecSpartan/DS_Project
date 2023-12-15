@@ -104,8 +104,28 @@ string add_new_lines(vector<string>&file) {
     }
     return valid_file;
 }
+vector<string> values_correction(vector<string>&file) {
+    vector<string> v;
+    for (int i = 0; i < file.size(); i++) {
+        if (!is_tag(file[i]) && !temp_is_dummy(file[i])) {
+            if (!is_the_same(file[i - 1], file[i + 1])) {
+                if (is_open_tag(file[i - 1])) {
+                    v.push_back(file[i]);
+                    v.push_back(get_closed_from_open(file[i - 1]));
+                } else {
+                    v.push_back(get_open_from_closed(file[i + 1]));
+                    v.push_back(file[i]);
+                }
+            } else
+                v.push_back(file[i]);
+        } else
+            v.push_back(file[i]);
+    }
+    return v;
+}
 string correct_xml(string &xml_file) {
     vector<string>file = divide_string_for_correction(xml_file);
+    file = values_correction(file);
     vector<string> valid_file;
     int x = 2; //  push both ( 1 >> push open / 0 >> push last )
     string to_push;
