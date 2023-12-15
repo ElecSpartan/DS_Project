@@ -64,7 +64,7 @@ vector<string> values_correction(vector<string>&file) {
     for (int i = 0; i < file.size(); i++) {
         if (!is_tag(file[i]) && !temp_is_dummy(file[i])) {
             if (!is_the_same(file[i - 1], file[i + 1])) {
-                if (is_open_tag(file[i - 1])) {
+                if (i!=1 && is_open_tag(file[i - 1])) {
                     v.push_back(file[i]);
                     v.push_back(get_closed_from_open(file[i - 1]));
                 } else {
@@ -95,12 +95,12 @@ string correct_xml(string &xml_file) {
     }
     if (x == 2 || x == 0)
         valid_file.push_back(file[0]);
-    else if (x == 1)
+    else
         valid_file.push_back(to_push);
 
 
     stack<string> s;
-    for (int i = 1; i <= file.size() - 2; i++) {
+    for (int i = 1 - (x==1); i <= file.size() - 2 + (x == 0); i++) {
         if (!is_tag(file[i])) {
             valid_file.push_back(file[i]);
             continue;
@@ -127,7 +127,7 @@ string correct_xml(string &xml_file) {
 
     if (x == 2 || x== 1)
         valid_file.push_back(file[file.size() - 1]);
-    else if (x == 0)
+    else
         valid_file.push_back(to_push);
 
 
@@ -155,19 +155,21 @@ vector<pair<pair<int, int>, string>> errors(string &xml_file) {
 
     stack<string> s;
 
+    int last = 0;
     for (int i = 1 + add2; i < file.size() - 1 + add; i++) {
+        last = line;
         line += num_of_new_lines(file[i]);
-
         if (!is_tag(file[i])) {
             if (temp_is_dummy(file[i]))
                 continue;
 
             if (!is_the_same(file[i - 1], file[i + 1])) {
-                if (is_open_tag(file[i - 1])) {
+                if ((i!=1) && is_open_tag(file[i - 1])) {
                     v.push_back({{line, 1}, "Missing 1 closed tag in line " + to_string(line) + "."});
                     s.pop();
                 } else {
-                    v.push_back({{line - 1, 1}, "Missing 1 open tag in line " + to_string(line) + "."});
+                    s.push(get_open_from_closed(file[i+1]));
+                    v.push_back({{last, 1}, "Missing 1 open tag in line " + to_string(last) + "."});
                 }
             }
         } else {
@@ -188,7 +190,7 @@ vector<pair<pair<int, int>, string>> errors(string &xml_file) {
         num++;
         s.pop();
     }
-    if (!num)
+    if (num)
         v.push_back({{line, num}, "Missing " + to_string(num) + " closed tag in line " + to_string(line) + "."});
     return v;
 }

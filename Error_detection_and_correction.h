@@ -1,7 +1,7 @@
 #ifndef DS_PROJECT_ERROR_DETECTION_AND_CORRECTION_H
 #define DS_PROJECT_ERROR_DETECTION_AND_CORRECTION_H
 #include "XML_Parser.h"
-bool contains_new_line(string &x);
+int num_of_new_lines(string &x);
 vector<pair<pair<int, int>, string>> errors(string &xml_file);
 string correct_xml(string &xml_file);
 bool is_open_tag(string &s);
