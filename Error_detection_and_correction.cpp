@@ -119,7 +119,8 @@ pair<vector<string>,int> values_correction(vector<string>&file) {
                         v.push_back(file[i]);
                         errors.emplace_back(last, false);
                     }
-                }
+                } else
+                    v.push_back(file[i]);
             }
         } else
             v.push_back(file[i]);

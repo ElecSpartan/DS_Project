@@ -23,7 +23,6 @@
     <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added code for correction&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Error_detection_and_correction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Error_detection_and_correction.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Error_detection_and_correction.h" beforeDir="false" afterPath="$PROJECT_DIR$/Error_detection_and_correction.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/Error_detection_and_correction.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/Error_detection_and_correction.cpp.obj" afterDir="false" />
@@ -119,7 +118,7 @@
       <workItem from="1702583558376" duration="17000" />
       <workItem from="1702640386947" duration="20337000" />
       <workItem from="1702666354710" duration="821000" />
-      <workItem from="1702670488833" duration="3524000" />
+      <workItem from="1702670488833" duration="4533000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Added cpp files&quot;">
       <created>1702216220857</created>
@@ -303,7 +302,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702667171978</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="&quot;Added code for correction&quot;">
+      <created>1702674145389</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1702674145389</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,16 +331,5 @@
     <MESSAGE value="&quot;Added some code for parsing&quot;" />
     <MESSAGE value="&quot;Added code for correction&quot;" />
     <option name="LAST_COMMIT_MESSAGE" value="&quot;Added code for correction&quot;" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Error_detection_and_correction.cpp</url>
-          <line>4</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

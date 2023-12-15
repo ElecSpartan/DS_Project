@@ -5,7 +5,8 @@ int main() {
     cout << correct_xml(file);
     vector<pair<int, bool>> v = get_errors();
 
-    cout<<'\n';
+    cout << '\n';
+    // o >> opening / 1 >> closing
     for (auto x: v)
         cout << x.first << " , " << x.second << '\n';
     return 0;
