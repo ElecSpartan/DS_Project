@@ -1,11 +1,11 @@
 #include "XML_Parser.h"
-bool contains_new_line(string &x) {
-    bool b = false;
+int num_of_new_lines(string &x) {
+    int num = 0;
     for (int i = 0; i < x.size(); i++) {
         if (x[i] == '\n')
-            b = true;
+            num++;
     }
-    return b;
+    return num;
 }
 bool is_tag(string &s) {
     return (s[0] == '<' && s[s.size() - 1] == '>');
@@ -136,19 +136,36 @@ string correct_xml(string &xml_file) {
 }
 vector<pair<pair<int, int>, string>> errors(string &xml_file) {
     vector<string> file = divide_string_for_correction(xml_file);
-
-    int line = 1;
     vector<pair<pair<int, int>, string>> v; // line error , num of errors , string to print
+    int add = 0;
+    int add2 = 0;
+    if (!is_the_same(file[0], file[file.size() - 1])) {
+        if (is_open_tag(file[0])) {
+            add = 1;
+        } else {
+            add2 = -1;
+            v.push_back({{1, 1}, "Missing 1 open tag in line 1."});
+        }
+    } else {
+
+    }
+    int line = 1;
+    if (!add2)
+        line += num_of_new_lines(file[0]);
+
     stack<string> s;
 
-    for (int i = 0; i < file.size(); i++) {
-        if (contains_new_line(file[i]))
-            line++;
+    for (int i = 1 + add2; i < file.size() - 1 + add; i++) {
+        line += num_of_new_lines(file[i]);
 
-        if (!is_tag(file[i]) && !temp_is_dummy(file[i])) {
+        if (!is_tag(file[i])) {
+            if (temp_is_dummy(file[i]))
+                continue;
+
             if (!is_the_same(file[i - 1], file[i + 1])) {
                 if (is_open_tag(file[i - 1])) {
                     v.push_back({{line, 1}, "Missing 1 closed tag in line " + to_string(line) + "."});
+                    s.pop();
                 } else {
                     v.push_back({{line - 1, 1}, "Missing 1 open tag in line " + to_string(line) + "."});
                 }
@@ -166,11 +183,12 @@ vector<pair<pair<int, int>, string>> errors(string &xml_file) {
         }
     }
 
-    int num = 0;
+    int num = add;
     while (!s.empty()) {
         num++;
         s.pop();
     }
-    v.push_back({{line, num}, "Missing " + to_string(num) + " closed tag in line " + to_string(line) + "."});
+    if (!num)
+        v.push_back({{line, num}, "Missing " + to_string(num) + " closed tag in line " + to_string(line) + "."});
     return v;
 }
