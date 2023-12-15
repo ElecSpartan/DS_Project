@@ -1,5 +1,4 @@
-#include "XML_Parser.h"
-
+#include "Error_detection_and_correction.h"
 int num_of_new_lines(string &x) {
     int num = 0;
     for (int i = 0; i < x.size(); i++) {
@@ -63,53 +62,61 @@ string add_new_lines(vector<string>&file) {
 pair<vector<string>,int> values_correction(vector<string>&file) {
     vector<string> v;
     int x = 2;
-    if(is_open_tag(file[0]) && is_open_tag(file[file.size()-1]))
+    if (is_open_tag(file[0]) && is_open_tag(file[file.size() - 1]))
         x = 1;
-    else if(is_closed_tag(file[0]) && is_closed_tag(file[file.size()-1]))
+    else if (is_closed_tag(file[0]) && is_closed_tag(file[file.size() - 1]))
         x = 0;
 
-
+    int line = 1;
+    int last;
     for (int i = 0; i < file.size(); i++) {
+        last = line;
+        line += num_of_new_lines(file[i]);
         if (!is_tag(file[i]) && !temp_is_dummy(file[i])) {
-            if(i==1) {
+            if (i == 1) {
                 if (x == 1 || x == 0) {
                     v.push_back(get_open_from_closed(file[i + 1]));
                     v.push_back(file[i]);
+                    errors.emplace_back(last, false);
                 } else {
                     if (is_closed_tag(file[i + 1])) {
                         v.push_back(get_open_from_closed(file[i + 1]));
                         v.push_back(file[i]);
-                    }
-                    else {
+                        errors.emplace_back(last, false);
+                    } else {
                         v.push_back(file[i]);
                         v.push_back(get_closed_from_open(file[i - 1]));
+                        errors.emplace_back(line, true);
                         x = 0;
                     }
                 }
-            }
-            else if(i==file.size()-2) {
+            } else if (i == file.size() - 2) {
                 if (x == 1 || x == 0) {
                     v.push_back(file[i]);
                     v.push_back(get_closed_from_open(file[i - 1]));
+                    errors.emplace_back(line, true);
                 } else {
                     if (is_open_tag(file[i - 1])) {
                         v.push_back(file[i]);
                         v.push_back(get_closed_from_open(file[i - 1]));
+                        errors.emplace_back(line, true);
                     } else {
                         v.push_back(get_open_from_closed(file[i + 1]));
                         v.push_back(file[i]);
+                        errors.emplace_back(last, false);
                         x = 1;
                     }
                 }
-            }
-            else {
+            } else {
                 if (!is_the_same(file[i - 1], file[i + 1])) {
                     if (is_open_tag(file[i - 1])) {
                         v.push_back(file[i]);
                         v.push_back(get_closed_from_open(file[i - 1]));
+                        errors.emplace_back(line, true);
                     } else {
                         v.push_back(get_open_from_closed(file[i + 1]));
                         v.push_back(file[i]);
+                        errors.emplace_back(last, false);
                     }
                 }
             }
@@ -117,7 +124,7 @@ pair<vector<string>,int> values_correction(vector<string>&file) {
             v.push_back(file[i]);
 
     }
-    return {v,x};
+    return {v, x};
 }
 string correct_xml(string &xml_file) {
     vector<string>file = divide_string_for_correction(xml_file);
@@ -141,9 +148,17 @@ string correct_xml(string &xml_file) {
     else
         valid_file.push_back(to_push);
 
-
+    int line = 1;
+    if(x!=1) {
+        line += num_of_new_lines(file[0]);
+    }
+    int last;
     stack<string> s;
     for (int i = 1 - (x==1); i <= file.size() - 2 + (x == 0); i++) {
+
+        last = line;
+        line+= num_of_new_lines(file[i]);
+
         if (!is_tag(file[i])) {
             valid_file.push_back(file[i]);
             continue;
@@ -159,12 +174,18 @@ string correct_xml(string &xml_file) {
             } else {
                 valid_file.push_back(get_open_from_closed(file[i]));
                 valid_file.push_back(file[i]);
+                errors.emplace_back(last, false);
             }
         }
     }
 
+    if(x!=0) {
+        errors.emplace_back(line,true);
+    }
+
     while (!s.empty()) {
         valid_file.push_back(get_closed_from_open(s.top()));
+        errors.emplace_back(line, true);
         s.pop();
     }
 
@@ -176,64 +197,4 @@ string correct_xml(string &xml_file) {
 
 
     return add_new_lines(valid_file);
-}
-vector<int> get_errors(string &xml_file) {
-    vector<string> file = divide_string_for_correction(xml_file);
-    vector<pair<pair<int, int>, string>> v; // line error , num of errors , string to print
-    int add = 0;
-    int add2 = 0;
-    if (!is_the_same(file[0], file[file.size() - 1])) {
-        if (is_open_tag(file[0])) {
-            add = 1;
-        } else {
-            add2 = -1;
-            v.push_back({{1, 1}, "Missing 1 open tag near line 1."});
-        }
-    } else {
-
-    }
-    int line = 1;
-    if (!add2)
-        line += num_of_new_lines(file[0]);
-
-    stack<string> s;
-
-    int last = 0;
-    for (int i = 1 + add2; i < file.size() - 1 + add; i++) {
-        last = line;
-        line += num_of_new_lines(file[i]);
-        if (!is_tag(file[i])) {
-            if (temp_is_dummy(file[i]))
-                continue;
-
-            if (!is_the_same(file[i - 1], file[i + 1])) {
-                if ((i!=1) && is_open_tag(file[i - 1])) {
-                    v.push_back({{line, 1}, "Missing 1 closed tag near line " + to_string(line) + "."});
-                    s.pop();
-                } else {
-                    s.push(get_open_from_closed(file[i+1]));
-                    v.push_back({{last, 1}, "Missing 1 open tag near line " + to_string(last) + "."});
-                }
-            }
-        } else {
-            if (is_open_tag(file[i])) {
-                s.push(file[i]);
-            } else {
-                if (!s.empty() && is_the_same(s.top(), file[i]))
-                    s.pop();
-                else {
-                    v.push_back({{line, 1}, "Missing 1 open tag near line " + to_string(line) + "."});
-                }
-            }
-        }
-    }
-
-    int num = add;
-    while (!s.empty()) {
-        num++;
-        s.pop();
-    }
-    if (num)
-        v.push_back({{line, num}, "Missing " + to_string(num) + " closed tag near line " + to_string(line) + "."});
-    return v;
 }
