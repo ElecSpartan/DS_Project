@@ -13,7 +13,7 @@ public:
     vector<User> most_followers();
     vector<User> most_connections();
     vector<User> mutual_followers();
-    vector<User> user_suggestion();
+    vector<User> user_suggestion(User user);
 };
 
 #endif

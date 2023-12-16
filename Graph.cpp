@@ -43,3 +43,24 @@ vector<User> Graph::most_followers() {
     }
     return ret;
 }
+
+vector<User> Graph::user_suggestion(User user){
+    vector<User> ret;
+    int id = user.get_user_id();
+    queue<pair<int,int>> q;
+    q.push({id,0});
+    int level = 0;
+    while(!q.empty()){
+        int cur_user = q.front().first;
+        int cur_level = q.front().second;
+        if(cur_level>=3)
+            break;
+        q.pop();
+        for(auto ch : followersOfUser[cur_user]){
+            q.push({ch,cur_level+1});
+            if(cur_level+1==2)
+                ret.push_back(users[ch]);
+        }
+    }
+    return ret;
+}
