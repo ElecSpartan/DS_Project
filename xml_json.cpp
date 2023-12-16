@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 struct mypair {
     string first;
     int second;
@@ -17,7 +18,7 @@ struct mypair {
         
 };
 
-stack<mypair*> tags;
+
 
 int get_tag_count(string &input_string, string &tag_name, int start_index, int end_index) {
     string tag = "<" + tag_name + ">";
@@ -26,12 +27,20 @@ int get_tag_count(string &input_string, string &tag_name, int start_index, int e
     
     while(start_index < end_index && start_index != -1) {
         count++;
-        int check_next_closing_tag = input_string.find_first_not_of(" \n\r\t", start_index + tag.length());
-        if (input_string[check_next_closing_tag] !=  '<') return 1;
+        if (flag) {
+            flag = false;
+            int next_same_opening_tag = input_string.find(tag, start_index + 1);
+            int my_closing_tag = input_string.find("</" + tag_name + ">", start_index) + 1;
+            int next_opening_tag = input_string.find_first_not_of(" \n\r\t", my_closing_tag + tag.length());
+            if (next_same_opening_tag != -1 && next_same_opening_tag > next_opening_tag) {
+                return count;
+            }
+        }
         start_index = input_string.find(tag, start_index + tag.length());
     }
     return count;
 }
+
 
 int main() {
     ifstream in("sample.xml");
@@ -44,6 +53,7 @@ int main() {
     int indentation_level = 0;
     bool close_tag = false, text = false, flag = true;
     int count;
+    stack<mypair*> tags;
 
     
     while(i < input_string.length()) {
@@ -59,18 +69,22 @@ int main() {
                     s += '}';
                 }
 
-                if(!close_tag) { 
+                if(!close_tag && count < 2) { 
                     indentation_level--;
                 }
+
+                int close_tag_index = input_string.find_first_of('>', check_for_closing_tag + 1);
+                tag = input_string.substr(check_for_closing_tag + 1, close_tag_index - check_for_closing_tag - 1);
                 
-                if (close_tag && tags.top()->second == 1 && tags.size() != 1) {
+                if (!tags.empty() && tag == tags.top()->first && tags.top()->second == 1) {
                     indentation_level--;
                     s += '\n';
                     for(int j = 0; j < indentation_level; j++) s += "    ";
                     s += ']';
                 }
-
-                if (--tags.top()->second == 0) {
+                
+                // IMPORTANT second condition
+                if (!tags.empty() && tag == tags.top()->first && --tags.top()->second == 0) {
                     tags.pop();
                 }
 
@@ -87,8 +101,6 @@ int main() {
 
                 count = get_tag_count(input_string, tag, close_tag_index, parent_close_tag_index);
 
-                close_tag = false;
-
                 if (!text) {
                     indentation_level++;
                     s += '{';
@@ -96,6 +108,7 @@ int main() {
                     s += ",";
                 }
 
+                close_tag = false;
                 text = false;
 
                 s += '\n';
@@ -117,7 +130,9 @@ int main() {
         int first_after_open_tag = input_string.find_first_not_of(" \n\r\t", i + 1);
         if (input_string[i] == '>' && input_string[first_after_open_tag] != '<') {
             text = true;
-            indentation_level++;
+            if(count < 2) {
+                indentation_level++;
+            }
         }
 
 
@@ -126,11 +141,13 @@ int main() {
                 s += "\": ";
             }
             
-            if(flag) {
+            if (flag && count != 1) {
                 tags.push(new mypair(tag, count));
                 flag = false;
             }
-            if(!flag && tag != tags.top()->first) tags.push(new mypair(tag, count));
+            if (!flag && (tags.empty() || tag != tags.top()->first) && count != 1) {
+                tags.push(new mypair(tag, count));
+            }
 
             // CHECK IF DATA OR TAG CONTAINER
             if(count > 1) {
