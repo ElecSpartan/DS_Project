@@ -1,57 +1,70 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ifstream in("sample.xml");
-    // string line;
-    // getline(in, line);
+string read_file(string path) {
+    ifstream in(path);
 
     stringstream buffer;
     buffer << in.rdbuf();
-    // cout << buffer.str();
+    in.close();
 
-    string s;
-    int i = 0, j;
-    string input_string = buffer.str();
+    return buffer.str();
+}
 
-    
-    while(i < input_string.length()) {
-        if (input_string[i] == '>') {
-            s += '>';
+void output_file(string path, string output_string) {
+    ifstream in(path);
 
-            // check if it is closing then opeing tags or tag value
-            bool flag = false;
-            int k = i + 1;
-            while(k < input_string.length() && input_string[k] != '<') {
-                if(isalnum(input_string[k])) {
-                    flag = true;
-                    break;
-                }
-                k++;
+    ofstream out(path);
+    out << output_string;
+    out.close();
+}
+
+string minify (string xml_input) {
+    string intermediate_string;
+    int i = xml_input.length()- 1;
+    bool text = false;
+
+    while (i >= 0) {
+        if (xml_input[i] == '<' && i != 0) {
+            intermediate_string += '<';
+
+            i = xml_input.find_last_not_of(" \n\r\t", i - 1);
+
+            if (xml_input[i] != '>') {
+                text = true;
             }
+        }
 
-            if (flag) {
-                j = i + 1;
-                while (j < input_string.length() && input_string[j] != '<') {
-                    s += input_string[j];
-                    j++;
-                }
-                i = j;
-                continue;
-            }
-            i = k;
+        if (text && xml_input[i] == '>') {
+            text = false;
         }
         
-        if(input_string[i] == ' ' || input_string[i] == '\t' || input_string[i] == '\n') continue;
-        s += input_string[i];
+        if (text || (xml_input[i] != ' ' && xml_input[i] != '\t' && xml_input[i] != '\n')) {
+            intermediate_string += xml_input[i];
+        }
 
-        cout << i << " " << input_string[i] << "\t";
-        i++;
-        cout << i << "\n";
+        i--;
     }
 
-    // cout << s;
-    cout << input_string.length();
+    i = intermediate_string.length() - 1;
+    string minified_string;
 
+    while (i >= 0) {
+        minified_string += intermediate_string[i];
+
+        if (intermediate_string[i] == '>' && i != 0) {
+            i = intermediate_string.find_last_not_of(" \n\r\t", i - 1) + 1;
+        }
+
+        i--;
+    }
+
+    return minified_string;
+}
+
+int main() {
+    string input_string = read_file("sample.xml");
+    string output = minify(input_string);
+    output_file("output_minified.xml", output);
     return 0;
 }
