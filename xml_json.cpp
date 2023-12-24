@@ -6,12 +6,12 @@ struct mypair {
     string first;
     int second;
 
-    mypair(){
+    mypair () {
         this->first = "";
         this->second = 0;
     }
 
-    mypair(string first, int second){
+    mypair (string first, int second) {
         this->first = first;
         this->second = second;
     }
@@ -20,23 +20,48 @@ struct mypair {
 
 
 
-int get_tag_count(string &input_string, string &tag_name, int start_index, int end_index) {
-    string tag = "<" + tag_name + ">";
-    bool flag = true;
-    int count = 0;
+int get_tag_count (string &input_string, string &tag_name, int start_index) {
+    string opening_tag = "<" + tag_name + ">";
+    string closing_tag = "</" + tag_name + ">";
+    string next_tag;
+    int next_same_opening_tag = 0, next_same_closing_tag = 0;
+    int next_different_opening_tag_start = 0, next_different_opening_tag_end = 0;
+    int count = 1, base = 0;
     
-    while(start_index < end_index && start_index != -1) {
-        count++;
-        if (flag) {
-            flag = false;
-            int next_same_opening_tag = input_string.find(tag, start_index + 1);
-            int my_closing_tag = input_string.find("</" + tag_name + ">", start_index) + 1;
-            int next_opening_tag = input_string.find_first_not_of(" \n\r\t", my_closing_tag + tag.length());
-            if (next_same_opening_tag != -1 && next_same_opening_tag > next_opening_tag) {
-                return count;
-            }
+    while (1) {
+        next_same_opening_tag = input_string.find(opening_tag, start_index);
+        next_same_closing_tag = input_string.find(closing_tag, start_index);
+
+        if (next_same_opening_tag == -1) {
+            return count;
         }
-        start_index = input_string.find(tag, start_index + tag.length());
+
+        if (next_same_opening_tag < next_same_closing_tag) {
+            base++;
+        } else {
+            base--;
+        }
+
+        if (base == 0) {
+            next_different_opening_tag_start = input_string.find_first_of("<", next_same_closing_tag + closing_tag.length());
+            if (next_different_opening_tag_start == -1) {
+                break;
+            }
+
+            next_different_opening_tag_end = input_string.find_first_of(">", next_different_opening_tag_start);
+            next_tag = input_string.substr(next_different_opening_tag_start, next_different_opening_tag_end - next_different_opening_tag_start + 1);
+            if (next_tag != opening_tag) {
+                break;
+            }
+
+            count++;
+        }
+
+        if (base == -1) {
+            return count;
+        }
+
+        start_index = min(next_same_opening_tag , next_same_closing_tag) + 1;
     }
     return count;
 }
@@ -50,7 +75,7 @@ int main() {
     string s = "";
     int i = 0, j;
     string input_string = buffer.str(), tag;
-    int indentation_level = 0;
+    int indentation_level = 0, level = 0;
     bool close_tag = false;
     int count;
     stack<mypair*> tags;
@@ -64,6 +89,7 @@ int main() {
 
             if (input_string[check_for_closing_tag] == '/') {
                 tag = input_string.substr(check_for_closing_tag + 1, close_tag_index - check_for_closing_tag - 1);
+                tag += '<' + to_string(level);
 
                 if (close_tag) {
                     indentation_level--;
@@ -80,17 +106,16 @@ int main() {
                     tags.pop();
                 }
 
+                level--;
                 close_tag = true;
                 i = input_string.find_first_of('<', i + 1); // bypass the closing tag
             
             } else {    // it must be an opening tag
+                level++;
                 tag = input_string.substr(i + 1, close_tag_index - i - 1);
                 int parent_close_tag_index = INT_MAX;
-                if(!tags.empty()) {
-                    parent_close_tag_index = input_string.find("</" + tags.top()->first + ">", i);
-                }
 
-                count = get_tag_count(input_string, tag, close_tag_index, parent_close_tag_index);
+                count = get_tag_count(input_string, tag, i);
 
                 if (!close_tag) {
                     indentation_level++;
@@ -102,20 +127,19 @@ int main() {
                 s += '\n';
                 for(int j = 0; j < indentation_level; j++) s += "    ";
 
-                if (tags.empty() || tag != tags.top()->first) {
+                if (tags.empty() || (tag + '<' + to_string(level)) != tags.top()->first) {
                     s += '"';
                     s += tag;
                     s += "\": ";
                 }
 
-                if(count > 1) {
-                    s+= "[\n";
+                tag += '<' + to_string(level);
+
+                if ((tags.empty() || tag != tags.top()->first || (tag == tags.top()->first && tags.top()->second != count)) && count != 1) {
+                    tags.push(new mypair(tag, count));
+                    s += "[\n";
                     indentation_level++;
                     for(int j = 0; j < indentation_level; j++) s += "    ";
-                }
-
-                if ((tags.empty() || tag != tags.top()->first) && count != 1) {
-                    tags.push(new mypair(tag, count));
                 }
 
                 close_tag = false;
@@ -131,7 +155,7 @@ int main() {
 
             int closing_tag_start_index = input_string.find_first_of('<', i + 1);
             int data_end_index = input_string.find_last_not_of(" \n\r\t", closing_tag_start_index - 1);
-            int first_non_numerical_char_index = input_string.find_first_not_of("0123456789-.", first_after_open_tag);
+            int first_non_numerical_char_index = input_string.find_first_not_of("0123456789-. \n", first_after_open_tag);
 
             if (first_non_numerical_char_index >= closing_tag_start_index) {
                 s += input_string.substr(first_after_open_tag, data_end_index - first_after_open_tag + 1);
@@ -143,7 +167,6 @@ int main() {
 
             i = closing_tag_start_index;
             continue;
-
         }
 
         i = first_after_open_tag;
