@@ -2,24 +2,6 @@
 using namespace std;
 
 
-struct mypair {
-    string first;
-    int second;
-
-    mypair () {
-        this->first = "";
-        this->second = 0;
-    }
-
-    mypair (string first, int second) {
-        this->first = first;
-        this->second = second;
-    }
-        
-};
-
-
-
 int get_tag_count (string &input_string, string &tag_name, int start_index) {
     string opening_tag = "<" + tag_name + ">";
     string closing_tag = "</" + tag_name + ">";
@@ -57,10 +39,6 @@ int get_tag_count (string &input_string, string &tag_name, int start_index) {
             count++;
         }
 
-        if (base == -1) {
-            return count;
-        }
-
         start_index = min(next_same_opening_tag , next_same_closing_tag) + 1;
     }
     return count;
@@ -72,39 +50,38 @@ int main() {
     stringstream buffer;
     buffer << in.rdbuf();
 
-    string s = "";
     int i = 0, j;
-    string input_string = buffer.str(), tag = "", indentation = "";
+    string input_string = buffer.str(), json = "", indentation_type = "    ";
     int level = 0;
     bool close_tag = false;
-    int count;
-    stack<mypair*> tags;
+    stack<string> tag_names;
+    stack<int> tag_count;
 
     
     while(i < input_string.length()) {
-
         if (input_string[i] == '<') {
             int check_for_closing_tag = input_string.find_first_not_of(" \n\r\t", i + 1);
             int close_tag_index = input_string.find('>', i + 1);
-            indentation = "";
+            string indentation = "";
 
             if (input_string[check_for_closing_tag] == '/') {
                 level--;
-                tag = input_string.substr(check_for_closing_tag + 1, close_tag_index - check_for_closing_tag - 1);
-                for(int j = 0; j < level + tags.size(); j++) indentation += "    ";
+                string tag = input_string.substr(check_for_closing_tag + 1, close_tag_index - check_for_closing_tag - 1);
+                for(int j = 0; j < level + tag_names.size(); j++) indentation += indentation_type;
 
                 if (close_tag) {
-                    s += '\n';
-                    s += indentation;
-                    s += "    ";
-                    s += '}';
+                    json += '\n';
+                    json += indentation;
+                    json += indentation_type;
+                    json += '}';
                 }
                 
-                if (!tags.empty() && (tag + to_string(level + 1)) == tags.top()->first && --tags.top()->second == 0) {
-                    tags.pop();
-                    s += '\n';
-                    s += indentation;
-                    s += ']';
+                if (!tag_names.empty() && (tag + to_string(level + 1)) == tag_names.top() && --tag_count.top() == 0) {
+                    tag_names.pop();
+                    tag_count.pop();
+                    json += '\n';
+                    json += indentation;
+                    json += ']';
                 }
 
                 close_tag = true;
@@ -113,37 +90,38 @@ int main() {
             
             } else {    // it must be an opening tag
                 level++;
-                tag = input_string.substr(i + 1, close_tag_index - i - 1);
-                for(int j = 0; j < level + tags.size(); j++) indentation += "    ";
+                string tag = input_string.substr(i + 1, close_tag_index - i - 1);
+                for(int j = 0; j < level + tag_names.size(); j++) indentation += indentation_type;
 
-                count = get_tag_count(input_string, tag, i);
+                int count = get_tag_count(input_string, tag, i);
 
                 if (!close_tag) {
-                    s += '{';
+                    json += '{';
                 } else {
-                    s += ",";
+                    json += ",";
                 }
-                s += '\n';
-                s += indentation;
+                json += '\n';
+                json += indentation;
 
                 close_tag = false;
                 i = close_tag_index;
 
-                if (!tags.empty() && (tag + to_string(level)) == tags.top()->first) {
+                if (!tag_names.empty() && (tag + to_string(level)) == tag_names.top()) {
                     continue;
                 }
 
-                s += '"';
-                s += tag;
-                s += "\": ";
+                json += '"';
+                json += tag;
+                json += "\": ";
 
-                if ( count != 1) {
-                    tags.push(new mypair(tag + to_string(level), count));
-                    s += "[\n";
-                    s += indentation;
-                    s += "    ";
+                if (count != 1) {
+                    tag_names.push(tag + to_string(level));
+                    tag_count.push(count);
+                    json += "[\n";
+                    json += indentation;
+                    json += indentation_type;
                 }
-                
+
                 continue;
             }
         }
@@ -157,11 +135,11 @@ int main() {
             int first_non_numerical_char_index = input_string.find_first_not_of("0123456789-. \n", first_after_open_tag);
 
             if (first_non_numerical_char_index >= closing_tag_start_index) {
-                s += input_string.substr(first_after_open_tag, data_end_index - first_after_open_tag + 1);
+                json += input_string.substr(first_after_open_tag, data_end_index - first_after_open_tag + 1);
             } else {
-                s += '\"';
-                s += input_string.substr(first_after_open_tag, data_end_index - first_after_open_tag + 1);
-                s += '\"';
+                json += '\"';
+                json += input_string.substr(first_after_open_tag, data_end_index - first_after_open_tag + 1);
+                json += '\"';
             }
 
             i = closing_tag_start_index;
@@ -171,10 +149,10 @@ int main() {
         i = first_after_open_tag;
     }
 
-    s += "\n}";
+    json += "\n}";
 
     ofstream out("output_json.json");
-    out << s;
+    out << json;
     out.close();
 
     return 0;
