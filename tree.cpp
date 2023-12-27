@@ -58,7 +58,7 @@ class Node {
 };
 
 
-void create_tree (string xml_input, Node* root) {
+void create_tree (string& xml_input, Node* root) {
     int start = xml_input.find('>');
     root->setName(xml_input.substr(1, start - 1));
     int i = start + 1;
@@ -164,17 +164,23 @@ void printJSON (Node* root, string& json_output, int level, bool is_array) {
     }
 }
 
+string toJSON (string& xml_input) {
+    string minified_string = xmlParser::minify(xml_input);
 
-int main() {
-    string input_string = read_file("sample.xml");
-    string minified_string = xmlParser::minify(input_string);
-
-    Node* root = new Node();
+    Node *root = new Node();
     create_tree(minified_string, root);
 
     string json_string = "{\n";
     printJSON(root, json_string, 1, false);
     json_string += "\n}";
+    return json_string;
+}
+
+
+int main() {
+    string input_string = read_file("sample.xml");
+
+    string json_string = toJSON(input_string);
 
     output_file("tree_test.json", json_string);
 
