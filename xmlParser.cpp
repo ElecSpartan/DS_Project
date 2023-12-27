@@ -2,7 +2,23 @@
 
 
 std::string xmlParser::minifyJson(std::string json_input) {
-    return std::string();
+    std::string minified_json;
+    int i = 0;
+    bool text = false;
+
+    while (i < json_input.length()) {
+        if (json_input[i] == '"') {
+            text = !text;
+        }
+        
+        if (text || (json_input[i] != ' ' && json_input[i] != '\t' && json_input[i] != '\n')) {
+            minified_json += json_input[i];
+        }
+
+        i++;
+    }
+
+    return minified_json;
 }
 
 std::string xmlParser::verify(std::string xml_input) {
