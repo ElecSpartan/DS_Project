@@ -105,21 +105,29 @@ void printTree (Node* root, int level) {
 }
 
 
-void printJSON (Node* root, int level, bool is_array) {
+void printJSON (Node* root, string& json_output, int level, bool is_array) {
     string indentation = "    ", indent = "";
     for (int i = 0; i < level; i++) indent += indentation;
     
     int children_count = root->getChildren().size();
 
     if (children_count == 0) {
-        cout << '"' << root->getName() << '"';
+        json_output += '"';
+        json_output += root->getName();
+        json_output += '"';
         return;
     }
 
-    cout << indent;
+    json_output += indent;
 
     if (!is_array) {
-        cout << '"' << root->getName() << "\": ";
+        json_output += '"';
+        json_output += root->getName();
+        json_output += "\": ";
+    }
+
+    if (root->getChildren()[0]->getChildren().size() != 0) {
+        json_output += "{\n";
     }
 
     bool are_same_children = false;
@@ -127,27 +135,32 @@ void printJSON (Node* root, int level, bool is_array) {
         are_same_children = true;
     }
 
-    if (children_count != 1) {
-        cout << "{\n";
-    }
-
     if (are_same_children) {
-        cout << indent << indentation << '"' << root->getChildren()[0]->getName() << "\": [\n";
+        json_output += indent;
+        json_output += indentation;
+        json_output += '"';
+        json_output += root->getChildren()[0]->getName();
+        json_output += "\": [\n";
     }
 
     for (int j = 0; j < children_count; j++) {
-        printJSON(root->getChildren()[j], level + 1 + are_same_children, are_same_children);
+        printJSON(root->getChildren()[j], json_output, level + 1 + are_same_children, are_same_children);
         if (j < children_count - 1) {
-            cout << ",\n";
+            json_output += ",\n";
         }
     }
 
     if (are_same_children) {
-        cout << "\n" << indent << indentation << "]";
+        json_output += '\n';
+        json_output += indent;
+        json_output += indentation;
+        json_output += ']';
     }
 
-    if (children_count != 1) {
-        cout << "\n" << indent << "}";
+    if (root->getChildren()[0]->getChildren().size() != 0) {
+        json_output += '\n';
+        json_output += indent;
+        json_output += '}';
     }
 }
 
@@ -156,16 +169,14 @@ int main() {
     string input_string = read_file("sample.xml");
     string minified_string = xmlParser::minify(input_string);
 
-
     Node* root = new Node();
     create_tree(minified_string, root);
 
-    // cout << input_string;
-    cout << "{\n";
-    printJSON(root, 1, false);
-    cout << "\n}";
+    string json_string = "{\n";
+    printJSON(root, json_string, 1, false);
+    json_string += "\n}";
 
-    output_file("tree_test.json", "");
+    output_file("tree_test.json", json_string);
 
     return 0;
 }
