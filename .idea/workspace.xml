@@ -22,6 +22,13 @@
   <component name="ChangeListManager">
     <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added code for correction&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/Error_detection_and_correction.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/Error_detection_and_correction.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/DS_Project.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/DS_Project.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +118,13 @@
       <workItem from="1702640386947" duration="20337000" />
       <workItem from="1702666354710" duration="821000" />
       <workItem from="1702670488833" duration="5761000" />
-      <workItem from="1702676597257" duration="1000" />
+      <workItem from="1702676597257" duration="82000" />
+      <workItem from="1702685391174" duration="638000" />
+      <workItem from="1702729777229" duration="1380000" />
+      <workItem from="1702932132707" duration="1384000" />
+      <workItem from="1702933892635" duration="2309000" />
+      <workItem from="1702996443970" duration="16000" />
+      <workItem from="1703684272523" duration="6000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Added cpp files&quot;">
       <created>1702216220857</created>
@@ -323,7 +336,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702676266597</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="&quot;Added code for correction&quot;">
+      <created>1702676661730</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1702676661730</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
