@@ -212,6 +212,7 @@ string correct_xml(string &xml_file) {
 
     return add_new_lines(valid_file);
 }
-vector<pair<int,bool>> get_errors() {
+vector<pair<int,bool>> get_errors(string &xml_file) {
+    string s = correct_xml(xml_file); // dummy
     return errors;
 }
