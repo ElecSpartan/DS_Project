@@ -59,9 +59,7 @@ class Node {
 
 
 void create_tree (string& xml_input, Node* root) {
-    int start = xml_input.find('>');
-    root->setName(xml_input.substr(1, start - 1));
-    int i = start + 1;
+    int i = 0, start;
     while (i < xml_input.length()) {
         if (xml_input[i] != '<') {
             start = xml_input.find('<', i);
@@ -86,17 +84,15 @@ void create_tree (string& xml_input, Node* root) {
 
 
 void printTree (Node* root, int level) {
-    for (int i = 0; i < level; i++) cout << "    ";
+    for (int i = 0; i < level - 1; i++) cout << "    ";
 
     if ((root->getChildren()).size() == 0) {
         cout << "Parent = " << root->getParent()->getName() << " / Value = " << root->getName() << '\n';
         return;
     }
 
-    if (root->getParent() == nullptr) {
-        cout << "Parent = ROOT Children:\n";
-    } else {
-        cout << "Parent = " << root->getParent()->getName() << ":\n";
+    if (root->getParent() != nullptr) {
+        cout << "Parent = " << (root->getParent()->getName() == ""? "ROOT" : root->getParent()->getName()) << ":\n";
     }
 
     for (auto &it : root->getChildren()) {
@@ -108,8 +104,13 @@ void printTree (Node* root, int level) {
 void printJSON (Node* root, string& json_output, int level, bool is_array) {
     string indentation = "    ", indent = "";
     for (int i = 0; i < level; i++) indent += indentation;
-    
+
     int children_count = root->getChildren().size();
+
+    bool are_same_children = false;
+    if (children_count > 1 && root->getChildren()[0]->getName() == root->getChildren()[1]->getName()) {
+        are_same_children = true;
+    }
 
     if (children_count == 0) {
         json_output += '"';
@@ -120,19 +121,14 @@ void printJSON (Node* root, string& json_output, int level, bool is_array) {
 
     json_output += indent;
 
-    if (!is_array) {
+    if (!is_array && root->getName() != "") {
         json_output += '"';
         json_output += root->getName();
         json_output += "\": ";
     }
 
-    if (root->getChildren()[0]->getChildren().size() != 0) {
+    if (root->getChildren()[0]->getChildren().size() != 0 && root->getName() != "") {
         json_output += "{\n";
-    }
-
-    bool are_same_children = false;
-    if (children_count > 1 && root->getChildren()[0]->getName() == root->getChildren()[1]->getName()) {
-        are_same_children = true;
     }
 
     if (are_same_children) {
@@ -157,7 +153,7 @@ void printJSON (Node* root, string& json_output, int level, bool is_array) {
         json_output += ']';
     }
 
-    if (root->getChildren()[0]->getChildren().size() != 0) {
+    if (root->getChildren()[0]->getChildren().size() != 0 && root->getName() != "") {
         json_output += '\n';
         json_output += indent;
         json_output += '}';
@@ -171,7 +167,7 @@ string toJSON (string& xml_input) {
     create_tree(minified_string, root);
 
     string json_string = "{\n";
-    printJSON(root, json_string, 1, false);
+    printJSON(root, json_string, 0, false);
     json_string += "\n}";
     return json_string;
 }
@@ -179,9 +175,7 @@ string toJSON (string& xml_input) {
 
 int main() {
     string input_string = read_file("sample.xml");
-
     string json_string = toJSON(input_string);
-
     output_file("tree_test.json", json_string);
 
     return 0;
