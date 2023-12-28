@@ -13,8 +13,6 @@ string read_file (string path) {
 }
 
 void output_file (string path, string output_string) {
-    ifstream in(path);
-
     ofstream out(path);
     out << output_string;
     out.close();
@@ -28,7 +26,7 @@ class Node {
 
     public:
         Node () {
-            parent = nullptr;
+
         }
 
         Node (string name, Node* parent) {
@@ -89,14 +87,14 @@ void printTree (Node* root, int level) {
     for (int i = 0; i < level; i++) cout << "    ";
 
     if ((root->getChildren()).size() == 0) {
-        cout << "Parent = " << root->getParent()->getName() << " / Value = " << root->getName() << '\n';
+        cout << "Parent = " << root->getParent()->getName() << " Value = " << root->getName() << '\n';
         return;
     }
 
     if (root->getParent() == nullptr) {
         cout << "Parent = ROOT Children:\n";
     } else {
-        cout << "Parent = " << root->getParent()->getName() << ":\n";
+        cout << "Parent = " << root->getParent()->getName() << " Children:\n";
     }
 
     for (auto &it : root->getChildren()) {
