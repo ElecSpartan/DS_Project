@@ -28,6 +28,20 @@ private slots:
 
     void on_CorrectFile_clicked();
 
+    void on_updatechanges_clicked();
+
+    void on_Prettify_clicked();
+
+    void on_toJson_clicked();
+
+    void on_Verify_clicked();
+
+    void on_Compress_clicked();
+
+    void on_Decompress_clicked();
+
+    void on_Graphs_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
