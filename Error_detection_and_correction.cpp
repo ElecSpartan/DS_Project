@@ -91,12 +91,16 @@ vector<string> values_correction(vector<string>&file) {
     return v;
 }
 string correct_xml(string &xml_file) {
-    pair<vector<string>,int> p =  divide_string_for_correction(xml_file);
+    pair<vector<string>, int> p = divide_string_for_correction(xml_file);
     vector<string> file = p.first;
     bool push_last_line = false;
 
+    bool must_push_opening = false;
+    if (file.size() >= 3)
+        must_push_opening = !is_tag(file[1]) && is_open_tag(file[2]) && !temp_is_dummy(file[1]);
+
     if (!is_the_same(file[0], file[file.size() - 1])) {
-        if (is_open_tag(file[0])) {
+        if (is_open_tag(file[0]) && !must_push_opening) {
             file.push_back(get_closed_from_open(file[0]));
             push_last_line = true;
         } else {
@@ -104,6 +108,19 @@ string correct_xml(string &xml_file) {
             errors.emplace_back(1, false);
         }
     }
+    else {
+        if (file.size() >= 3) {
+            if (!is_tag(file[1]) && is_open_tag(file[2]) && !temp_is_dummy(file[file.size()-2])) {
+                file.insert(file.begin(), get_open_from_closed(file[file.size() - 1]));
+                errors.emplace_back(1, false);
+            } else if (!is_tag(file[file.size() - 2]) && is_closed_tag(file[file.size() - 3]) && !temp_is_dummy(file[file.size()-2])) {
+                file.push_back(get_closed_from_open(file[0]));
+                push_last_line = true;
+            }
+        }
+    }
+
+
     vector<string> valid_file;
     valid_file.push_back(file[0]);
     file = values_correction(file);
