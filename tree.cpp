@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "xmlParser.h"
+#include "xmlParser.cpp"
 using namespace std;
 
 string read_file (string path) {
