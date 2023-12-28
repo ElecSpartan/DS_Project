@@ -43,94 +43,6 @@ int xmlParser::getTagCount (std::string &input_string, std::string &tag_name, in
     return count;
 }
 
-void xmlParser::createTree(std::string& xml_input, Node* root) {
-    int i = 0, start;
-    while (i < xml_input.length()) {
-        if (xml_input[i] != '<') {
-            start = xml_input.find('<', i);
-            root->appendChild(new Node(xml_input.substr(i, start - i), root));
-            i = start;
-        }
-
-        if (xml_input[i + 1] == '/') {
-            root = root->getParent();
-            i = xml_input.find('>', i) + 1;
-            continue;
-        }
-
-        int end = xml_input.find('>', i);
-        std::string tag_name = xml_input.substr(i + 1, end - i - 1);
-        Node *node = new Node(tag_name, root);
-        root->appendChild(node);
-        root = node;
-        i = end + 1;
-    }
-}
-
-void xmlParser::createJsonFromTree(Node* root, std::string& json_output, int level, bool is_array) {
-    std::string indentation = "    ", indent = "";
-    for (int i = 0; i < level; i++) indent += indentation;
-
-    int children_count = root->getChildren().size();
-
-    bool are_same_children = false;
-    if (children_count > 1 && root->getChildren()[0]->getName() == root->getChildren()[1]->getName()) {
-        are_same_children = true;
-    }
-
-    if (children_count == 0) {
-        int first_non_numeric_char = root->getName().find_first_not_of("0123456789");
-        if (!root->getName().empty() && (first_non_numeric_char == -1 || (first_non_numeric_char == 0 && root->getName()[0] == '-'))) {
-            json_output += root->getName();
-            return;
-        }
-        json_output += '"';
-        json_output += root->getName();
-        json_output += '"';
-        return;
-    }
-
-    json_output += indent;
-
-    if (!is_array && root->getName() != "") {
-        json_output += '"';
-        json_output += root->getName();
-        json_output += "\": ";
-    }
-
-    if (root->getChildren()[0]->getChildren().size() != 0 && root->getName() != "") {
-        json_output += "{\n";
-    }
-
-    if (are_same_children) {
-        json_output += indent;
-        json_output += indentation;
-        json_output += '"';
-        json_output += root->getChildren()[0]->getName();
-        json_output += "\": [\n";
-    }
-
-    for (int j = 0; j < children_count; j++) {
-        xmlParser::createJsonFromTree(root->getChildren()[j], json_output, level + 1 + are_same_children, are_same_children);
-        if (j < children_count - 1) {
-            json_output += ",\n";
-        }
-    }
-
-    if (are_same_children) {
-        json_output += '\n';
-        json_output += indent;
-        json_output += indentation;
-        json_output += ']';
-    }
-
-    if (root->getChildren()[0]->getChildren().size() != 0 && root->getName() != "") {
-        json_output += '\n';
-        json_output += indent;
-        json_output += '}';
-    }
-}
-
 std::string xmlParser::minifyJson(std::string json_input) {
     std::string minified_json;
     int i = 0;
@@ -355,16 +267,8 @@ std::string xmlParser::toJsonByStrings(std::string &xml_input) {
     return json_output;
 }
 
-std::string xmlParser::toJsonByTrees(std::string& xml_input) {
-    std::string minified_string = xmlParser::minify(xml_input);
-
-    Node *root = new Node();
-    createTree(minified_string, root);
-
-    std::string json_string = "{\n";
-    xmlParser::createJsonFromTree(root, json_string, 0, false);
-    json_string += "\n}";
-    return json_string;
+std::string xmlParser::toJson(std::string xml_input) {
+    return std::string();
 }
 
 std::string xmlParser::compress(std::string input) {
