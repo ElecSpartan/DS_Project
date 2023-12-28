@@ -1,6 +1,5 @@
 #pragma once
-
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <queue>
 #include <fstream>
@@ -8,29 +7,39 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
 
-
-struct HuffmanNode {
+class Node {
     int value;
-    int frequency;
-    HuffmanNode* left;
-    HuffmanNode* right;
+    int freq;
+    Node* left;
+    Node* right;
 
-    HuffmanNode(int val, int freq);
+public:
+    Node(int val, int freq);
+    int getFrequency();
+    Node* getLeft();
+    Node* getRight();
+    void setLeft(Node *x);
+    void setRight(Node *x);
+    int getValue();
 };
-struct CompareNodes {
-    bool operator()(const HuffmanNode* a, const HuffmanNode* b) const;
+
+
+struct CompareTwoNodes {
+    bool operator()(Node* a, Node* b);
 };
-using HuffmanPriorityQueue = std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, CompareNodes>;
-HuffmanNode* buildHuffmanTree(const std::unordered_map<char, int>& frequencies);
-void serializeHuffmanTree(HuffmanNode* root, std::ofstream& outFile);
-HuffmanNode* deserializeHuffmanTree(std::ifstream& inFile);
-void buildHuffmanCodes(HuffmanNode* root, const std::string& code, std::unordered_map<char, std::string>& codes);
 
 
-std::unordered_map<char, int> calculateFrequencies(const std::string& input);
-std::string compress(const std::string& input, const std::string& compressedPath, const std::string& compressedFilename);
+Node* BuildTree(map<char, int>& freqs);
+void serializeTree(Node* root, ofstream& outFile);
+Node* deserializeTree(ifstream& inFile);
+void buildCodes(Node* root, string code, map<char, string>& codes);
 
 
-std::string decompress(const std::string& compressedFilename);
+map<char, int> calculateFreqs(const string& input);
+string compress(string& input, string path);
+
+
+string decompress(string path);
 

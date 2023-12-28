@@ -1,119 +1,141 @@
 #include "huffman.h"
-using namespace std;
 
-HuffmanNode::HuffmanNode(int val, int freq) : value(val), frequency(freq), left(nullptr), right(nullptr) {}
-bool CompareNodes::operator()(const HuffmanNode* a, const HuffmanNode* b) const {
-    return a->frequency > b->frequency;
+
+// Node class functions implementation
+Node::Node(int val, int freqq) : value(val), freq(freqq), left(nullptr), right(nullptr) {}
+int Node::getFrequency() {
+    return freq;
 }
-HuffmanNode* buildHuffmanTree(const std::unordered_map<char, int>& frequencies) {
-    HuffmanPriorityQueue pq;
+Node* Node::getLeft() {
+    return left;
+}
+Node* Node::getRight() {
+    return right;
+}
+void Node::setLeft(Node *x) {
+    left = x;
+}
+void Node::setRight(Node *x) {
+    right = x;
+}
+int Node::getValue() {
+    return value;
+}
 
-    for (auto& pair : frequencies) {
-        pq.push(new HuffmanNode(pair.first, pair.second));
+
+// CompareTwoNodes
+bool CompareTwoNodes::operator()(Node* a, Node* b) {
+    return a->getFrequency() > b->getFrequency();
+}
+
+
+//Huffman Tree
+Node* BuildTree(map<char, int>& freqs) {
+    priority_queue<Node*, vector<Node*>, CompareTwoNodes> pq;
+
+    for (auto& p : freqs) {
+        pq.push(new Node(p.first, p.second));
     }
 
     while (pq.size() > 1) {
-        HuffmanNode* left = pq.top();
+        Node *left = pq.top();
         pq.pop();
-        HuffmanNode* right = pq.top();
+        Node *right = pq.top();
         pq.pop();
 
-        HuffmanNode* newNode = new HuffmanNode(0, left->frequency + right->frequency);
-        newNode->left = left;
-        newNode->right = right;
+        Node *newNode = new Node(0, left->getFrequency() + right->getFrequency());
+        newNode->setLeft(left);
+        newNode->setRight(right);
 
         pq.push(newNode);
     }
 
     return pq.top();
 }
-void serializeHuffmanTree(HuffmanNode* root, std::ofstream& outFile) {
+void serializeTree(Node* root, ofstream& outputFile) {
     if (!root)
         return;
 
-    if (root->left || root->right) {
-        outFile.put('\1');  // Non-leaf node marker
-        outFile.write(reinterpret_cast<const char*>(&root->value), sizeof(char));
-        outFile.write(reinterpret_cast<const char*>(&root->frequency), sizeof(int));
+    if (root->getLeft() || root->getRight()) {
+        outputFile.put('\1');
+        outputFile.write((char *) (root->getValue()), sizeof(char));
+        outputFile.write((char *) (root->getFrequency()), sizeof(int));
 
-        serializeHuffmanTree(root->left, outFile);
-        serializeHuffmanTree(root->right, outFile);
-    }
-    else {
-        outFile.put('\0');  // Leaf node marker
-        outFile.write(reinterpret_cast<const char*>(&root->value), sizeof(char));
+        serializeTree(root->getLeft(), outputFile);
+        serializeTree(root->getRight(), outputFile);
+    } else {
+        outputFile.put('\0');
+        outputFile.write((char *) (root->getValue()), sizeof(char));
     }
 }
-HuffmanNode* deserializeHuffmanTree(std::ifstream& inFile) {
-    char marker;
-    inFile.get(marker);
+Node* deserializeTree(ifstream& inputFile) {
+    char m;
+    inputFile.get(m);
 
-    if (marker == '\1') {
-        int value, frequency;
-        inFile.read(reinterpret_cast<char*>(&value), sizeof(char));
-        inFile.read(reinterpret_cast<char*>(&frequency), sizeof(int));
+    if (m == '\1') {
+        int value, freq;
+        inputFile.read((char *)(&value), sizeof(char));
+        inputFile.read((char *)(&freq), sizeof(int));
 
-        HuffmanNode* newNode = new HuffmanNode(value, frequency);
-        newNode->left = deserializeHuffmanTree(inFile);
-        newNode->right = deserializeHuffmanTree(inFile);
+        Node* newNode = new Node(value, freq);
+        newNode->setLeft( deserializeTree(inputFile));
+        newNode->setRight( deserializeTree(inputFile));
 
         return newNode;
     }
-    else if (marker == '\0') {
+    else if (m == '\0') {
         int value;
-        inFile.read(reinterpret_cast<char*>(&value), sizeof(char));
+        inputFile.read(reinterpret_cast<char*>(&value), sizeof(char));
 
-        return new HuffmanNode(value, 0);
+        return new Node(value, 0);
     }
     else {
-        // Handle error or unexpected marker
         return nullptr;
     }
 }
-void buildHuffmanCodes(HuffmanNode* root, const std::string& code, std::unordered_map<char, std::string>& codes) {
+void buildCodes(Node* root, string code, map<char, string>& codes) {
     if (!root)
         return;
 
-    if (!root->left && !root->right) {
-        codes[root->value] = code;
+    if (!root->getLeft() && !root->getRight()) {
+        codes[root->getValue()] = code;
         return;
     }
 
-    buildHuffmanCodes(root->left, code + "0", codes);
-    buildHuffmanCodes(root->right, code + "1", codes);
+    buildCodes(root->getLeft(), code + "0", codes);
+    buildCodes(root->getRight(), code + "1", codes);
 }
 
-std::unordered_map<char, int> calculateFrequencies(const std::string& input) {
-    std::unordered_map<char, int> frequencies;
-    for (char c : input) {
-        frequencies[c]++;
+
+
+
+map<char, int> calculateFreqs(const string& input) {
+    map<char, int> freqs;
+    for (char c: input) {
+        freqs[c]++;
     }
-    return frequencies;
+    return freqs;
 }
-std::string compress(const std::string& input, const std::string& compressedPath, const std::string& compressedFilename) {
-    std::unordered_map<char, int> frequencies = calculateFrequencies(input);
-    HuffmanNode* root = buildHuffmanTree(frequencies);
+string compress(string& input, string path) {
+    map<char, int> freqs = calculateFreqs(input);
+    Node *root = BuildTree(freqs);
 
-    // Build the full path to the compressed file
-    std::string fullCompressedPath = compressedPath + "\\" + compressedFilename+".bin";
+    ofstream compressedFile(path, ios::binary);
 
-    // Open the compressed file for writing in binary mode
-    std::ofstream compressedFile(fullCompressedPath, std::ios::binary);
 
-    // Serialize Huffman tree to compressed file
-    serializeHuffmanTree(root, compressedFile);
+    serializeTree(root, compressedFile);
 
-    // Compress input and write to file
-    std::unordered_map<char, std::string> codes;
-    buildHuffmanCodes(root, "", codes);
 
-    std::string compressed;
-    for (char c : input) {
+    map<char, string> codes;
+    buildCodes(root, "", codes);
+
+    string compressed;
+    for (char c: input) {
         compressed += codes[c];
     }
 
-    // Convert the binary string to bytes and write to the compressed file
-    std::bitset<8> bits;
+
+    bitset<8> bits;
     for (int i = 0; i < compressed.size(); ++i) {
         bits[7 - (i % 8)] = compressed[i] == '1';
         if (i % 8 == 7 || i == compressed.size() - 1) {
@@ -126,24 +148,24 @@ std::string compress(const std::string& input, const std::string& compressedPath
     return compressed;
 }
 
-string decompress(const string& compressedFilename) {
-    ifstream compressedFile(compressedFilename, ios::binary);
-    HuffmanNode* root;
+string decompress(string path) {
+    ifstream compressedFile(path, ios::binary);
+    Node* root;
     // Deserialize Huffman tree from compressed file
-    root = deserializeHuffmanTree(compressedFile);
+    root = deserializeTree(compressedFile);
 
     // Decompress the remaining data
-    std::string compressedBits;
+    string compressedBits;
     char c;
     while (compressedFile.get(c)) {
-        std::bitset<8> bits(c);
+        bitset<8> bits(c);
         compressedBits += bits.to_string();
     }
 
     compressedFile.close();
 
-    std::string decompressed;
-    HuffmanNode* currentNode = root;
+    string decompressed;
+    Node* currentNode = root;
 
     for (char bit : compressedBits) {
         if (bit == '0') {
