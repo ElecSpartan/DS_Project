@@ -56,16 +56,19 @@ void serializeTree(Node* root, ofstream& outputFile) {
     if (!root)
         return;
 
+    int value = root->getValue();
+    int freq = root->getFrequency();
     if (root->getLeft() || root->getRight()) {
         outputFile.put('\1');
-        outputFile.write((char *) (root->getValue()), sizeof(char));
-        outputFile.write((char *) (root->getFrequency()), sizeof(int));
+
+        outputFile.write(reinterpret_cast<char *>(&value), sizeof(char));
+        outputFile.write(reinterpret_cast<char *>(&freq), sizeof(int));
 
         serializeTree(root->getLeft(), outputFile);
         serializeTree(root->getRight(), outputFile);
     } else {
         outputFile.put('\0');
-        outputFile.write((char *) (root->getValue()), sizeof(char));
+        outputFile.write(reinterpret_cast<char *>(&value), sizeof(char));
     }
 }
 Node* deserializeTree(ifstream& inputFile) {
@@ -74,8 +77,8 @@ Node* deserializeTree(ifstream& inputFile) {
 
     if (m == '\1') {
         int value, freq;
-        inputFile.read((char *)(&value), sizeof(char));
-        inputFile.read((char *)(&freq), sizeof(int));
+        inputFile.read(reinterpret_cast<char*>(&value), sizeof(char));
+        inputFile.read(reinterpret_cast<char*>(&freq), sizeof(int));
 
         Node* newNode = new Node(value, freq);
         newNode->setLeft( deserializeTree(inputFile));
@@ -133,6 +136,7 @@ string compress(string& input, string path) {
     for (char c: input) {
         compressed += codes[c];
     }
+    cout<<compressed;
 
 
     bitset<8> bits;
@@ -149,35 +153,33 @@ string compress(string& input, string path) {
 }
 
 string decompress(string path) {
-    ifstream compressedFile(path, ios::binary);
-    Node* root;
-    // Deserialize Huffman tree from compressed file
-    root = deserializeTree(compressedFile);
+    ifstream compressed(path, ios::binary);
+    Node *root;
 
-    // Decompress the remaining data
+    root = deserializeTree(compressed);
+
     string compressedBits;
     char c;
-    while (compressedFile.get(c)) {
+    while (compressed.get(c)) {
         bitset<8> bits(c);
         compressedBits += bits.to_string();
     }
 
-    compressedFile.close();
+    compressed.close();
 
     string decompressed;
-    Node* currentNode = root;
+    Node *Node = root;
 
-    for (char bit : compressedBits) {
+    for (char bit: compressedBits) {
         if (bit == '0') {
-            currentNode = currentNode->left;
-        }
-        else {
-            currentNode = currentNode->right;
+            Node = Node->getLeft();
+        } else {
+            Node = Node->getRight();
         }
 
-        if (!currentNode->left && !currentNode->right) {
-            decompressed += static_cast<char>(currentNode->value);
-            currentNode = root;
+        if (!Node->getLeft() && !Node->getRight()) {
+            decompressed += (char) (Node->getValue());
+            Node = root;
         }
     }
 
