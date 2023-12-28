@@ -3,6 +3,8 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QTextStream>
+#include "xmlParser.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -51,5 +53,21 @@ void MainWindow::on_InputFile_clicked()
 void MainWindow::on_Testing_clicked()
 {
     ui->Result->setPlainText(ui->InputText->toPlainText());
+}
+
+
+void MainWindow::on_minify_clicked()
+{
+    std::string input = ui->InputText->toPlainText().toStdString();
+    std::string result = xmlParser::minify(input);
+    ui->Result->setPlainText(QString::fromStdString(result));
+}
+
+
+void MainWindow::on_CorrectFile_clicked()
+{
+    std::string input = ui->InputText->toPlainText().toStdString();
+    std::string result = xmlParser::correct_xml(input);
+    ui->Result->setPlainText(QString::fromStdString(result));
 }
 

@@ -36,7 +36,7 @@
           <property name="verticalSpacing">
            <number>5</number>
           </property>
-          <item row="0" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
+          <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
            <widget class="QLabel" name="label">
             <property name="minimumSize">
              <size>
@@ -55,7 +55,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1" alignment="Qt::AlignLeft|Qt::AlignTop">
+          <item row="0" column="1" alignment="Qt::AlignHCenter|Qt::AlignTop">
            <widget class="QLabel" name="label_2">
             <property name="minimumSize">
              <size>
@@ -77,7 +77,10 @@
          </layout>
         </item>
         <item row="1" column="0">
-         <layout class="QGridLayout" name="gridLayout">
+         <layout class="QGridLayout" name="gridLayout" columnminimumwidth="0,0">
+          <property name="horizontalSpacing">
+           <number>10</number>
+          </property>
           <item row="0" column="0">
            <widget class="QTextEdit" name="InputText">
             <property name="minimumSize">
@@ -146,7 +149,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QPushButton" name="Testing">
+         <widget class="QPushButton" name="CorrectFile">
           <property name="minimumSize">
            <size>
             <width>160</width>
@@ -154,7 +157,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Testing</string>
+           <string>Correct</string>
           </property>
          </widget>
         </item>
@@ -191,7 +194,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="minify">
           <property name="minimumSize">
            <size>
             <width>160</width>
@@ -199,7 +202,7 @@
            </size>
           </property>
           <property name="text">
-           <string>PushButton</string>
+           <string>Minify</string>
           </property>
          </widget>
         </item>

@@ -24,6 +24,10 @@ private slots:
 
     void on_Testing_clicked();
 
+    void on_minify_clicked();
+
+    void on_CorrectFile_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
