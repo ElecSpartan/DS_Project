@@ -11,4 +11,5 @@ string trim(string&x);
 vector<string> divide_string_for_graph(string &file);
 pair<vector<string>,int>  divide_string_for_correction(string &file);
 Graph parse(string &file);
+void visualize_graph(Graph &g);
 #endif

@@ -206,3 +206,31 @@ Graph parse(string &file) {
     }
     return g;
 }
+void visualize_graph(Graph &g) {
+    string s = "";
+    s += "digraph test{\n";
+
+    map<int, User> users = g.get_users();
+    map<int, vector<int>> followersOfUser = g.get_followersOfUsers();
+    for (auto x: users) {
+        s+= "\"";
+        s += x.second.get_name();
+        s+="\"";
+        s += "  ->  { ";
+        int num = 0;
+        for (auto id: followersOfUser[x.first]) {
+            s += "\"";
+            s += users[id].get_name();
+            s += "\"";
+            if (num != followersOfUser[x.first].size() - 1)
+                s += " ";
+
+            num++;
+        }
+        s += " }\n";
+    }
+
+    s += "\n}";
+    write_to_file("E:\\College\\Data structures\\Project\\DS_Project\\graph.dot", s);
+    system("cd .. && C:\\\"Program Files\"\\Graphviz\\bin\\dot -Tpng -O graph.dot");
+}

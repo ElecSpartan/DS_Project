@@ -1,11 +1,6 @@
 #include <bits/stdc++.h>
 #include "Graph.h"
 
-Graph::Graph() {
-    users.resize(2e5 + 5);
-    followersOfUser.resize(2e5 + 5);
-    freq.resize(2e5+5,0);
-}
 void Graph::add_user(int userId, User& user) {
     users[userId] = user;
 }
@@ -17,25 +12,28 @@ void Graph::add_follower(int userId, int followerId) {
 
 vector<User> Graph::most_connections() {
     vector<User> ret;
-    int mx = *max_element(freq.begin(),freq.end());
-    for(int i=1;i<=2e5+5;i++){
-        if(freq[i]==mx)
-            ret.push_back(users[i]);
+
+    int mx = -1;
+    for (auto x: freq)
+        mx = max(mx, x.second);
+
+    for (auto x: freq) {
+        if (x.second == mx)
+            ret.push_back(users[x.first]);
     }
     return ret;
 }
 
-
 vector<User> Graph::most_followers() {
     int mx = -1;
     vector<User> ret;
-    for(auto x : users){
-        if(followersOfUser[x.get_user_id()].size() > mx)
-            mx = followersOfUser[x.get_user_id()].size();
+    for (auto &x: users) {
+        if (followersOfUser[x.first].size() > mx)
+            mx = followersOfUser[x.first].size();
     }
-    for(auto x : users){
-        if(followersOfUser[x.get_user_id()].size() == mx)
-            ret.push_back(x);
+    for (auto &x: users) {
+        if (followersOfUser[x.first].size() == mx)
+            ret.push_back(x.second);
     }
     return ret;
 }
@@ -60,8 +58,6 @@ vector<User> Graph::user_suggestion(User user){
     return ret;
 }
 
-
-
 vector<User> Graph::mutual_followers(User user1 , User user2){
     vector<User> ret;
     sort(followersOfUser[user1.get_user_id()].begin(),followersOfUser[user1.get_user_id()].end());
@@ -79,4 +75,12 @@ vector<User> Graph::mutual_followers(User user1 , User user2){
             p1++;
     }
     return ret;
+}
+
+map<int,User> Graph::get_users() {
+    return users;
+}
+
+map<int,vector<int>> Graph::get_followersOfUsers() {
+    return followersOfUser;
 }
