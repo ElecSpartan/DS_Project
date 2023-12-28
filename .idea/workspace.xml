@@ -118,7 +118,7 @@
       <workItem from="1703684272523" duration="85000" />
       <workItem from="1703684713124" duration="667000" />
       <workItem from="1703685509200" duration="26000" />
-      <workItem from="1703726809754" duration="5702000" />
+      <workItem from="1703726809754" duration="5743000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Added cpp files&quot;">
       <created>1702216220857</created>
@@ -365,7 +365,14 @@
       <option name="project" value="LOCAL" />
       <updated>1703732526199</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="&quot;Added code for correction&quot;">
+      <created>1703732602658</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1703732602658</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -387,16 +394,5 @@
     <MESSAGE value="&quot;Added some code for parsing&quot;" />
     <MESSAGE value="&quot;Added code for correction&quot;" />
     <option name="LAST_COMMIT_MESSAGE" value="&quot;Added code for correction&quot;" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Error_detection_and_correction.cpp</url>
-          <line>140</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

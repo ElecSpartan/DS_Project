@@ -9,7 +9,7 @@ int main() {
         if (x.second)
             cout << "closing tag after line ";
         else
-            cout << "opening tag before line ";
+            cout << "opening tag in line ";
 
         cout << x.first << '\n';
     }
