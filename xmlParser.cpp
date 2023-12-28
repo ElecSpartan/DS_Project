@@ -506,7 +506,7 @@ std::string xmlParser::prettify(std::string& xml_input) {
     return prettified_xml;
 }
 
-// butt
+// buttl
 std::string xmlParser::toJsonByStrings(std::string& xml_input) {
     int i = 0, j;
     std::string json_output = "", indentation_type = "    ";
