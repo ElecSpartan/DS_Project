@@ -74,8 +74,8 @@ int main() {
 
     string s = "";
     int i = 0, j;
-    string input_string = buffer.str(), tag = "", indentation = "";
-    int level = 0;
+    string input_string = buffer.str(), tag;
+    int indentation_level = 0, level = 0;
     bool close_tag = false;
     int count;
     stack<mypair*> tags;
@@ -86,66 +86,67 @@ int main() {
         if (input_string[i] == '<') {
             int check_for_closing_tag = input_string.find_first_not_of(" \n\r\t", i + 1);
             int close_tag_index = input_string.find('>', i + 1);
-            indentation = "";
 
             if (input_string[check_for_closing_tag] == '/') {
-                level--;
                 tag = input_string.substr(check_for_closing_tag + 1, close_tag_index - check_for_closing_tag - 1);
-                for(int j = 0; j < level + tags.size(); j++) indentation += "    ";
+                tag += '<' + to_string(level);
 
                 if (close_tag) {
+                    indentation_level--;
                     s += '\n';
-                    s += indentation;
-                    s += "    ";
+                    for(int j = 0; j < indentation_level; j++) s += "    ";
                     s += '}';
                 }
                 
-                if (!tags.empty() && (tag + to_string(level + 1)) == tags.top()->first && --tags.top()->second == 0) {
-                    tags.pop();
+                if (!tags.empty() && tag == tags.top()->first && --tags.top()->second == 0) {
+                    indentation_level--;
                     s += '\n';
-                    s += indentation;
+                    for(int j = 0; j < indentation_level; j++) s += "    ";
                     s += ']';
+                    tags.pop();
                 }
 
+                level--;
                 close_tag = true;
                 i = input_string.find_first_of('<', i + 1); // bypass the closing tag
-                continue;
             
             } else {    // it must be an opening tag
                 level++;
                 tag = input_string.substr(i + 1, close_tag_index - i - 1);
-                for(int j = 0; j < level + tags.size(); j++) indentation += "    ";
+                int parent_close_tag_index = INT_MAX;
 
                 count = get_tag_count(input_string, tag, i);
 
                 if (!close_tag) {
+                    indentation_level++;
                     s += '{';
                 } else {
                     s += ",";
                 }
+
                 s += '\n';
-                s += indentation;
+                for(int j = 0; j < indentation_level; j++) s += "    ";
+
+                if (tags.empty() || (tag + '<' + to_string(level)) != tags.top()->first) {
+                    s += '"';
+                    s += tag;
+                    s += "\": ";
+                }
+
+                tag += '<' + to_string(level);
+
+                if ((tags.empty() || tag != tags.top()->first || (tag == tags.top()->first && tags.top()->second != count)) && count != 1) {
+                    tags.push(new mypair(tag, count));
+                    s += "[\n";
+                    indentation_level++;
+                    for(int j = 0; j < indentation_level; j++) s += "    ";
+                }
 
                 close_tag = false;
                 i = close_tag_index;
-
-                if (!tags.empty() && (tag + to_string(level)) == tags.top()->first) {
-                    continue;
-                }
-
-                s += '"';
-                s += tag;
-                s += "\": ";
-
-                if ( count != 1) {
-                    tags.push(new mypair(tag + to_string(level), count));
-                    s += "[\n";
-                    s += indentation;
-                    s += "    ";
-                }
-                
-                continue;
             }
+            
+            continue;
         }
 
         // check if text
