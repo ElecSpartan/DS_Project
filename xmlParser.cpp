@@ -1,5 +1,5 @@
 #include "xmlParser.h"
-
+std::vector<std::pair<int,bool>>errors; // line, type ( 0 >> open , 1 >> closed )
 
 int xmlParser::getTagCount(std::string& input_string, std::string& tag_name, int start_index) {
     std::string opening_tag = "<" + tag_name + ">";
@@ -151,14 +151,268 @@ std::string xmlParser::minifyJson(std::string& json_input) {
     return minified_json;
 }
 
-std::string xmlParser::verify(std::string& xml_input) {
-    return std::string();
+bool xmlParser::is_tag(std::string &s) {
+    return (s[0] == '<' && s[s.size() - 1] == '>');
 }
 
-std::string xmlParser::correct(std::string& xml_input) {
-    return std::string();
+bool xmlParser::is_open_tag(std::string &s) {
+    return (s[1] != '/') && is_tag(s);
 }
 
+bool xmlParser::is_closed_tag(std::string &s) {
+    return (s[1] == '/') && is_tag(s);
+}
+
+bool xmlParser::is_the_same(std::string &open,std::string &closed) {
+    int j = 0;
+    bool the_same = true;
+    for (int i = 0; i < closed.size(); i++) {
+        if (i == 1)
+            i++;
+
+        the_same = the_same && (closed[i] == open[j]);
+        j++;
+    }
+    return the_same;
+}
+
+std::string xmlParser::get_open_from_closed(std::string &s) {
+    std::string open = "<" + s.substr(2);
+    return open;
+}
+
+std::string xmlParser::get_closed_from_open(std::string &s) {
+    std::string closed = "</" + s.substr(1);
+    return closed;
+}
+
+std::string xmlParser::add_new_lines(std::vector<std::string>&file) {
+    std::string valid_file = "";
+
+    for (int i = 0; i < file.size(); i++) {
+        if (i == file.size() - 1) {
+            valid_file += file[i];
+            break;
+        }
+        if (is_open_tag(file[i]) && is_open_tag(file[i + 1])) {
+            valid_file += file[i];
+            valid_file += "\n";
+        } else if (is_closed_tag(file[i]) && is_closed_tag(file[i + 1])) {
+            valid_file += file[i];
+            valid_file += "\n";
+        } else if (is_closed_tag(file[i]) && is_open_tag(file[i + 1])) {
+            valid_file += file[i];
+            valid_file += "\n";
+        } else {
+            valid_file += file[i];
+        }
+    }
+    return valid_file;
+}
+
+int xmlParser::num_of_new_lines(std::string &x) {
+    int num = 0;
+    for (int i = 0; i < x.size(); i++) {
+        if (x[i] == '\n')
+            num++;
+    }
+    return num;
+}
+
+bool xmlParser::temp_is_dummy(std::string &temp) {
+    bool is_dummy = 1;
+    for (auto ch: temp)
+        is_dummy = is_dummy && (ch == '\n' || ch == ' ');
+
+
+    return is_dummy;
+}
+
+std::vector<std::string> xmlParser::values_correction(std::vector<std::string>&file) {
+    std::vector<std::string> v;
+
+    int line = 1;
+    int last;
+    for (int i = 0; i < file.size(); i++) {
+        last = line;
+        line += num_of_new_lines(file[i]);
+        if (!is_tag(file[i])) {
+            if (is_the_same(file[i - 1], file[i + 1]) || temp_is_dummy(file[i])) {
+                v.push_back(file[i]);
+                continue;
+            }
+
+            if (i == 1) {
+                v.push_back(get_open_from_closed(file[i + 1]));
+                v.push_back(file[i]);
+                errors.emplace_back(std::max(1, last - 1), false);
+            } else if (i == file.size() - 2) {
+                v.push_back(file[i]);
+                v.push_back(get_closed_from_open(file[i - 1]));
+                errors.emplace_back(std::max(1, line - 1), true);
+            } else {
+                if (is_open_tag(file[i - 1])) {
+                    v.push_back(file[i]);
+                    v.push_back(get_closed_from_open(file[i - 1]));
+                    errors.emplace_back(std::max(1, line - 1), true);
+                } else {
+                    v.push_back(get_open_from_closed(file[i + 1]));
+                    v.push_back(file[i]);
+                    errors.emplace_back(std::max(1, last - 1), false);
+                }
+            }
+        } else
+            v.push_back(file[i]);
+    }
+    return v;
+}
+
+std::pair<std::vector<std::string>,int> xmlParser::divide_string_for_correction(std::string &file) {
+    std::vector<std::string> divided_file;
+    std::string temp = "";
+    bool start = true;
+    int start_line = 1;
+    bool tag;
+    int index = 0;
+    bool first = true;
+    while (index < file.size()) {
+        if (start) {
+            if (file[index] == '<')
+                tag = true;
+            else
+                tag = false;
+
+            start = false;
+        }
+        temp += file[index];
+        if (tag) {
+            if (file[index] == '>') {
+                divided_file.push_back(temp);
+                temp = "";
+                start = true;
+                first = false;
+            }
+        } else {
+            if ((index == file.size() - 1 && !temp_is_dummy(temp)) || file[index + 1] == '<') {
+                {
+                    if (!(first && temp_is_dummy(temp)))
+                        divided_file.push_back(temp);
+                    else
+                        start_line += num_of_new_lines(temp);
+
+                    first = false;
+                }
+
+                temp = "";
+                start = true;
+            }
+        }
+        index++;
+    }
+    return {divided_file, start_line};
+}
+
+// butt
+std::string xmlParser::correct_xml(std::string &xml_file) {
+    std::pair<std::vector<std::string>, int> p = divide_string_for_correction(xml_file);
+    std::vector<std::string> file = p.first;
+    bool push_last_line = false;
+
+    bool must_push_opening = false;
+    if (file.size() >= 3)
+        must_push_opening = !is_tag(file[1]) && is_open_tag(file[2]) && !temp_is_dummy(file[1]);
+
+    if (!is_the_same(file[0], file[file.size() - 1])) {
+        if (is_open_tag(file[0]) && !must_push_opening) {
+            file.push_back(get_closed_from_open(file[0]));
+            push_last_line = true;
+        } else {
+            file.insert(file.begin(), get_open_from_closed(file[file.size() - 1]));
+            errors.emplace_back(1, false);
+        }
+    } else {
+        if (file.size() >= 3) {
+            if (!is_tag(file[1]) && is_open_tag(file[2]) && !temp_is_dummy(file[file.size() - 2])) {
+                file.insert(file.begin(), get_open_from_closed(file[file.size() - 1]));
+                errors.emplace_back(1, false);
+            } else if (!is_tag(file[file.size() - 2]) && is_closed_tag(file[file.size() - 3]) &&
+                       !temp_is_dummy(file[file.size() - 2])) {
+                file.push_back(get_closed_from_open(file[0]));
+                push_last_line = true;
+            }
+        }
+    }
+
+
+    std::vector<std::string> valid_file;
+    valid_file.push_back(file[0]);
+    file = values_correction(file);
+
+
+    std::stack<std::string> s;
+    int line = num_of_new_lines(valid_file[0]) + p.second;
+    int last;
+
+    for (int i = 1; i < file.size() - 1; i++) {
+        last = line;
+        line += num_of_new_lines(file[i]);
+
+        if (!is_tag(file[i])) {
+            valid_file.push_back(file[i]);
+            continue;
+        }
+
+        if (is_open_tag(file[i])) {
+            valid_file.push_back(file[i]);
+            s.push(file[i]);
+        } else {
+            if (!s.empty() && is_the_same(s.top(), file[i])) {
+                valid_file.push_back(file[i]);
+                s.pop();
+            } else {
+                valid_file.push_back(get_open_from_closed(file[i]));
+                valid_file.push_back(file[i]);
+                errors.emplace_back(last, false);
+            }
+        }
+    }
+
+
+    while (!s.empty()) {
+        valid_file.push_back(get_closed_from_open(s.top()));
+        errors.emplace_back(line, true);
+        s.pop();
+    }
+
+    valid_file.push_back(file[file.size() - 1]);
+    if (push_last_line) {
+        errors.emplace_back(line, true);
+    }
+
+    return add_new_lines(valid_file);
+}
+
+// butt
+std::string xmlParser::get_errors(std::string &xml_file) {
+    errors.clear();
+    std::string s = correct_xml(xml_file);
+
+    std::string ans = "";
+    sort(errors.begin(), errors.end());
+    for (int i = 0; i < errors.size(); i++) {
+        ans += "Missing ";
+        if (errors[i].second)
+            ans += " Closing tag after line ";
+        else
+            ans += " Opening tag in line ";
+
+        ans += std::to_string(errors[i].first);
+        ans += '\n';
+    }
+    return ans;
+}
+
+// butt
 std::string xmlParser::minify(std::string& xml_input) {
     std::string intermediate_string, minified_xml;
     int i = xml_input.length()- 1;
@@ -201,6 +455,7 @@ std::string xmlParser::minify(std::string& xml_input) {
     return minified_xml;
 }
 
+// butt
 std::string xmlParser::prettify(std::string& xml_input) {
     std::string prettified_xml = "<";
     int i = xml_input.find('<') + 1, j;
@@ -251,6 +506,7 @@ std::string xmlParser::prettify(std::string& xml_input) {
     return prettified_xml;
 }
 
+// butt
 std::string xmlParser::toJsonByStrings(std::string& xml_input) {
     int i = 0, j;
     std::string json_output = "", indentation_type = "    ";
@@ -355,11 +611,12 @@ std::string xmlParser::toJsonByStrings(std::string& xml_input) {
     return json_output;
 }
 
+// butt
 std::string xmlParser::toJsonByTrees(std::string& xml_input) {
     std::string minified_xml = xmlParser::minify(xml_input);
 
     Node *root = new Node();
-    createTree(minified_xml, root);
+    xmlParser::createTree(minified_xml, root);
 
     std::string json_output = "{\n";
     xmlParser::createJsonFromTree(root, json_output, 0, false);
@@ -367,10 +624,12 @@ std::string xmlParser::toJsonByTrees(std::string& xml_input) {
     return json_output;
 }
 
+// butt
 std::string xmlParser::compress(std::string& input) {
     return std::string();
 }
 
+// butt
 std::string xmlParser::decompress(std::string& compressed_input) {
     return std::string();
 }

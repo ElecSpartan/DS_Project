@@ -8,12 +8,8 @@ add_executable(DS_Project
         Graph.cpp
         Post.cpp
         User.cpp
-        XML_Parser.cpp
-        XML_Parser.h
         Graph.h
         User.h
         Post.h
-        Error_detection_and_correction.h
-        Error_detection_and_correction.cpp
         huffman.cpp
         huffman.h)
