@@ -10,6 +10,6 @@ string get_open_from_closed(string &s);
 string get_closed_from_open(string &s);
 string add_new_lines(vector<string>&file);
 bool is_closed_tag(string &s);
-pair<vector<string>,int> values_correction(vector<string>&file);
+vector<string> values_correction(vector<string>&file);
 vector<pair<int,bool>> get_errors(string &sml_file);
 #endif

@@ -1,5 +1,13 @@
 #include "XML_Parser.h"
-void write_to_file(string address, string& content) {
+int num_of_new_lines(string &x) {
+    int num = 0;
+    for (int i = 0; i < x.size(); i++) {
+        if (x[i] == '\n')
+            num++;
+    }
+    return num;
+}
+void write_to_file(string address, string content) {
     ofstream file(address);
     if (file.is_open()) {
         file << content;
@@ -88,12 +96,14 @@ vector<string> divide_string_for_graph(string &file) {
     }
     return divided_file;
 }
-vector<string> divide_string_for_correction(string &file) {
+pair<vector<string>,int> divide_string_for_correction(string &file) {
     vector<string> divided_file;
     string temp = "";
     bool start = true;
+    int start_line = 1;
     bool tag;
     int index = 0;
+    bool first = true;
     while (index < file.size()) {
         if (start) {
             if (file[index] == '<')
@@ -109,10 +119,18 @@ vector<string> divide_string_for_correction(string &file) {
                 divided_file.push_back(temp);
                 temp = "";
                 start = true;
+                first = false;
             }
         } else {
-            if (file[index + 1] == '<') {
-                divided_file.push_back(temp);
+            if ((index == file.size() - 1 && !temp_is_dummy(temp)) || file[index + 1] == '<') {
+                {
+                    if (!(first && temp_is_dummy(temp)))
+                        divided_file.push_back(temp);
+                    else
+                        start_line += num_of_new_lines(temp);
+
+                    first = false;
+                }
 
                 temp = "";
                 start = true;
@@ -120,7 +138,7 @@ vector<string> divide_string_for_correction(string &file) {
         }
         index++;
     }
-    return divided_file;
+    return {divided_file, start_line};
 }
 Graph parse(string &file) {
     Graph g;
