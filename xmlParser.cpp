@@ -725,13 +725,14 @@ std::string xmlParser::compress(std::string& in) {
     HuffmanNode *root = buildHuffmanTree(frequencies);
 
     // Build the full path to the compressed file
-    std::string path = "compressed_file.bin";
-
+    //std::string path = "compressed_file.bin";
+    std::ofstream compressed_file; //amgad
+    compressed_file.open("compressed.bin",std::ios::out);
     // Open the compressed file for writing in binary mode
-    std::ofstream compressedFile(path, std::ios::binary);
+    //std::ofstream compressedFile(path, std::ios::binary);
 
     // Serialize Huffman tree to compressed file
-    HuffmanTree_to_file(root, compressedFile);
+    HuffmanTree_to_file(root, compressed_file);
 
     // Compress input and write to file
     std::map<char, std::string> codes;
@@ -748,11 +749,11 @@ std::string xmlParser::compress(std::string& in) {
         bits[7 - (i % 8)] = compressed[i] == '1';
         if (i % 8 == 7 || i == compressed.size() - 1) {
             char byte = static_cast<char>(bits.to_ulong());
-            compressedFile.write(&byte, sizeof(char));
+            compressed_file.write(&byte, sizeof(char));
         }
     }
 
-    compressedFile.close();
+    compressed_file.close();
     return compressed;
 }
 
