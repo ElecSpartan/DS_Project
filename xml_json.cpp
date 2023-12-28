@@ -2,22 +2,6 @@
 using namespace std;
 
 
-string read_file (string path) {
-    ifstream in(path);
-
-    stringstream buffer;
-    buffer << in.rdbuf();
-    in.close();
-
-    return buffer.str();
-}
-
-void output_file (string path, string output_string) {
-    ofstream out(path);
-    out << output_string;
-    out.close();
-}
-
 int get_tag_count (string &input_string, string &tag_name, int start_index) {
     string opening_tag = "<" + tag_name + ">";
     string closing_tag = "</" + tag_name + ">";
@@ -60,59 +44,64 @@ int get_tag_count (string &input_string, string &tag_name, int start_index) {
     return count;
 }
 
-string toJSON (string& xml_input) {
+
+int main() {
+    ifstream in("sample.xml");
+    stringstream buffer;
+    buffer << in.rdbuf();
+
     int i = 0, j;
-    string json_output = "", indentation_type = "    ";
+    string input_string = buffer.str(), json = "", indentation_type = "    ";
     int level = 0;
     bool close_tag = false;
     stack<string> tag_names;
     stack<int> tag_count;
 
     
-    while(i < xml_input.length()) {
-        if (xml_input[i] == '<') {
-            int check_for_closing_tag = xml_input.find_first_not_of(" \n\r\t", i + 1);
-            int close_tag_index = xml_input.find('>', i + 1);
+    while(i < input_string.length()) {
+        if (input_string[i] == '<') {
+            int check_for_closing_tag = input_string.find_first_not_of(" \n\r\t", i + 1);
+            int close_tag_index = input_string.find('>', i + 1);
             string indentation = "";
 
-            if (xml_input[check_for_closing_tag] == '/') {
+            if (input_string[check_for_closing_tag] == '/') {
                 level--;
-                string tag = xml_input.substr(check_for_closing_tag + 1, close_tag_index - check_for_closing_tag - 1);
+                string tag = input_string.substr(check_for_closing_tag + 1, close_tag_index - check_for_closing_tag - 1);
                 for(int j = 0; j < level + tag_names.size(); j++) indentation += indentation_type;
 
                 if (close_tag) {
-                    json_output += '\n';
-                    json_output += indentation;
-                    json_output += indentation_type;
-                    json_output += '}';
+                    json += '\n';
+                    json += indentation;
+                    json += indentation_type;
+                    json += '}';
                 }
                 
                 if (!tag_names.empty() && (tag + to_string(level + 1)) == tag_names.top() && --tag_count.top() == 0) {
                     tag_names.pop();
                     tag_count.pop();
-                    json_output += '\n';
-                    json_output += indentation;
-                    json_output += ']';
+                    json += '\n';
+                    json += indentation;
+                    json += ']';
                 }
 
                 close_tag = true;
-                i = xml_input.find_first_of('<', i + 1); // bypass the closing tag
+                i = input_string.find_first_of('<', i + 1); // bypass the closing tag
                 continue;
             
             } else {    // it must be an opening tag
                 level++;
-                string tag = xml_input.substr(i + 1, close_tag_index - i - 1);
+                string tag = input_string.substr(i + 1, close_tag_index - i - 1);
                 for(int j = 0; j < level + tag_names.size(); j++) indentation += indentation_type;
 
-                int count = get_tag_count(xml_input, tag, i);
+                int count = get_tag_count(input_string, tag, i);
 
                 if (!close_tag) {
-                    json_output += '{';
+                    json += '{';
                 } else {
-                    json_output += ",";
+                    json += ",";
                 }
-                json_output += '\n';
-                json_output += indentation;
+                json += '\n';
+                json += indentation;
 
                 close_tag = false;
                 i = close_tag_index;
@@ -121,16 +110,16 @@ string toJSON (string& xml_input) {
                     continue;
                 }
 
-                json_output += '"';
-                json_output += tag;
-                json_output += "\": ";
+                json += '"';
+                json += tag;
+                json += "\": ";
 
                 if (count != 1) {
                     tag_names.push(tag + to_string(level));
                     tag_count.push(count);
-                    json_output += "[\n";
-                    json_output += indentation;
-                    json_output += indentation_type;
+                    json += "[\n";
+                    json += indentation;
+                    json += indentation_type;
                 }
 
                 continue;
@@ -138,19 +127,19 @@ string toJSON (string& xml_input) {
         }
 
         // check if text
-        int first_after_open_tag = xml_input.find_first_not_of(" \n\r\t", i + 1);
-        if (xml_input[i] == '>' && xml_input[first_after_open_tag] != '<') {
+        int first_after_open_tag = input_string.find_first_not_of(" \n\r\t", i + 1);
+        if (input_string[i] == '>' && input_string[first_after_open_tag] != '<') {
 
-            int closing_tag_start_index = xml_input.find_first_of('<', i + 1);
-            int data_end_index = xml_input.find_last_not_of(" \n\r\t", closing_tag_start_index - 1);
-            int first_non_numerical_char_index = xml_input.find_first_not_of("0123456789-. \n", first_after_open_tag);
+            int closing_tag_start_index = input_string.find_first_of('<', i + 1);
+            int data_end_index = input_string.find_last_not_of(" \n\r\t", closing_tag_start_index - 1);
+            int first_non_numerical_char_index = input_string.find_first_not_of("0123456789-. \n", first_after_open_tag);
 
             if (first_non_numerical_char_index >= closing_tag_start_index) {
-                json_output += xml_input.substr(first_after_open_tag, data_end_index - first_after_open_tag + 1);
+                json += input_string.substr(first_after_open_tag, data_end_index - first_after_open_tag + 1);
             } else {
-                json_output += '\"';
-                json_output += xml_input.substr(first_after_open_tag, data_end_index - first_after_open_tag + 1);
-                json_output += '\"';
+                json += '\"';
+                json += input_string.substr(first_after_open_tag, data_end_index - first_after_open_tag + 1);
+                json += '\"';
             }
 
             i = closing_tag_start_index;
@@ -160,16 +149,11 @@ string toJSON (string& xml_input) {
         i = first_after_open_tag;
     }
 
-    json_output += "\n}";
-    return json_output;
-}
+    json += "\n}";
 
-int main() {
-    string input_string = read_file("sample.xml");
-
-    string json_string = toJSON(input_string);
-
-    output_file("output_json.json", json_string);
+    ofstream out("output_json.json");
+    out << json;
+    out.close();
 
     return 0;
 }
