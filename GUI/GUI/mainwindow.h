@@ -21,6 +21,9 @@ public:
 private slots:
     void on_InputFile_clicked();
 
+
+    void on_Testing_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
