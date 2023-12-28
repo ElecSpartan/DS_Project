@@ -113,6 +113,11 @@ void printJSON (Node* root, string& json_output, int level, bool is_array) {
     }
 
     if (children_count == 0) {
+        int first_non_numeric_char = root->getName().find_first_not_of("0123456789");
+        if (!root->getName().empty() && (first_non_numeric_char == -1 || (first_non_numeric_char == 0 && root->getName()[0] == '-'))) {
+            json_output += root->getName();
+            return;
+        }
         json_output += '"';
         json_output += root->getName();
         json_output += '"';
