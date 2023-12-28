@@ -312,6 +312,101 @@ std::pair<std::vector<std::string>,int> xmlParser::divide_string_for_correction(
     return {divided_file, start_line};
 }
 
+
+HuffmanNode::HuffmanNode(int data, int freq) : data(data), frequency(freq), left(nullptr), right(nullptr) {}
+
+bool CompareNodes::operator()(const HuffmanNode* a, const HuffmanNode* b) const {
+    return a->frequency > b->frequency;
+}
+
+HuffmanNode* xmlParser::buildHuffmanTree(std::map<char, int>& frequencies) {
+    HuffmanPriorityQueue pq;
+
+    for (auto& pair : frequencies) {
+        pq.push(new HuffmanNode(pair.first, pair.second));
+    }
+
+    while (pq.size() > 1) {
+        HuffmanNode* left = pq.top();
+        pq.pop();
+        HuffmanNode* right = pq.top();
+        pq.pop();
+
+        HuffmanNode* newNode = new HuffmanNode(0, left->frequency + right->frequency);
+        newNode->left = left;
+        newNode->right = right;
+
+        pq.push(newNode);
+    }
+    return pq.top();
+}
+
+void xmlParser::HuffmanTree_to_file(HuffmanNode* root, std::ofstream& outFile) {
+    if (!root)
+        return;
+
+    if (root->left || root->right) {
+        outFile.put('\1');  // Non-leaf node marker
+        outFile.write(reinterpret_cast<const char*>(&root->data), sizeof(char));
+        outFile.write(reinterpret_cast<const char*>(&root->frequency), sizeof(int));
+
+        HuffmanTree_to_file(root->left, outFile);
+        HuffmanTree_to_file(root->right, outFile);
+    }
+    else {
+        outFile.put('\0');  // Leaf node marker
+        outFile.write(reinterpret_cast<const char*>(&root->data), sizeof(char));
+    }
+}
+
+HuffmanNode* xmlParser::file_to_HuffmanTree(std::ifstream& inFile) {
+    char marker;
+    inFile.get(marker);
+
+    if (marker == '\1') {
+        int value, frequency;
+        inFile.read(reinterpret_cast<char*>(&value), sizeof(char));
+        inFile.read(reinterpret_cast<char*>(&frequency), sizeof(int));
+
+        HuffmanNode* newNode = new HuffmanNode(value, frequency);
+        newNode->left = file_to_HuffmanTree(inFile);
+        newNode->right = file_to_HuffmanTree(inFile);
+
+        return newNode;
+    }
+    else if (marker == '\0') {
+        int value;
+        inFile.read(reinterpret_cast<char*>(&value), sizeof(char));
+
+        return new HuffmanNode(value, 0);
+    }
+    else {
+        // Handle error or unexpected marker
+        return nullptr;
+    }
+}
+
+void xmlParser::HuffmanCodes(HuffmanNode* root, const std::string& code, std::map<char, std::string>& codes) {
+    if (!root)
+        return;
+
+    if (!root->left && !root->right) {
+        codes[root->data] = code;
+        return;
+    }
+
+    HuffmanCodes(root->left, code + "0", codes);
+    HuffmanCodes(root->right, code + "1", codes);
+}
+
+std::map<char, int> xmlParser::calculateFrequencies(const std::string& in) {
+    std::map<char, int> frequencies;
+    for (char c: in) {
+        frequencies[c]++;
+    }
+    return frequencies;
+}
+
 // butt
 std::string xmlParser::correct_xml(std::string &xml_file) {
     std::pair<std::vector<std::string>, int> p = divide_string_for_correction(xml_file);
@@ -625,11 +720,76 @@ std::string xmlParser::toJsonByTrees(std::string& xml_input) {
 }
 
 // butt
-std::string xmlParser::compress(std::string& input) {
-    return std::string();
+std::string xmlParser::compress(std::string& in) {
+    std::map<char, int> frequencies = xmlParser::calculateFrequencies(in);
+    HuffmanNode *root = buildHuffmanTree(frequencies);
+
+    // Build the full path to the compressed file
+    std::string path = "compressed_file.bin";
+
+    // Open the compressed file for writing in binary mode
+    std::ofstream compressedFile(path, std::ios::binary);
+
+    // Serialize Huffman tree to compressed file
+    HuffmanTree_to_file(root, compressedFile);
+
+    // Compress input and write to file
+    std::map<char, std::string> codes;
+    HuffmanCodes(root, "", codes);
+
+    std::string compressed;
+    for (char c: in) {
+        compressed += codes[c];
+    }
+
+    // Convert the binary string to bytes and write to the compressed file
+    std::bitset<8> bits;
+    for (int i = 0; i < compressed.size(); ++i) {
+        bits[7 - (i % 8)] = compressed[i] == '1';
+        if (i % 8 == 7 || i == compressed.size() - 1) {
+            char byte = static_cast<char>(bits.to_ulong());
+            compressedFile.write(&byte, sizeof(char));
+        }
+    }
+
+    compressedFile.close();
+    return compressed;
 }
 
 // butt
-std::string xmlParser::decompress(std::string& compressed_input) {
-    return std::string();
+std::string xmlParser::decompress(const std::string& compressedFilePath) {
+    std::ifstream compressedFile(compressedFilePath, std::ios::binary);
+    HuffmanNode *root;
+    // Deserialize Huffman tree from compressed file
+    root = file_to_HuffmanTree(compressedFile);
+
+    // Decompress the remaining data
+    std::string Bits;
+    char c;
+    while (compressedFile.get(c)) {
+        std::bitset<8> bits(c);
+        Bits += bits.to_string();
+    }
+
+    compressedFile.close();
+
+    std::string decompressed;
+    HuffmanNode *currentNode = root;
+
+    for (char bit: Bits) {
+        if (bit == '0') {
+            currentNode = currentNode->left;
+        } else {
+            currentNode = currentNode->right;
+        }
+
+        if (!currentNode->left && !currentNode->right) { //leaf node
+            decompressed += static_cast<char>(currentNode->data);
+            currentNode = root;
+        }
+    }
+
+    return decompressed;
 }
+
+

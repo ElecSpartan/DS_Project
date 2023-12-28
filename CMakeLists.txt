@@ -11,5 +11,4 @@ add_executable(DS_Project
         Graph.h
         User.h
         Post.h
-        huffman.cpp
-        huffman.h)
+        )
