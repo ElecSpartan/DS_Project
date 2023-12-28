@@ -14,4 +14,6 @@ add_executable(DS_Project
         User.h
         Post.h
         Error_detection_and_correction.h
-        Error_detection_and_correction.cpp)
+        Error_detection_and_correction.cpp
+        huffman.cpp
+        huffman.h)
