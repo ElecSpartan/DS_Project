@@ -44,3 +44,12 @@ void MainWindow::on_InputFile_clicked()
         }
 }
 
+
+
+
+
+void MainWindow::on_Testing_clicked()
+{
+    ui->Result->setPlainText(ui->InputText->toPlainText());
+}
+
