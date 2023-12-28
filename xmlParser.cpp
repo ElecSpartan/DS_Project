@@ -493,7 +493,7 @@ std::string xmlParser::get_errors(std::string &xml_file) {
     std::string s = correct_xml(xml_file);
 
     std::string ans = "";
-    sort(errors.begin(), errors.end());
+    std::sort(errors.begin(), errors.end());
     for (int i = 0; i < errors.size(); i++) {
         ans += "Missing ";
         if (errors[i].second)
@@ -724,12 +724,12 @@ std::string xmlParser::compress(std::string& in) {
     std::map<char, int> frequencies = xmlParser::calculateFrequencies(in);
     HuffmanNode *root = buildHuffmanTree(frequencies);
 
-    // Build the full path to the compressed file
-    //std::string path = "compressed_file.bin";
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::filesystem::path filePath = currentPath / "compressed_file.bin";
+
     std::ofstream compressed_file; //amgad
-    compressed_file.open("compressed.bin",std::ios::out);
-    // Open the compressed file for writing in binary mode
-    //std::ofstream compressedFile(path, std::ios::binary);
+    compressed_file.open(filePath,std::ios::out);
+
 
     // Serialize Huffman tree to compressed file
     HuffmanTree_to_file(root, compressed_file);

@@ -7,6 +7,8 @@
 #include "Node.h"
 #include <fstream>
 #include <bitset>
+#include <filesystem>
+#include <algorithm>
 struct HuffmanNode {
     int data;
     int frequency;
