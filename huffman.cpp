@@ -6,7 +6,7 @@ HuffmanNode::HuffmanNode(int data, int freq) : data(data), frequency(freq), left
 bool CompareNodes::operator()(const HuffmanNode* a, const HuffmanNode* b) const {
     return a->frequency > b->frequency;
 }
-HuffmanNode* buildHuffmanTree(const unordered_map<char, int>& frequencies) {
+HuffmanNode* buildHuffmanTree(const map<char, int>& frequencies) {
     HuffmanPriorityQueue pq;
 
     for (auto& pair : frequencies) {
@@ -73,7 +73,7 @@ HuffmanNode* file_to_HuffmanTree(std::ifstream& inFile) {
     }
 }
 
-void HuffmanCodes(HuffmanNode* root, const std::string& code, std::unordered_map<char, std::string>& codes) {
+void HuffmanCodes(HuffmanNode* root, const string& code, map<char, string>& codes) {
     if (!root)
         return;
 
