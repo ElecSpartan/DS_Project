@@ -1,25 +1,25 @@
 #include "huffman.h"
 #include <fstream>
 
-Node::Node(int data, int freq) : data(data), frequency(freq), left(nullptr), right(nullptr) {}
+HuffmanNode::HuffmanNode(int data, int freq) : data(data), frequency(freq), left(nullptr), right(nullptr) {}
 
-bool CompareNodes::operator()(const Node* a, const Node* b) const {
+bool CompareNodes::operator()(const HuffmanNode* a, const HuffmanNode* b) const {
     return a->frequency > b->frequency;
 }
-Node* buildHuffmanTree(const std::unordered_map<char, int>& frequencies) {
+HuffmanNode* buildHuffmanTree(const unordered_map<char, int>& frequencies) {
     HuffmanPriorityQueue pq;
 
     for (auto& pair : frequencies) {
-        pq.push(new Node(pair.first, pair.second));
+        pq.push(new HuffmanNode(pair.first, pair.second));
     }
 
     while (pq.size() > 1) {
-        Node* left = pq.top();
+        HuffmanNode* left = pq.top();
         pq.pop();
-        Node* right = pq.top();
+        HuffmanNode* right = pq.top();
         pq.pop();
 
-        Node* newNode = new Node(0, left->frequency + right->frequency);
+        HuffmanNode* newNode = new HuffmanNode(0, left->frequency + right->frequency);
         newNode->left = left;
         newNode->right = right;
 
@@ -28,7 +28,7 @@ Node* buildHuffmanTree(const std::unordered_map<char, int>& frequencies) {
     return pq.top();
 }
 
-void HuffmanTree_to_file(Node* root, std::ofstream& outFile) {
+void HuffmanTree_to_file(HuffmanNode* root, std::ofstream& outFile) {
     if (!root)
         return;
 
@@ -55,7 +55,7 @@ HuffmanNode* file_to_HuffmanTree(std::ifstream& inFile) {
         inFile.read(reinterpret_cast<char*>(&value), sizeof(char));
         inFile.read(reinterpret_cast<char*>(&frequency), sizeof(int));
 
-        Node* newNode = new Node(value, frequency);
+        HuffmanNode* newNode = new HuffmanNode(value, frequency);
         newNode->left = file_to_HuffmanTree(inFile);
         newNode->right = file_to_HuffmanTree(inFile);
 
@@ -65,7 +65,7 @@ HuffmanNode* file_to_HuffmanTree(std::ifstream& inFile) {
         int value;
         inFile.read(reinterpret_cast<char*>(&value), sizeof(char));
 
-        return new Node(value, 0);
+        return new HuffmanNode(value, 0);
     }
     else {
         // Handle error or unexpected marker
@@ -73,7 +73,7 @@ HuffmanNode* file_to_HuffmanTree(std::ifstream& inFile) {
     }
 }
 
-void HuffmanCodes(Node* root, const std::string& code, std::unordered_map<char, std::string>& codes) {
+void HuffmanCodes(HuffmanNode* root, const std::string& code, std::unordered_map<char, std::string>& codes) {
     if (!root)
         return;
 
