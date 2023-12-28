@@ -1,7 +1,7 @@
 #include "xmlParser.h"
 
 
-int xmlParser::getTagCount (std::string &input_string, std::string &tag_name, int start_index) {
+int xmlParser::getTagCount(std::string& input_string, std::string& tag_name, int start_index) {
     std::string opening_tag = "<" + tag_name + ">";
     std::string closing_tag = "</" + tag_name + ">";
     std::string next_tag;
@@ -131,7 +131,7 @@ void xmlParser::createJsonFromTree(Node* root, std::string& json_output, int lev
     }
 }
 
-std::string xmlParser::minifyJson(std::string json_input) {
+std::string xmlParser::minifyJson(std::string& json_input) {
     std::string minified_json;
     int i = 0;
     bool text = false;
@@ -151,16 +151,16 @@ std::string xmlParser::minifyJson(std::string json_input) {
     return minified_json;
 }
 
-std::string xmlParser::verify(std::string xml_input) {
+std::string xmlParser::verify(std::string& xml_input) {
     return std::string();
 }
 
-std::string xmlParser::correct(std::string xml_input) {
+std::string xmlParser::correct(std::string& xml_input) {
     return std::string();
 }
 
-std::string xmlParser::minify(std::string xml_input) {
-    std::string intermediate_string, minified_string;
+std::string xmlParser::minify(std::string& xml_input) {
+    std::string intermediate_string, minified_xml;
     int i = xml_input.length()- 1;
     bool text = false;
 
@@ -189,7 +189,7 @@ std::string xmlParser::minify(std::string xml_input) {
     i = intermediate_string.length() - 1;
 
     while (i >= 0) {
-        minified_string += intermediate_string[i];
+        minified_xml += intermediate_string[i];
 
         if (intermediate_string[i] == '>' && i != 0) {
             i = intermediate_string.find_last_not_of(" \n\r\t", i - 1) + 1;
@@ -198,10 +198,10 @@ std::string xmlParser::minify(std::string xml_input) {
         i--;
     }
 
-    return minified_string;
+    return minified_xml;
 }
 
-std::string xmlParser::prettify(std::string xml_input) {
+std::string xmlParser::prettify(std::string& xml_input) {
     std::string prettified_xml = "<";
     int i = xml_input.find('<') + 1, j;
     int indentation_level = 0;
@@ -251,7 +251,7 @@ std::string xmlParser::prettify(std::string xml_input) {
     return prettified_xml;
 }
 
-std::string xmlParser::toJsonByStrings(std::string &xml_input) {
+std::string xmlParser::toJsonByStrings(std::string& xml_input) {
     int i = 0, j;
     std::string json_output = "", indentation_type = "    ";
     int level = 0;
@@ -356,21 +356,21 @@ std::string xmlParser::toJsonByStrings(std::string &xml_input) {
 }
 
 std::string xmlParser::toJsonByTrees(std::string& xml_input) {
-    std::string minified_string = xmlParser::minify(xml_input);
+    std::string minified_xml = xmlParser::minify(xml_input);
 
     Node *root = new Node();
-    createTree(minified_string, root);
+    createTree(minified_xml, root);
 
-    std::string json_string = "{\n";
-    xmlParser::createJsonFromTree(root, json_string, 0, false);
-    json_string += "\n}";
-    return json_string;
+    std::string json_output = "{\n";
+    xmlParser::createJsonFromTree(root, json_output, 0, false);
+    json_output += "\n}";
+    return json_output;
 }
 
-std::string xmlParser::compress(std::string input) {
+std::string xmlParser::compress(std::string& input) {
     return std::string();
 }
 
-std::string xmlParser::decompress(std::string compressed_input) {
+std::string xmlParser::decompress(std::string& compressed_input) {
     return std::string();
 }
