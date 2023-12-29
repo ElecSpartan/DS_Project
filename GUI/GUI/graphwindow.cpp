@@ -23,7 +23,7 @@ void GraphWindow::on_pushButton_2_clicked()
 
     QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem(QPixmap(QDir::homePath() + "/Downloads/Popeye.jpg"));
 
-    qreal scaleFactor = 0.4;
+    qreal scaleFactor = 0.6;
     pixmapItem->setScale(scaleFactor);
     scene->addItem(pixmapItem);
 
