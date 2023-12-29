@@ -2,8 +2,27 @@
 #include <iostream>
 #include <stack>
 #include <vector>
-#include <algorithm>
+#include <queue>
+#include <map>
 #include "Node.h"
+#include <fstream>
+#include <bitset>
+#include <filesystem>
+#include <algorithm>
+struct HuffmanNode {
+    int data;
+    int frequency;
+    HuffmanNode* left;
+    HuffmanNode* right;
+
+    HuffmanNode(int data, int freq);
+};
+
+struct CompareNodes {
+    bool operator()(const HuffmanNode* a, const HuffmanNode* b) const;
+};
+
+using HuffmanPriorityQueue = std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, CompareNodes>;
 
 class xmlParser {
 private:
@@ -37,6 +56,11 @@ private:
 
     static std::vector<std::string> values_correction(std::vector<std::string> &file);
 
+    static HuffmanNode* buildHuffmanTree(std::map<char, int>& frequencies); //to output the compressed file from the tree
+    static void HuffmanTree_to_file(HuffmanNode* root, std::ofstream& outFile); //to build the tree from the compressed file
+    static HuffmanNode* file_to_HuffmanTree(std::ifstream& inFile);
+    static void HuffmanCodes(HuffmanNode* root, const std::string& code, std::map<char, std::string>& codes);
+    static std::map<char, int> calculateFrequencies(const std::string& in);
 public:
     xmlParser() = delete;
 
@@ -54,7 +78,9 @@ public:
 
     static std::string compress(std::string &input);
 
-    static std::string decompress(std::string &compressed_input);
+    static std::string decompress(const std::string& compressedFilePath);
 };
+
+
 
 
