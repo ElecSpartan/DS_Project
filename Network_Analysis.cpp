@@ -1,6 +1,8 @@
 #include "Network_Analysis.h"
 Graph g;
 
+// lesa el post search
+
 // post class methods
 Post::Post() {
     body = "";
@@ -146,6 +148,11 @@ std::vector<User> Graph::mutual_followers(User user1 , User user2){
 std::map<int,User> Graph::get_users() {
     return users;
 }
+
+User Graph::get_user_by_id(int id) {
+    return users[id];
+}
+
 
 std::map<int,std::vector<int>> Graph::get_followersOfUsers() {
     return followersOfUser;
@@ -348,17 +355,37 @@ std::string Network_Analysis::most_connections() {
     return s;
 }
 
-// lesa
-std::string Network_Analysis::mutual_followers(User user1, User user2) {
-    return std::string();
+
+std::string Network_Analysis::mutual_followers(int user1_id, int user2_id) {
+    User user1 = g.get_user_by_id(user1_id);
+    User user2 = g.get_user_by_id(user2_id);
+    std::vector<User> users = g.most_followers();
+    std::string s = "";
+    int i = 1;
+    for (auto &u: users) {
+        s += std::to_string(i) + ") " + "User with id : " + std::to_string(u.get_user_id()) + " and name : ";
+        s += u.get_name();
+        s += '\n';
+        i++;
+    }
+    return s;
 }
 
-// lesa
-std::string Network_Analysis::user_suggestion(User user) {
-    return std::string();
+std::string Network_Analysis::user_suggestion(int user_id) {
+    User user = g.get_user_by_id(user_id);
+    std::string s = "";
+    std::vector<User> users = g.user_suggestion(user);
+    int i = 1;
+    for (auto &u: users) {
+        s += std::to_string(i) + ") " + "User with id : " + std::to_string(u.get_user_id()) + " and name : ";
+        s += u.get_name();
+        s += '\n';
+        i++;
+    }
+    return s;
 }
 
-// lesa
+
 std::string Network_Analysis::post_search(std::string word) {
     return std::string();
 }

@@ -50,6 +50,8 @@ public:
 
     std::map<int,User> get_users();
 
+    User get_user_by_id(int id);
+
     std::map<int,std::vector<int>> get_followersOfUsers();
 };
 class Network_Analysis {
@@ -67,9 +69,9 @@ public:
 
     static std::string most_connections();
 
-    static std::string mutual_followers(User user1, User user2);
+    static std::string mutual_followers(int user1_id, int user2_id) ;
 
-    static std::string user_suggestion(User user);
+    static std::string user_suggestion(int user_id);
 
     static std::string post_search(std::string word);
 };
