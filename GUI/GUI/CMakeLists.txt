@@ -29,6 +29,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Node.cpp
         Node.h
         graphwindow.h graphwindow.cpp graphwindow.ui
+        Network_Analysis.h
+        Network_Analysis.cpp
+        File.h
+        File.cpp
 
 
 

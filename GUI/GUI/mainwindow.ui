@@ -23,147 +23,7 @@
    <string> XML Parser</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_5">
-    <item row="1" column="0">
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="4">
-       <widget class="QPushButton" name="updatechanges">
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Update Input</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QPushButton" name="toJson">
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Convert to JSON</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="minify">
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Minify</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QPushButton" name="Graphs">
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Graphs</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QPushButton" name="Verify">
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Verify</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="Decompress">
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Decompress</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="InputFile">
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Input XML file</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="Prettify">
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Prettify</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="CorrectFile">
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Correct</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="Compress">
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Compress</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
+   <layout class="QGridLayout" name="gridLayout_6">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
@@ -268,6 +128,207 @@
          </widget>
         </item>
        </layout>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="1">
+       <widget class="QPushButton" name="Redo">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Redo</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="Savefile">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Save File</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="Undo">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Undo</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0">
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="InputFile">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Input XML file</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="Verify">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Verify</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="CorrectFile">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Correct</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QPushButton" name="minify">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Minify</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="Prettify">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Prettify</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="Compress">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Compress</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="Decompress">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Decompress</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="toJson">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Convert to JSON</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QPushButton" name="updatechanges">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Update Input</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QPushButton" name="Graphs">
+        <property name="minimumSize">
+         <size>
+          <width>160</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Graphs</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

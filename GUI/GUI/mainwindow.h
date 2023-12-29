@@ -2,6 +2,16 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "Network_Analysis.h"
+#include "./ui_mainwindow.h"
+#include <QFileDialog>
+#include <QFile>
+#include <QTextStream>
+#include "xmlParser.h"
+#include "graphwindow.h"
+
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,9 +30,6 @@ public:
 
 private slots:
     void on_InputFile_clicked();
-
-
-    void on_Testing_clicked();
 
     void on_minify_clicked();
 
@@ -43,6 +50,13 @@ private slots:
 
 
     void on_Graphs_released();
+
+    void on_Undo_clicked();
+
+    void on_Redo_clicked();
+
+
+    void on_Savefile_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -2,7 +2,11 @@
 #define GRAPHWINDOW_H
 
 #include <QMainWindow>
-
+#include <QInputDialog>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <QDir>
+#include "Network_Analysis.h"
 namespace Ui {
 class GraphWindow;
 }
@@ -16,7 +20,9 @@ public:
     ~GraphWindow();
 
 private slots:
-    void on_pushButton_2_clicked();
+
+
+    void on_Show_clicked();
 
 private:
     Ui::GraphWindow *ui;
