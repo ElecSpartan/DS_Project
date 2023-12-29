@@ -10,8 +10,8 @@
 #include <filesystem>
 #include <algorithm>
 struct HuffmanNode {
-    int data;
     int frequency;
+    int data;
     HuffmanNode* left;
     HuffmanNode* right;
 
@@ -81,13 +81,14 @@ public:
     static std::string decompress(const std::string& compressedFilePath);
 };
 
-
 class Undo_and_redo{
 public:
     static std::pair<int,std::string> undo();
     static std::pair<int,std::string> redo();
     static std::pair<int, std::string> push_to_undo(int num, std::string &s);
 };
+
+
 
 
 

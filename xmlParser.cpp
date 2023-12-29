@@ -327,17 +327,17 @@ bool CompareNodes::operator()(const HuffmanNode* a, const HuffmanNode* b) const 
 HuffmanNode* xmlParser::buildHuffmanTree(std::map<char, int>& frequencies) {
     HuffmanPriorityQueue pq;
 
-    for (auto& pair : frequencies) {
+    for (auto &pair: frequencies) {
         pq.push(new HuffmanNode(pair.first, pair.second));
     }
 
     while (pq.size() > 1) {
-        HuffmanNode* left = pq.top();
+        HuffmanNode *left = pq.top();
         pq.pop();
-        HuffmanNode* right = pq.top();
+        HuffmanNode *right = pq.top();
         pq.pop();
 
-        HuffmanNode* newNode = new HuffmanNode(0, left->frequency + right->frequency);
+        HuffmanNode *newNode = new HuffmanNode(0, left->frequency + right->frequency);
         newNode->left = left;
         newNode->right = right;
 
@@ -387,6 +387,7 @@ HuffmanNode* xmlParser::file_to_HuffmanTree(std::ifstream& inFile) {
         int value;
         inFile.read(reinterpret_cast<char*>(&value), sizeof(char));
 
+        // Since it's a leaf node, frequency is not needed
         return new HuffmanNode(value, 0);
     }
     else {
@@ -394,6 +395,7 @@ HuffmanNode* xmlParser::file_to_HuffmanTree(std::ifstream& inFile) {
         return nullptr;
     }
 }
+
 
 void xmlParser::HuffmanCodes(HuffmanNode* root, const std::string& code, std::map<char, std::string>& codes) {
     if (!root)

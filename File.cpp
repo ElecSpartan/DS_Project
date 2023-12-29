@@ -20,6 +20,7 @@ void File::outputFile(std::string address,std::string &content) {
     if (file.is_open()) {
         file << content;
         file.close();
+
     } else {
         std::cerr << "Error: Unable to write to file" << std::endl;
     }

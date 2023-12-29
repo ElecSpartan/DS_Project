@@ -22,7 +22,17 @@
   <component name="ChangeListManager">
     <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added Network Analysis&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/File.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/File.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/File.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/File.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/Network_Analysis.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/Network_Analysis.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/xmlParser.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_Project.dir/xmlParser.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/DS_Project.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/DS_Project.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/compressed_file.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/compressed_file.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xmlParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/xmlParser.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xmlParser.h" beforeDir="false" afterPath="$PROJECT_DIR$/xmlParser.h" afterDir="false" />
     </list>
@@ -135,14 +145,8 @@
       <workItem from="1703794687847" duration="4088000" />
       <workItem from="1703801529992" duration="13283000" />
       <workItem from="1703851217576" duration="2198000" />
-      <workItem from="1703853460940" duration="4000" />
-    </task>
-    <task id="LOCAL-00004" summary="&quot;Added some code for parsing&quot;">
-      <created>1702307517102</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1702307517102</updated>
+      <workItem from="1703853460940" duration="2239000" />
+      <workItem from="1703856929393" duration="6320000" />
     </task>
     <task id="LOCAL-00005" summary="&quot;Added some code for parsing&quot;">
       <created>1702392571846</created>
@@ -480,7 +484,14 @@
       <option name="project" value="LOCAL" />
       <updated>1703852049816</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="&quot;Added Network Analysis&quot;">
+      <created>1703853470443</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1703853470443</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
