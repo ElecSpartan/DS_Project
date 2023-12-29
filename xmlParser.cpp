@@ -346,22 +346,26 @@ HuffmanNode* xmlParser::buildHuffmanTree(std::map<char, int>& frequencies) {
     return pq.top();
 }
 
-void xmlParser::HuffmanTree_to_file(HuffmanNode* root, std::ofstream& outFile) {
+void xmlParser::HuffmanTree_to_file(HuffmanNode* root, std::fstream& outFile) {
     if (!root)
         return;
+    outFile.open("comp.dat",std::ios::out | std::ios::binary);
+    if(outFile){
+        if (root->left || root->right) {
+            outFile.put('\1');  // Non-leaf node marker
+            outFile.write(reinterpret_cast<const char*>(&root->data), sizeof(char));
+            outFile.write(reinterpret_cast<const char*>(&root->frequency), sizeof(int));
 
-    if (root->left || root->right) {
-        outFile.put('\1');  // Non-leaf node marker
-        outFile.write(reinterpret_cast<const char*>(&root->data), sizeof(char));
-        outFile.write(reinterpret_cast<const char*>(&root->frequency), sizeof(int));
-
-        HuffmanTree_to_file(root->left, outFile);
-        HuffmanTree_to_file(root->right, outFile);
+            HuffmanTree_to_file(root->left, outFile);
+            HuffmanTree_to_file(root->right, outFile);
+        }
+        else {
+            outFile.put('\0');  // Leaf node marker
+            outFile.write(reinterpret_cast<const char*>(&root->data), sizeof(char));
+        }
     }
-    else {
-        outFile.put('\0');  // Leaf node marker
-        outFile.write(reinterpret_cast<const char*>(&root->data), sizeof(char));
-    }
+    else
+        std::cout<<"Error Openening File";
 }
 
 HuffmanNode* xmlParser::file_to_HuffmanTree(std::ifstream& inFile) {
