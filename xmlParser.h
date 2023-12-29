@@ -3,19 +3,19 @@
 #include <stack>
 #include <vector>
 #include <queue>
-#include <map>
+#include <unordered_map>
 #include "Node.h"
 #include <fstream>
 #include <bitset>
 #include <filesystem>
 #include <algorithm>
 struct HuffmanNode {
+    int value;
     int frequency;
-    int data;
     HuffmanNode* left;
     HuffmanNode* right;
 
-    HuffmanNode(int data, int freq);
+    HuffmanNode(int val, int freq);
 };
 
 struct CompareNodes {
@@ -56,11 +56,19 @@ private:
 
     static std::vector<std::string> values_correction(std::vector<std::string> &file);
 
-    static HuffmanNode* buildHuffmanTree(std::map<char, int>& frequencies); //to output the compressed file from the tree
-    static void HuffmanTree_to_file(HuffmanNode* root, std::ofstream& outFile); //to build the tree from the compressed file
-    static HuffmanNode* file_to_HuffmanTree(std::ifstream& inFile);
-    static void HuffmanCodes(HuffmanNode* root, const std::string& code, std::map<char, std::string>& codes);
-    static std::map<char, int> calculateFrequencies(const std::string& in);
+    static HuffmanNode* buildHuffmanTree(std::unordered_map<char, int>& frequencies); //to output the compressed file from the tree
+
+    static void writeHuffmanTree(std::ofstream& outFile,HuffmanNode* root); //to build the tree from the compressed file
+
+    static HuffmanNode* readHuffmanTree(std::ifstream& inFile);
+
+    static void buildHuffmanCodes(HuffmanNode* root,std::string code, std::unordered_map<char, std::string>& codes);
+
+    static std::unordered_map<char, int> calculateFrequencies(std::string& in);
+
+    static std::string compress(std::string &input);
+
+    static std::string decompress(const std::string& compressedFilePath, HuffmanNode* root);
 public:
     xmlParser() = delete;
 
@@ -76,9 +84,9 @@ public:
 
     static std::string toJsonByTrees(std::string &xml_input);
 
-    static std::string compress(std::string &input);
+    static std::string  compressAndWriteToFile(std::string& input, std::string fileName = "compressed_file");
 
-    static std::string decompress(const std::string& compressedFilePath);
+    static std::string readAndDecompressFromFile(const std::string& fileName);
 };
 
 class Undo_and_redo{
