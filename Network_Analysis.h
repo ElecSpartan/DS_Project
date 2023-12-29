@@ -51,7 +51,7 @@ public:
 
     std::map<int,User> get_users();
 
-    std::vector<std::pair<std::string,std::string>> Search_in_post(std::string word);
+    std::vector<User> Search_in_post(std::string word);
 
     User get_user_by_id(int id);
 

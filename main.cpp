@@ -3,8 +3,7 @@
 using namespace std;
 int main() {
     string file = File::readFile("E:\\College\\Data structures\\Project\\DS_Project\\sample.txt");
-    cout << xmlParser::compressAndWriteToFile(file);
-    cout << "\n\n"<< xmlParser::readAndDecompressFromFile(
-            "E:\\College\\Data structures\\Project\\DS_Project\\cmake-build-debug\\compressed_file.bin");
+    Network_Analysis::graph_and_visualization(file);
+    cout<<Network_Analysis::post_search("economy");
     return 0;
 }

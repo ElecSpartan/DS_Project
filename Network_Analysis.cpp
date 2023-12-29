@@ -157,26 +157,27 @@ std::map<int,std::vector<int>> Graph::get_followersOfUsers() {
     return followersOfUser;
 }
 
-std::vector<std::pair<std::string,std::string>> Graph::Search_in_post(std::string word) {
-    bool first_id = true;
-    std::vector<std::string> v; //call the function that parse the xml file to vector of strings to create this vector
-    v = Network_Analysis::divide_string_for_graph()
-    std::stack<std::string> name_stk, id_stk;
-    std::vector<std::pair<std::string, std::string>> ret;
-    std::vector<int> id_freq(2e5 + 5, 0);
-    for (int i = 0; i < v.size(); i++) {
-        if (v[i] == "<name>")
-            name_stk.push(v[i + 1]), i++;
-        if (v[i] == "<id>")
-            id_stk.push(v[i + 1]), i++;
-        if (v[i] == "</user>")
-            name_stk.pop(), id_stk.pop();
-        if (v[i] == "<post>") {
-            for (int j = i + 1; j < v.size(); j++) {
-                if (v[j] == "</post>")
-                    break;
-                if (v[j].find(word) != std::string::npos && !id_freq[stoi(id_stk.top())])
-                    ret.emplace_back(id_stk.top(), name_stk.top()), id_freq[stoi(id_stk.top())]++;
+std::vector<User> Graph::Search_in_post(std::string word) {
+    std::vector<User> ret;
+    std::map<int, User> userss = g.get_users();
+    for (auto x: userss) {
+        std::vector<Post> v = x.second.get_posts();
+        for (auto y: v) {
+            std::string Body = y.get_body();
+            std::vector<std::string> Topics = y.get_topics();
+            if (Body.find(word) != std::string::npos) {
+                ret.push_back(x.second);
+                break;
+            } else {
+                bool break_flag = false;
+                for (auto &t: Topics) {
+                    if (t.find(word) != std::string::npos) {
+                        ret.push_back(x.second);
+                        break_flag = true;
+                        break;
+                    }
+                }
+                if (break_flag) break;
             }
         }
     }

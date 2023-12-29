@@ -20,10 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;edited error in xml parsing&quot;">
+    <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;post search&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Network_Analysis.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Network_Analysis.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Network_Analysis.h" beforeDir="false" afterPath="$PROJECT_DIR$/Network_Analysis.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,14 +136,8 @@
       <workItem from="1703853460940" duration="2239000" />
       <workItem from="1703856929393" duration="9183000" />
       <workItem from="1703875606944" duration="520000" />
-      <workItem from="1703876966022" duration="1632000" />
-    </task>
-    <task id="LOCAL-00011" summary="&quot;Added some code for parsing&quot;">
-      <created>1702410974928</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1702410974928</updated>
+      <workItem from="1703876966022" duration="1913000" />
+      <workItem from="1703881363052" duration="1000" />
     </task>
     <task id="LOCAL-00012" summary="&quot;Added some code for parsing&quot;">
       <created>1702412207176</created>
@@ -482,7 +475,14 @@
       <option name="project" value="LOCAL" />
       <updated>1703877874689</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="&quot;post search&quot;">
+      <created>1703878637847</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1703878637847</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,6 +509,7 @@
     <MESSAGE value="&quot;Added undo - redo&quot;" />
     <MESSAGE value="&quot; xml parsing&quot;" />
     <MESSAGE value="&quot;edited error in xml parsing&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;edited error in xml parsing&quot;" />
+    <MESSAGE value="&quot;post search&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;post search&quot;" />
   </component>
 </project>
