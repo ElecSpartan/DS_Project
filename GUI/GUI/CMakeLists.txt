@@ -28,6 +28,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         xmlParser.cpp
         Node.cpp
         Node.h
+        graphwindow.h graphwindow.cpp graphwindow.ui
+
+
 
 
 

@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QTextStream>
 #include "xmlParser.h"
+#include "graphwindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -121,17 +122,21 @@ void MainWindow::on_Decompress_clicked()
 {
     // Open a file dialog to choose a file
     QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text Files (*.txt);;All Files (*)"));
+    std::string path = filePath.toStdString();
 
-
-    std::string resultFromDC= xmlParser::decompress(filePath.toStdString());
+    std::string resultFromDC= xmlParser::decompress(path);
     ui->Result->setPlainText(QString::fromStdString(resultFromDC));
 
 }
 
 
-void MainWindow::on_Graphs_clicked()
-{
 
-    //GraphWindow *graphWindow = new GraphWindow(this);
-    //graphWindow->show();
+
+
+
+void MainWindow::on_Graphs_released()
+{
+    GraphWindow *newWindow = new GraphWindow(this);
+    newWindow->show();
 }
+

@@ -40,7 +40,9 @@ private slots:
 
     void on_Decompress_clicked();
 
-    void on_Graphs_clicked();
+
+
+    void on_Graphs_released();
 
 private:
     Ui::MainWindow *ui;
