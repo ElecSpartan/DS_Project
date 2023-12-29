@@ -1,10 +1,7 @@
 #include "File.h"
 
-File::File(std::string path) {
-    this->path = path;
-}
 
-std::string File::readFile() {
+std::string File::readFile(std::string path) {
     std::ifstream file(path);
     if (!file.is_open()) {
         std::cerr << "Error: Unable to open file" << std::endl;
@@ -18,10 +15,10 @@ std::string File::readFile() {
     return file_string;
 }
 
-void File::outputFile(const std::string& output_string) {
-    std::ofstream file(path);
+void File::outputFile(std::string address,std::string &content) {
+    std::ofstream file(address);
     if (file.is_open()) {
-        file << output_string;
+        file << content;
         file.close();
     } else {
         std::cerr << "Error: Unable to write to file" << std::endl;

@@ -55,26 +55,26 @@ build CMakeFiles/DS_Project.dir/main.cpp.obj: CXX_COMPILER__DS_Project_Debug E$:
   OBJECT_DIR = CMakeFiles\DS_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\DS_Project.dir
 
-build CMakeFiles/DS_Project.dir/Graph.cpp.obj: CXX_COMPILER__DS_Project_Debug E$:/College/Data$ structures/Project/DS_Project/Graph.cpp || cmake_object_order_depends_target_DS_Project
-  DEP_FILE = CMakeFiles\DS_Project.dir\Graph.cpp.obj.d
+build CMakeFiles/DS_Project.dir/xmlParser.cpp.obj: CXX_COMPILER__DS_Project_Debug E$:/College/Data$ structures/Project/DS_Project/xmlParser.cpp || cmake_object_order_depends_target_DS_Project
+  DEP_FILE = CMakeFiles\DS_Project.dir\xmlParser.cpp.obj.d
   FLAGS = -g -std=gnu++23
   OBJECT_DIR = CMakeFiles\DS_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\DS_Project.dir
 
-build CMakeFiles/DS_Project.dir/Post.cpp.obj: CXX_COMPILER__DS_Project_Debug E$:/College/Data$ structures/Project/DS_Project/Post.cpp || cmake_object_order_depends_target_DS_Project
-  DEP_FILE = CMakeFiles\DS_Project.dir\Post.cpp.obj.d
+build CMakeFiles/DS_Project.dir/Node.cpp.obj: CXX_COMPILER__DS_Project_Debug E$:/College/Data$ structures/Project/DS_Project/Node.cpp || cmake_object_order_depends_target_DS_Project
+  DEP_FILE = CMakeFiles\DS_Project.dir\Node.cpp.obj.d
   FLAGS = -g -std=gnu++23
   OBJECT_DIR = CMakeFiles\DS_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\DS_Project.dir
 
-build CMakeFiles/DS_Project.dir/User.cpp.obj: CXX_COMPILER__DS_Project_Debug E$:/College/Data$ structures/Project/DS_Project/User.cpp || cmake_object_order_depends_target_DS_Project
-  DEP_FILE = CMakeFiles\DS_Project.dir\User.cpp.obj.d
+build CMakeFiles/DS_Project.dir/File.cpp.obj: CXX_COMPILER__DS_Project_Debug E$:/College/Data$ structures/Project/DS_Project/File.cpp || cmake_object_order_depends_target_DS_Project
+  DEP_FILE = CMakeFiles\DS_Project.dir\File.cpp.obj.d
   FLAGS = -g -std=gnu++23
   OBJECT_DIR = CMakeFiles\DS_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\DS_Project.dir
 
-build CMakeFiles/DS_Project.dir/huffman.cpp.obj: CXX_COMPILER__DS_Project_Debug E$:/College/Data$ structures/Project/DS_Project/huffman.cpp || cmake_object_order_depends_target_DS_Project
-  DEP_FILE = CMakeFiles\DS_Project.dir\huffman.cpp.obj.d
+build CMakeFiles/DS_Project.dir/Network_Analysis.cpp.obj: CXX_COMPILER__DS_Project_Debug E$:/College/Data$ structures/Project/DS_Project/Network_Analysis.cpp || cmake_object_order_depends_target_DS_Project
+  DEP_FILE = CMakeFiles\DS_Project.dir\Network_Analysis.cpp.obj.d
   FLAGS = -g -std=gnu++23
   OBJECT_DIR = CMakeFiles\DS_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\DS_Project.dir
@@ -87,7 +87,7 @@ build CMakeFiles/DS_Project.dir/huffman.cpp.obj: CXX_COMPILER__DS_Project_Debug 
 #############################################
 # Link the executable DS_Project.exe
 
-build DS_Project.exe: CXX_EXECUTABLE_LINKER__DS_Project_Debug CMakeFiles/DS_Project.dir/main.cpp.obj CMakeFiles/DS_Project.dir/Graph.cpp.obj CMakeFiles/DS_Project.dir/Post.cpp.obj CMakeFiles/DS_Project.dir/User.cpp.obj CMakeFiles/DS_Project.dir/huffman.cpp.obj
+build DS_Project.exe: CXX_EXECUTABLE_LINKER__DS_Project_Debug CMakeFiles/DS_Project.dir/main.cpp.obj CMakeFiles/DS_Project.dir/xmlParser.cpp.obj CMakeFiles/DS_Project.dir/Node.cpp.obj CMakeFiles/DS_Project.dir/File.cpp.obj CMakeFiles/DS_Project.dir/Network_Analysis.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\DS_Project.dir

@@ -1,10 +1,21 @@
 # ninja log v5
-9	1099	7241126745873677	CMakeFiles/DS_Project.dir/Error_detection.cpp.obj	5bb2a7908508ed85
+11	1541	7241118223464176	CMakeFiles/DS_Project.dir/Post.cpp.obj	edc1d14d1d0a75ce
 21	1779	7254762895905773	CMakeFiles/DS_Project.dir/Error_detection_and_correction.cpp.obj	6df058640a4242ea
 10	4388	7254762921990083	CMakeFiles/DS_Project.dir/Graph.cpp.obj	fe42040f7808881a
-11	1541	7241118223464176	CMakeFiles/DS_Project.dir/Post.cpp.obj	edc1d14d1d0a75ce
-899	1380	7254916919064384	DS_Project.exe	27fa39ddf6f4c656
+9	1099	7241126745873677	CMakeFiles/DS_Project.dir/Error_detection.cpp.obj	5bb2a7908508ed85
 27	1605	7241118224122405	CMakeFiles/DS_Project.dir/User.cpp.obj	c732b98dc41045fc
+2264	3435	7255137691954251	DS_Project.exe	7f93c4de3a1e6ef3
 4	2007	7254769011604587	CMakeFiles/DS_Project.dir/XML_Parser.cpp.obj	466b30b67dde9ad4
-4	1089	7254826863502492	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
+4	2263	7255137680321251	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
 3	899	7254916914291623	CMakeFiles/DS_Project.dir/huffman.cpp.obj	4ddcea28c3737d13
+1	205	7255191164187772	build.ninja	7fe640fbab316998
+4	4108	7255123848584803	CMakeFiles/DS_Project.dir/xmlParser.cpp.obj	326a05f046e99909
+6	985	7255114221094692	CMakeFiles/DS_Project.dir/Node.cpp.obj	3a26155cf035e35c
+10	605	7255191449750559	CMakeFiles/DS_Project.dir/File.cpp.obj	37a5e67fde0bd4e3
+3	818	7255191451884857	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
+7	1445	7255191458124363	CMakeFiles/DS_Project.dir/Network_Analysis.cpp.obj	33f0d9ecf9fb0d1e
+2	687	7255192282486277	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
+7	1390	7255192289480847	CMakeFiles/DS_Project.dir/Network_Analysis.cpp.obj	33f0d9ecf9fb0d1e
+3	806	7255193687983708	CMakeFiles/DS_Project.dir/main.cpp.obj	13340ccce530d375
+6	1567	7255193695574995	CMakeFiles/DS_Project.dir/Network_Analysis.cpp.obj	33f0d9ecf9fb0d1e
+1567	2432	7255193704198153	DS_Project.exe	df596deafd31280c

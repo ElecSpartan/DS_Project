@@ -5,10 +5,12 @@ set(CMAKE_CXX_STANDARD 23)
 
 add_executable(DS_Project
         main.cpp
-        Graph.cpp
-        Post.cpp
-        User.cpp
-        Graph.h
-        User.h
-        Post.h
+        xmlParser.cpp
+        xmlParser.h
+        Node.cpp
+        Node.h
+        File.cpp
+        File.h
+        Network_Analysis.cpp
+        Network_Analysis.h
         )

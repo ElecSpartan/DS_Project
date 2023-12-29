@@ -1,5 +1,11 @@
 #include "xmlParser.h"
+
+// lesa el huff-man
+// w el un-do w el re-do
+
 std::vector<std::pair<int,bool>>errors; // line, type ( 0 >> open , 1 >> closed )
+std::stack<std::pair<bool,std::string>> undo_stack; // 0 >> input , 1 >> Result
+std::stack<std::pair<bool,std::string>> redo_stack; // 0 >> input , 1 >> Result
 
 int xmlParser::getTagCount(std::string& input_string, std::string& tag_name, int start_index) {
     std::string opening_tag = "<" + tag_name + ">";
@@ -407,7 +413,7 @@ std::map<char, int> xmlParser::calculateFrequencies(const std::string& in) {
     return frequencies;
 }
 
-// butt
+
 std::string xmlParser::correct_xml(std::string &xml_file) {
     std::pair<std::vector<std::string>, int> p = divide_string_for_correction(xml_file);
     std::vector<std::string> file = p.first;
@@ -487,7 +493,7 @@ std::string xmlParser::correct_xml(std::string &xml_file) {
     return add_new_lines(valid_file);
 }
 
-// butt
+
 std::string xmlParser::get_errors(std::string &xml_file) {
     errors.clear();
     std::string s = correct_xml(xml_file);
@@ -507,7 +513,7 @@ std::string xmlParser::get_errors(std::string &xml_file) {
     return ans;
 }
 
-// butt
+
 std::string xmlParser::minify(std::string& xml_input) {
     std::string intermediate_string, minified_xml;
     int i = xml_input.length()- 1;
@@ -550,7 +556,7 @@ std::string xmlParser::minify(std::string& xml_input) {
     return minified_xml;
 }
 
-// butt
+
 std::string xmlParser::prettify(std::string& xml_input) {
     std::string prettified_xml = "<";
     int i = xml_input.find('<') + 1, j;
@@ -601,7 +607,7 @@ std::string xmlParser::prettify(std::string& xml_input) {
     return prettified_xml;
 }
 
-// buttl
+
 std::string xmlParser::toJsonByStrings(std::string& xml_input) {
     int i = 0, j;
     std::string json_output = "", indentation_type = "    ";
@@ -706,7 +712,7 @@ std::string xmlParser::toJsonByStrings(std::string& xml_input) {
     return json_output;
 }
 
-// butt
+
 std::string xmlParser::toJsonByTrees(std::string& xml_input) {
     std::string minified_xml = xmlParser::minify(xml_input);
 
@@ -719,7 +725,7 @@ std::string xmlParser::toJsonByTrees(std::string& xml_input) {
     return json_output;
 }
 
-// butt
+
 std::string xmlParser::compress(std::string& in) {
     std::map<char, int> frequencies = xmlParser::calculateFrequencies(in);
     HuffmanNode *root = buildHuffmanTree(frequencies);
@@ -757,12 +763,14 @@ std::string xmlParser::compress(std::string& in) {
     return compressed;
 }
 
-// butt
+
 std::string xmlParser::decompress(const std::string& compressedFilePath) {
     std::ifstream compressedFile(compressedFilePath, std::ios::binary);
     HuffmanNode *root;
     // Deserialize Huffman tree from compressed file
     root = file_to_HuffmanTree(compressedFile);
+
+
 
     // Decompress the remaining data
     std::string Bits;
@@ -772,10 +780,12 @@ std::string xmlParser::decompress(const std::string& compressedFilePath) {
         Bits += bits.to_string();
     }
 
+
     compressedFile.close();
 
     std::string decompressed;
     HuffmanNode *currentNode = root;
+
 
     for (char bit: Bits) {
         if (bit == '0') {
