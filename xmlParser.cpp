@@ -740,7 +740,7 @@ std::string xmlParser::toJsonByTrees(std::string& xml_input) {
 
 std::string  xmlParser::compressAndWriteToFile(std::string& input, std::string fileName) {
     std::unordered_map<char, int> frequencies = calculateFrequencies(input);
-    HuffmanNode root = buildHuffmanTree(frequencies);
+    HuffmanNode *root = buildHuffmanTree(frequencies);
     std::string compressed = compress(input);
 
     std::filesystem::path currentPath = std::filesystem::current_path();
@@ -764,7 +764,7 @@ std::string  xmlParser::readAndDecompressFromFile(const std::string& fileName) {
     std::ifstream inFile(fileName, std::ios::binary);
 
     // Read Huffman tree from the file
-    HuffmanNode decompressionRoot = readHuffmanTree(inFile);
+    HuffmanNode *decompressionRoot = readHuffmanTree(inFile);
 
     // Read the compressed data from the file
     std::string compressedFromFile;
