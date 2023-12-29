@@ -3,6 +3,7 @@
 #include<vector>
 #include<map>
 #include<queue>
+#include<stack>
 #include "File.h"
 
 class Post {
@@ -49,6 +50,8 @@ public:
     std::vector<User> user_suggestion(User user);
 
     std::map<int,User> get_users();
+
+    std::vector<std::pair<std::string,std::string>> Search_in_post(std::string word);
 
     User get_user_by_id(int id);
 

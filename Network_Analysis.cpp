@@ -153,9 +153,34 @@ User Graph::get_user_by_id(int id) {
     return users[id];
 }
 
-
 std::map<int,std::vector<int>> Graph::get_followersOfUsers() {
     return followersOfUser;
+}
+
+std::vector<std::pair<std::string,std::string>> Graph::Search_in_post(std::string word) {
+    bool first_id = true;
+    std::vector<std::string> v; //call the function that parse the xml file to vector of strings to create this vector
+    v = Network_Analysis::divide_string_for_graph()
+    std::stack<std::string> name_stk, id_stk;
+    std::vector<std::pair<std::string, std::string>> ret;
+    std::vector<int> id_freq(2e5 + 5, 0);
+    for (int i = 0; i < v.size(); i++) {
+        if (v[i] == "<name>")
+            name_stk.push(v[i + 1]), i++;
+        if (v[i] == "<id>")
+            id_stk.push(v[i + 1]), i++;
+        if (v[i] == "</user>")
+            name_stk.pop(), id_stk.pop();
+        if (v[i] == "<post>") {
+            for (int j = i + 1; j < v.size(); j++) {
+                if (v[j] == "</post>")
+                    break;
+                if (v[j].find(word) != std::string::npos && !id_freq[stoi(id_stk.top())])
+                    ret.emplace_back(id_stk.top(), name_stk.top()), id_freq[stoi(id_stk.top())]++;
+            }
+        }
+    }
+    return ret;
 }
 
 
@@ -355,7 +380,6 @@ std::string Network_Analysis::most_connections() {
     return s;
 }
 
-
 std::string Network_Analysis::mutual_followers(int user1_id, int user2_id) {
     User user1 = g.get_user_by_id(user1_id);
     User user2 = g.get_user_by_id(user2_id);
@@ -385,7 +409,17 @@ std::string Network_Analysis::user_suggestion(int user_id) {
     return s;
 }
 
-
 std::string Network_Analysis::post_search(std::string word) {
-    return std::string();
+    std::vector<User> users = g.Search_in_post(word);
+    std::string s = "";
+    int i = 1;
+    for (auto &u: users) {
+        s += std::to_string(i) + ") " + "User with id : " + std::to_string(u.get_user_id()) + " and name : ";
+        s += u.get_name();
+        s += " posted about the word ( " + word + " ).";
+        s += '\n';
+        i++;
+    }
+    return s;
 }
+
