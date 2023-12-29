@@ -20,12 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added Compression&quot;">
+    <list default="true" id="cff5e52a-7082-4087-802e-8abf0b082d26" name="Changes" comment="&quot;Added undo - redo&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample.txt" beforeDir="false" afterPath="$PROJECT_DIR$/sample.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xmlParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/xmlParser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xmlParser.h" beforeDir="false" afterPath="$PROJECT_DIR$/xmlParser.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,14 +135,8 @@
       <workItem from="1703801529992" duration="13283000" />
       <workItem from="1703851217576" duration="2198000" />
       <workItem from="1703853460940" duration="2239000" />
-      <workItem from="1703856929393" duration="9129000" />
-    </task>
-    <task id="LOCAL-00007" summary="&quot;Added some code for parsing&quot;">
-      <created>1702409071652</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1702409071652</updated>
+      <workItem from="1703856929393" duration="9183000" />
+      <workItem from="1703875606944" duration="35000" />
     </task>
     <task id="LOCAL-00008" summary="&quot;Added some code for parsing&quot;">
       <created>1702409134602</created>
@@ -482,7 +474,14 @@
       <option name="project" value="LOCAL" />
       <updated>1703867707898</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="&quot;Added undo - redo&quot;">
+      <created>1703868313953</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1703868313953</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -506,6 +505,7 @@
     <MESSAGE value="&quot;Added compression code&quot;" />
     <MESSAGE value="&quot;Added Network Analysis&quot;" />
     <MESSAGE value="&quot;Added Compression&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;Added Compression&quot;" />
+    <MESSAGE value="&quot;Added undo - redo&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;Added undo - redo&quot;" />
   </component>
 </project>

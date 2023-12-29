@@ -525,7 +525,7 @@ std::string xmlParser::get_errors(std::string &xml_file) {
     for (int i = 0; i < errors.size(); i++) {
         ans += "Missing ";
         if (errors[i].second)
-            ans += " Closing tag after line ";
+            ans += " Closing tag in line ";
         else
             ans += " Opening tag in line ";
 
