@@ -136,14 +136,8 @@
       <workItem from="1703851217576" duration="2198000" />
       <workItem from="1703853460940" duration="2239000" />
       <workItem from="1703856929393" duration="9183000" />
-      <workItem from="1703875606944" duration="35000" />
-    </task>
-    <task id="LOCAL-00008" summary="&quot;Added some code for parsing&quot;">
-      <created>1702409134602</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1702409134602</updated>
+      <workItem from="1703875606944" duration="520000" />
+      <workItem from="1703876966022" duration="223000" />
     </task>
     <task id="LOCAL-00009" summary="&quot;Added some code for parsing&quot;">
       <created>1702409511624</created>
@@ -481,7 +475,14 @@
       <option name="project" value="LOCAL" />
       <updated>1703868313953</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="&quot;Added undo - redo&quot;">
+      <created>1703875665478</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1703875665478</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
