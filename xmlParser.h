@@ -82,12 +82,11 @@ public:
 };
 
 
-
 class Undo_and_redo{
-
-
-
-
+public:
+    static std::pair<int,std::string> undo();
+    static std::pair<int,std::string> redo();
+    static std::pair<int, std::string> push_to_undo(int num, std::string &s);
 };
 
 

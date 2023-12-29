@@ -1,11 +1,10 @@
 #include "xmlParser.h"
 
 // lesa el huff-man
-// w el un-do w el re-do
 
 std::vector<std::pair<int,bool>>errors; // line, type ( 0 >> open , 1 >> closed )
-std::stack<std::pair<bool,std::string>> undo_stack; // 0 >> input , 1 >> Result
-std::stack<std::pair<bool,std::string>> redo_stack; // 0 >> input , 1 >> Result
+std::stack<std::pair<int,std::string>> undo_stack; // 0 >> input , 1 >> Result , 2 >> nothing
+std::stack<std::pair<int,std::string>> redo_stack; // 0 >> input , 1 >> Result , 2 >> nothing
 
 int xmlParser::getTagCount(std::string& input_string, std::string& tag_name, int start_index) {
     std::string opening_tag = "<" + tag_name + ">";
@@ -803,4 +802,27 @@ std::string xmlParser::decompress(const std::string& compressedFilePath) {
     return decompressed;
 }
 
+std::pair<int,std::string> Undo_and_redo::undo() {
+    if (undo_stack.empty())
+        return {2, ""};
 
+    std::pair<int, std::string> p = undo_stack.top();
+    undo_stack.pop();
+    redo_stack.push(p);
+    return p;
+}
+
+std::pair<int, std::string> Undo_and_redo::redo() {
+    if (redo_stack.empty())
+        return {2, ""};
+
+    std::pair<int, std::string> p = redo_stack.top();
+    redo_stack.pop();
+    undo_stack.push(p);
+    return p;
+}
+
+// num >> 0 >> input  , num >> 1 >> result
+std::pair<int,std::string> Undo_and_redo::push_to_undo(int num,std::string &s) {
+    undo_stack.push({num, s});
+}
