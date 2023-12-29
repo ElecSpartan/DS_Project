@@ -784,23 +784,35 @@ std::string  xmlParser::readAndDecompressFromFile(const std::string& fileName) {
     return decompress(compressedFromFile, decompressionRoot);
 }
 
-std::pair<int,std::string> Undo_and_redo::undo() {
+
+
+std::pair<int,std::string> Undo_and_redo::undo(std::string &last_str) {
     if (undo_stack.empty())
         return {2, ""};
 
     std::pair<int, std::string> p = undo_stack.top();
     undo_stack.pop();
-    redo_stack.push(p);
+    if (p.first == 0)
+        redo_stack.push({0, last_str});
+    else
+        redo_stack.push({1, last_str});
+
     return p;
 }
 
-std::pair<int, std::string> Undo_and_redo::redo() {
+std::pair<int, std::string> Undo_and_redo::redo(std::string &last_str) {
     if (redo_stack.empty())
         return {2, ""};
 
     std::pair<int, std::string> p = redo_stack.top();
     redo_stack.pop();
-    undo_stack.push(p);
+
+    if (p.first == 1)
+        undo_stack.push({0, last_str});
+    else
+        undo_stack.push({1, last_str});
+
+
     return p;
 }
 
