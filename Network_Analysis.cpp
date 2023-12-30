@@ -133,7 +133,7 @@ std::vector<User> Graph::mutual_followers(User user1 , User user2){
     sort(followersOfUser[user2.get_user_id()].begin(),followersOfUser[user2.get_user_id()].end());
     int p1 = 0 , p2 = 0;
     while(p1<followersOfUser[user1.get_user_id()].size() && p2 < followersOfUser[user2.get_user_id()].size()){
-        if(followersOfUser[user1.get_user_id()][p1] == followersOfUser[user2.get_user_id()][p2] ){
+        if(followersOfUser[user1.get_user_id()][p1] == followersOfUser[user2.get_user_id()][p2] && followersOfUser[user1.get_user_id()][p1] !=user1.get_user_id() && followersOfUser[user2.get_user_id()][p2] !=user2.get_user_id()){
             ret.push_back(users[followersOfUser[user1.get_user_id()][p1]]);
             p1++;
             p2++;
