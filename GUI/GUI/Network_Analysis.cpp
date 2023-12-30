@@ -260,6 +260,7 @@ std::vector<std::string> Network_Analysis::divide_string_for_graph(std::string &
 }
 
 Graph Network_Analysis::parse(std::string &file) {
+    Graph gg;
     std::vector<std::string> divided_file = divide_string_for_graph(file);
     User* obj_ptr;
     Post* post_ptr;
@@ -276,7 +277,7 @@ Graph Network_Analysis::parse(std::string &file) {
             if (!inside_followers)
                 obj_ptr->set_user_id(stoi(divided_file[i + 1]));
             else {
-                g.add_follower(obj_ptr->get_user_id(), stoi(divided_file[i + 1]));
+                gg.add_follower(obj_ptr->get_user_id(), stoi(divided_file[i + 1]));
             }
         }
 
@@ -318,10 +319,11 @@ Graph Network_Analysis::parse(std::string &file) {
         }
 
         if(s=="</user>"){
-            g.add_user(obj_ptr->get_user_id(),*obj_ptr);
+            gg.add_user(obj_ptr->get_user_id(),*obj_ptr);
             delete obj_ptr;
         }
     }
+    g = gg;
     return g;
 }
 
