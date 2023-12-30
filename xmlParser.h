@@ -91,9 +91,9 @@ public:
 
 class Undo_and_redo{
 public:
-    static std::pair<int,std::string> undo(std::string &str);
-    static std::pair<int,std::string> redo(std::string &str);
-    static std::pair<int, std::string> push_to_undo(int num, std::string &s);
+    static std::pair<int,std::string> undo(std::string input,std::string result);
+    static std::pair<int,std::string> redo(std::string input,std::string result);
+    static void push_to_undo(int num, std::string s);
 };
 
 

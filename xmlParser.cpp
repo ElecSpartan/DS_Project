@@ -428,7 +428,7 @@ std::string  xmlParser::decompress(const std::string& compressed, HuffmanNode* r
 }
 
 // num >> 0 >> input  , num >> 1 >> result
-std::pair<int,std::string> Undo_and_redo::push_to_undo(int num,std::string &s) {
+void Undo_and_redo::push_to_undo(int num,std::string s) {
     undo_stack.push({num, s});
 }
 
@@ -779,21 +779,21 @@ std::string  xmlParser::readAndDecompressFromFile(const std::string& fileName) {
     return decompress(compressedFromFile, decompressionRoot);
 }
 
-std::pair<int,std::string> Undo_and_redo::undo(std::string &last_str) {
+std::pair<int,std::string> Undo_and_redo::undo(std::string input,std::string result) {
     if (undo_stack.empty())
         return {2, ""};
 
     std::pair<int, std::string> p = undo_stack.top();
     undo_stack.pop();
     if (p.first == 0)
-        redo_stack.push({0, last_str});
+        redo_stack.push({0, input});
     else
-        redo_stack.push({1, last_str});
+        redo_stack.push({1, result});
 
     return p;
 }
 
-std::pair<int, std::string> Undo_and_redo::redo(std::string &last_str) {
+std::pair<int, std::string> Undo_and_redo::redo(std::string input,std::string result) {
     if (redo_stack.empty())
         return {2, ""};
 
@@ -801,9 +801,9 @@ std::pair<int, std::string> Undo_and_redo::redo(std::string &last_str) {
     redo_stack.pop();
 
     if (p.first == 1)
-        undo_stack.push({0, last_str});
+        undo_stack.push({0, input});
     else
-        undo_stack.push({1, last_str});
+        undo_stack.push({1, result});
 
 
     return p;

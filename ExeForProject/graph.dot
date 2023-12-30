@@ -1,0 +1,9 @@
+digraph test{
+"Ahmed Ali"  ->  { "Yasser Ahmed" "Mohamed Sherif" "Fatima Hassan" "Khaled Hassan" }
+"Yasser Ahmed"  ->  { "Ahmed Ali" "Noura Ahmed" }
+"Mohamed Sherif"  ->  { "Ahmed Ali" "Fatima Hassan" }
+"Fatima Hassan"  ->  { "Ahmed Ali" "Mohamed Sherif" }
+"Khaled Hassan"  ->  { "Ahmed Ali" "Yasser Ahmed" }
+"Noura Ahmed"  ->  { "Ahmed Ali" "Khaled Hassan" }
+
+}

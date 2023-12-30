@@ -4,7 +4,11 @@
 #include<map>
 #include<queue>
 #include<stack>
+#include <vector>
 #include "File.h"
+#include <algorithm>
+#include <filesystem>
+#include <set>
 
 class Post {
     std::string body;
@@ -64,9 +68,10 @@ private:
     static std::string trim(std::string&x);
     static std::vector<std::string> divide_string_for_graph(std::string &file);
     static Graph parse(std::string &file);
-    static void visualize_graph();
+
 public:
-    static void graph_and_visualization(std::string file);
+
+    static std::string visualize_graph();
 
     static std::string most_followers();
 
@@ -77,6 +82,8 @@ public:
     static std::string user_suggestion(int user_id);
 
     static std::string post_search(std::string word);
+
+    static void UsingParse(std::string file);
 };
 
 

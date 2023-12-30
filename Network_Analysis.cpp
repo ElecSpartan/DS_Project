@@ -96,8 +96,7 @@ std::vector<User> Graph::most_followers() {
     int mx = -1;
     std::vector<User> ret;
     for (auto &x: users) {
-        if (followersOfUser[x.first].size() > mx)
-            mx = followersOfUser[x.first].size();
+        mx = std::max(mx,(int)followersOfUser[x.first].size());
     }
     for (auto &x: users) {
         if (followersOfUser[x.first].size() == mx)
@@ -109,43 +108,47 @@ std::vector<User> Graph::most_followers() {
 std::vector<User> Graph::user_suggestion(User user){
     std::vector<User> ret;
     int id = user.get_user_id();
-    std::queue<std::pair<int,int>> q;
-    q.push({id,0});
+    std::queue<int> q;
+    std::map<int,int> dis;
+    q.push(id);
+    dis[id] = 0;
     while(!q.empty()){
-        int cur_user = q.front().first;
-        int cur_level = q.front().second;
+        int cur_user = q.front();
+        int cur_level = dis[cur_user]+1;
         if(cur_level>=3)
             break;
         q.pop();
         for(auto ch : followersOfUser[cur_user]){
-            if(ch.get_user_id()==id) continue;
-            q.push({ch,cur_level+1});
-            if(cur_level+1==2)
-                ret.push_back(users[ch]);
+            if(dis[ch] > cur_level || (!dis[ch]&&ch!=id)){
+                dis[ch] = cur_level;
+                q.push(ch);
+                if(cur_level==2)
+                    ret.push_back(users[ch]);
+            }
         }
     }
     return ret;
 }
 
-std::vector<User> Graph::mutual_followers(User user1 , User user2){
+std::vector<User> Graph::mutual_followers(User user1 , User user2) {
     std::vector<User> ret;
-    sort(followersOfUser[user1.get_user_id()].begin(),followersOfUser[user1.get_user_id()].end());
-    sort(followersOfUser[user2.get_user_id()].begin(),followersOfUser[user2.get_user_id()].end());
-    int p1 = 0 , p2 = 0;
-    while(p1<followersOfUser[user1.get_user_id()].size() && p2 < followersOfUser[user2.get_user_id()].size()){
-        if(followersOfUser[user1.get_user_id()][p1] == followersOfUser[user2.get_user_id()][p2] && followersOfUser[user1.get_user_id()][p1] !=user1.get_user_id() && followersOfUser[user2.get_user_id()][p2] !=user2.get_user_id()){
-            ret.push_back(users[followersOfUser[user1.get_user_id()][p1]]);
+    std::vector<int> v1 = followersOfUser[user1.get_user_id()], v2 = followersOfUser[user2.get_user_id()];
+
+    sort(v1.begin(), v1.end());
+    sort(v2.begin(), v2.end());
+    int p1 = 0, p2 = 0;
+    while (p1 < v1.size() && p2 < v2.size()) {
+        if (v1[p1] == v2[p2] && v1[p1] != user1.get_user_id() && v1[p1] != user2.get_user_id()) {
+            ret.push_back(users[v1[p1]]);
             p1++;
             p2++;
-        }
-        else if(followersOfUser[user1.get_user_id()][p1] > followersOfUser[user2.get_user_id()][p2] )
+        } else if (v1[p1] > v2[p2])
             p2++;
         else
             p1++;
     }
     return ret;
 }
-
 std::map<int,User> Graph::get_users() {
     return users;
 }
@@ -322,7 +325,12 @@ Graph Network_Analysis::parse(std::string &file) {
     return g;
 }
 
-void Network_Analysis::visualize_graph() {
+void Network_Analysis::UsingParse(std::string file){
+    g=parse(file);
+}
+
+
+std::string Network_Analysis::visualize_graph() {
     std::string s = "";
     s += "digraph test{\n";
 
@@ -347,14 +355,16 @@ void Network_Analysis::visualize_graph() {
     }
 
     s += "\n}";
-    File::outputFile("E:\\College\\Data structures\\Project\\DS_Project\\graph.dot", s);
-    system("cd .. && C:\\\"Program Files\"\\Graphviz\\bin\\dot -Tpng -O graph.dot");
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::filesystem::path filePath = currentPath / "graph.dot";
+
+    File::outputFile(filePath.string(), s);
+    system("D:\\Graphviz\\bin\\dot -Tpng -O graph.dot");
+
+    return (currentPath /"graph.dot.png").string();
 }
 
-void Network_Analysis::graph_and_visualization(std::string file) {
-    g = parse(file);
-    visualize_graph();
-}
+
 
 std::string Network_Analysis::most_followers() {
     std::vector<User> users = g.most_followers();
@@ -385,28 +395,43 @@ std::string Network_Analysis::most_connections() {
 std::string Network_Analysis::mutual_followers(int user1_id, int user2_id) {
     User user1 = g.get_user_by_id(user1_id);
     User user2 = g.get_user_by_id(user2_id);
-    std::vector<User> users = g.most_followers();
+    std::vector<User> users = g.mutual_followers(user1,user2);
     std::string s = "";
+    if(users.empty())
+        return "There are no mutual followers";
     int i = 1;
+    std::set<int>ss;
     for (auto &u: users) {
-        s += std::to_string(i) + ") " + "User with id : " + std::to_string(u.get_user_id()) + " and name : ";
-        s += u.get_name();
-        s += '\n';
-        i++;
+
+        if (!ss.count(u.get_user_id())) {
+            s += std::to_string(i) + ") " + "User with id : " + std::to_string(u.get_user_id()) + " and name : ";
+            s += u.get_name();
+            s += '\n';
+            i++;
+        }
+
+        ss.insert(u.get_user_id());
     }
     return s;
 }
-
 std::string Network_Analysis::user_suggestion(int user_id) {
     User user = g.get_user_by_id(user_id);
     std::string s = "";
     std::vector<User> users = g.user_suggestion(user);
+    if(users.empty())
+        return "There are no suggestions";
     int i = 1;
+    std::set<int>ss;
     for (auto &u: users) {
-        s += std::to_string(i) + ") " + "User with id : " + std::to_string(u.get_user_id()) + " and name : ";
-        s += u.get_name();
-        s += '\n';
-        i++;
+
+        if (!ss.count(u.get_user_id())) {
+            s += std::to_string(i) + ") " + "User with id : " + std::to_string(u.get_user_id()) + " and name : ";
+            s += u.get_name();
+            s += '\n';
+            i++;
+        }
+
+        ss.insert(u.get_user_id());
     }
     return s;
 }

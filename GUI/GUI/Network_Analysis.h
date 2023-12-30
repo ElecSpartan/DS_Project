@@ -4,9 +4,11 @@
 #include<map>
 #include<queue>
 #include<stack>
+#include <vector>
 #include "File.h"
 #include <algorithm>
 #include <filesystem>
+#include <set>
 
 class Post {
     std::string body;
