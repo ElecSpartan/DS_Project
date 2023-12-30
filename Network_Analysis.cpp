@@ -118,6 +118,7 @@ std::vector<User> Graph::user_suggestion(User user){
             break;
         q.pop();
         for(auto ch : followersOfUser[cur_user]){
+            if(ch.get_user_id()==id) continue;
             q.push({ch,cur_level+1});
             if(cur_level+1==2)
                 ret.push_back(users[ch]);
