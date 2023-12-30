@@ -1,6 +1,0 @@
-digraph test{
-"Ahmed Ali"  ->  { "Yasser Ahmed" "Mohamed Sherif" }
-"Yasser Ahmed"  ->  { "Ahmed Ali" }
-"Mohamed Sherif"  ->  { "Ahmed Ali" }
-
-}

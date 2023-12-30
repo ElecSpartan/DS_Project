@@ -98,10 +98,12 @@ void MainWindow::on_Verify_clicked()
     Undo_and_redo::push_to_undo(1,ui->Result->toPlainText().toStdString());
     std::string input = ui->InputText->toPlainText().toStdString();
     std::string result = xmlParser::get_errors(input);
-    if(!result.empty())
-    ui->Result->setPlainText("Error: \n"+QString::fromStdString(result));
-    else
+    if(!result.empty()){
+    ui->Result->setPlainText("Error: \n" + QString::fromStdString(result));
+    }
+    else{
         ui->Result->setPlainText(QString::fromStdString("No Errors"));
+    }
 }
 
 
@@ -127,16 +129,6 @@ void MainWindow::on_Decompress_clicked()
 }
 
 
-
-
-
-
-void MainWindow::on_Graphs_released()
-{
-    GraphWindow *newWindow = new GraphWindow(this);
-    newWindow->show();
-    Network_Analysis::UsingParse(ui->InputText->toPlainText().toStdString());
-}
 
 
 void MainWindow::on_Undo_clicked()
@@ -185,5 +177,17 @@ void MainWindow::on_Savefile_clicked()
         }
     }
 
+}
+
+
+
+
+
+
+void MainWindow::on_Graphs_released()
+{
+    Network_Analysis::UsingParse(ui->InputText->toPlainText().toStdString());
+    GraphWindow *newWindow = new GraphWindow(this);
+    newWindow->show();
 }
 

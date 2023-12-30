@@ -96,8 +96,7 @@ std::vector<User> Graph::most_followers() {
     int mx = -1;
     std::vector<User> ret;
     for (auto &x: users) {
-        if (followersOfUser[x.first].size() > mx)
-            mx = followersOfUser[x.first].size();
+        mx = std::max(mx,(int)followersOfUser[x.first].size());
     }
     for (auto &x: users) {
         if (followersOfUser[x.first].size() == mx)
@@ -355,10 +354,11 @@ std::string Network_Analysis::visualize_graph() {
     std::filesystem::path filePath = currentPath / "graph.dot";
 
     File::outputFile(filePath.string(), s);
-    system("cd .. && D:\\Graphviz\\bin\\dot -Tpng -O graph.dot");
+    system("D:\\Graphviz\\bin\\dot -Tpng -O graph.dot");
 
     return (currentPath /"graph.dot.png").string();
 }
+
 
 
 std::string Network_Analysis::most_followers() {

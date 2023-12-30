@@ -47,16 +47,14 @@ private slots:
 
     void on_Decompress_clicked();
 
-
-
-    void on_Graphs_released();
-
     void on_Undo_clicked();
 
     void on_Redo_clicked();
 
 
     void on_Savefile_clicked();
+
+    void on_Graphs_released();
 
 private:
     Ui::MainWindow *ui;

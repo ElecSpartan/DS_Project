@@ -22,7 +22,13 @@ public:
 private slots:
 
 
-    void on_Show_clicked();
+    void on_Visualize_clicked();
+
+    void on_MustFollowers_clicked();
+
+    void on_MostConnections_clicked();
+
+    void on_Suggestion_clicked();
 
 private:
     Ui::GraphWindow *ui;
