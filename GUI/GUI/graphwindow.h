@@ -30,6 +30,10 @@ private slots:
 
     void on_Suggestion_clicked();
 
+    void on_Mutual_clicked();
+
+    void on_PostSearch_clicked();
+
 private:
     Ui::GraphWindow *ui;
 };

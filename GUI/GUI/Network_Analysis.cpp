@@ -117,6 +117,7 @@ std::vector<User> Graph::user_suggestion(User user){
             break;
         q.pop();
         for(auto ch : followersOfUser[cur_user]){
+            if(ch==id) continue;
             q.push({ch,cur_level+1});
             if(cur_level+1==2)
                 ret.push_back(users[ch]);
@@ -131,7 +132,7 @@ std::vector<User> Graph::mutual_followers(User user1 , User user2){
     std::sort(followersOfUser[user2.get_user_id()].begin(),followersOfUser[user2.get_user_id()].end());
     int p1 = 0 , p2 = 0;
     while(p1<followersOfUser[user1.get_user_id()].size() && p2 < followersOfUser[user2.get_user_id()].size()){
-        if(followersOfUser[user1.get_user_id()][p1] == followersOfUser[user2.get_user_id()][p2] ){
+        if(followersOfUser[user1.get_user_id()][p1] == followersOfUser[user2.get_user_id()][p2] && followersOfUser[user1.get_user_id()][p1] !=user1.get_user_id() && followersOfUser[user1.get_user_id()][p1] !=user2.get_user_id()){
             ret.push_back(users[followersOfUser[user1.get_user_id()][p1]]);
             p1++;
             p2++;
@@ -406,6 +407,8 @@ std::string Network_Analysis::user_suggestion(int user_id) {
     User user = g.get_user_by_id(user_id);
     std::string s = "";
     std::vector<User> users = g.user_suggestion(user);
+    if(users.empty())
+        return "No Suggestions Needed";
     int i = 1;
     for (auto &u: users) {
         s += std::to_string(i) + ") " + "User with id : " + std::to_string(u.get_user_id()) + " and name : ";

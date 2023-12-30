@@ -80,3 +80,28 @@ void GraphWindow::on_Suggestion_clicked()
         }
 }
 
+
+void GraphWindow::on_Mutual_clicked()
+{
+    bool ok;
+    QString userInput1 = QInputDialog::getText(this, "Get Input", "Please Enter User1 ID: ", QLineEdit::Normal, "", &ok);
+    QString userInput2 = QInputDialog::getText(this, "Get Input", "Please Enter User2 ID: ", QLineEdit::Normal, "", &ok);
+
+    if (ok && !userInput1.isEmpty() && !userInput2.isEmpty()) {
+        std::string mutuals = Network_Analysis::mutual_followers(std::stoi(userInput1.toStdString()),std::stoi(userInput2.toStdString()));
+        ui->ResultGraphs->setPlainText(QString::fromStdString(mutuals));
+    }
+}
+
+
+void GraphWindow::on_PostSearch_clicked()
+{
+    bool ok;
+    QString userInput = QInputDialog::getText(this, "Get Input", "Please Enter word to search about: ", QLineEdit::Normal, "", &ok);
+
+    if (ok && !userInput.isEmpty()) {
+        std::string search = Network_Analysis::post_search(userInput.toStdString());
+        ui->ResultGraphs->setPlainText(QString::fromStdString(search));
+    }
+}
+
