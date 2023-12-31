@@ -7,10 +7,11 @@ std::string File::readFile(std::string path) {
         std::cerr << "Error: Unable to open file" << std::endl;
         return "";
     }
-    std::string file_string, line;
-    while (getline(file, line)) {
-        file_string += line + '\n';
-    }
+
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    std::string file_string = buffer.str();
+
     file.close();
     return file_string;
 }
