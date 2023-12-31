@@ -4,6 +4,8 @@ std::vector<std::pair<int,bool>>errors; // line, type ( 0 >> open , 1 >> closed 
 std::stack<std::pair<int,std::string>> undo_stack; // 0 >> input , 1 >> Result , 2 >> nothing
 std::stack<std::pair<int,std::string>> redo_stack; // 0 >> input , 1 >> Result , 2 >> nothing
 
+int padd;
+
 int xmlParser::getTagCount(std::string& input_string, std::string& tag_name, int start_index) {
     std::string opening_tag = "<" + tag_name + ">";
     std::string closing_tag = "</" + tag_name + ">";
@@ -738,35 +740,45 @@ std::string xmlParser::toJsonByTrees(std::string& xml_input) {
     return json_output;
 }
 
-std::string  xmlParser::compressAndWriteToFile(std::string& input, std::string fileName) {
+std::string xmlParser::compressAndWriteToFile(std::string& input) {
     std::unordered_map<char, int> frequencies = calculateFrequencies(input);
     HuffmanNode *root = buildHuffmanTree(frequencies);
     std::string compressed = compress(input);
 
+    // Write Huffman tree to the file
     std::filesystem::path currentPath = std::filesystem::current_path();
     std::filesystem::path filePath = currentPath / "compressed_file.bin";
-
     std::ofstream outFile(filePath, std::ios::binary);
-
-    // Write Huffman tree to the file
     writeHuffmanTree(outFile, root);
+    outFile.close();
 
-    // Write the compressed data to the file
-    for (char c: compressed) {
-        outFile.put(c);
+    // Calculate the padding needed
+    size_t padding = 8 - (compressed.size() % 8);
+    padd = padding;
+    // Add the padding bits
+    compressed += std::string(padding, '0');
+
+    // Convert every 8 bits to a character
+    std::string groupedCompressed;
+    for (size_t i = 0; i < compressed.size(); i += 8) {
+        std::bitset<8> bits(compressed.substr(i, 8));
+        groupedCompressed += static_cast<char>(bits.to_ulong());
     }
 
-    outFile.close();
-    return compressed;
+    // Write the modified compressed data to the file
+    std::ofstream outFile2(filePath, std::ios::binary | std::ios::app);
+    outFile2 << groupedCompressed;
+    outFile2.close();
+
+    return groupedCompressed;
 }
 
-std::string  xmlParser::readAndDecompressFromFile(const std::string& fileName) {
+std::string xmlParser::readAndDecompressFromFile(std::string& fileName) {
     std::ifstream inFile(fileName, std::ios::binary);
 
     // Read Huffman tree from the file
     HuffmanNode *decompressionRoot = readHuffmanTree(inFile);
 
-    // Read the compressed data from the file
     std::string compressedFromFile;
     char byte;
     while (inFile.get(byte)) {
@@ -775,8 +787,21 @@ std::string  xmlParser::readAndDecompressFromFile(const std::string& fileName) {
 
     inFile.close();
 
+    // Convert each character back to 8 bits
+    std::string decompressedBits;
+    for (size_t i = 0; i < compressedFromFile.size(); i++) {
+        std::bitset<8> bits(static_cast<unsigned char>(compressedFromFile[i]));
+
+        // Exclude padding bits in the last byte
+        if (i == compressedFromFile.size() - 1) {
+            decompressedBits += bits.to_string().substr(0, 8 - padd);
+        } else {
+            decompressedBits += bits.to_string();
+        }
+    }
+
     // Decompress the data
-    return decompress(compressedFromFile, decompressionRoot);
+    return decompress(decompressedBits, decompressionRoot);
 }
 
 std::pair<int,std::string> Undo_and_redo::undo(std::string input,std::string result) {
