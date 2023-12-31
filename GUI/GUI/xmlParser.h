@@ -84,9 +84,9 @@ public:
 
     static std::string toJsonByTrees(std::string &xml_input);
 
-    static std::string  compressAndWriteToFile(std::string& input, std::string fileName = "compressed_file");
+    static std::string  compressAndWriteToFile(std::string& input);
 
-    static std::string readAndDecompressFromFile(const std::string& fileName);
+    static std::string readAndDecompressFromFile(std::string& fileName);
 };
 
 class Undo_and_redo{
