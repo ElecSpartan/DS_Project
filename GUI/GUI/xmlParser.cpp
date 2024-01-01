@@ -4,7 +4,6 @@ std::vector<std::pair<int,bool>>errors; // line, type ( 0 >> open , 1 >> closed 
 std::stack<std::pair<int,std::string>> undo_stack; // 0 >> input , 1 >> Result , 2 >> nothing
 std::stack<std::pair<int,std::string>> redo_stack; // 0 >> input , 1 >> Result , 2 >> nothing
 
-int padd;
 
 int xmlParser::getTagCount(std::string& input_string, std::string& tag_name, int start_index) {
     std::string opening_tag = "<" + tag_name + ">";
@@ -740,7 +739,7 @@ std::string xmlParser::toJsonByTrees(std::string& xml_input) {
     return json_output;
 }
 
-std::string xmlParser::compressAndWriteToFile(std::string& input) {
+std::string compressAndWriteToFile(std::string& input) {
     std::unordered_map<char, int> frequencies = calculateFrequencies(input);
     HuffmanNode *root = buildHuffmanTree(frequencies);
     std::string compressed = compress(input);
@@ -750,11 +749,13 @@ std::string xmlParser::compressAndWriteToFile(std::string& input) {
     std::filesystem::path filePath = currentPath / "compressed_file.bin";
     std::ofstream outFile(filePath, std::ios::binary);
     writeHuffmanTree(outFile, root);
-    outFile.close();
 
     // Calculate the padding needed
     size_t padding = 8 - (compressed.size() % 8);
-    padd = padding;
+
+    // Write the padding information to the file
+    outFile.write(reinterpret_cast<const char*>(&padding), sizeof(padding));
+
     // Add the padding bits
     compressed += std::string(padding, '0');
 
@@ -766,18 +767,22 @@ std::string xmlParser::compressAndWriteToFile(std::string& input) {
     }
 
     // Write the modified compressed data to the file
-    std::ofstream outFile2(filePath, std::ios::binary | std::ios::app);
-    outFile2 << groupedCompressed;
-    outFile2.close();
+    outFile << groupedCompressed;
+    outFile.close();
 
     return groupedCompressed;
 }
 
-std::string xmlParser::readAndDecompressFromFile(std::string& fileName) {
+
+std::string readAndDecompressFromFile(const std::string& fileName) {
     std::ifstream inFile(fileName, std::ios::binary);
 
     // Read Huffman tree from the file
     HuffmanNode *decompressionRoot = readHuffmanTree(inFile);
+
+    // Read the padding information
+    size_t padding;
+    inFile.read(reinterpret_cast<char*>(&padding), sizeof(padding));
 
     std::string compressedFromFile;
     char byte;
@@ -794,7 +799,7 @@ std::string xmlParser::readAndDecompressFromFile(std::string& fileName) {
 
         // Exclude padding bits in the last byte
         if (i == compressedFromFile.size() - 1) {
-            decompressedBits += bits.to_string().substr(0, 8 - padd);
+            decompressedBits += bits.to_string().substr(0, 8 - padding);
         } else {
             decompressedBits += bits.to_string();
         }
@@ -804,19 +809,10 @@ std::string xmlParser::readAndDecompressFromFile(std::string& fileName) {
     return decompress(decompressedBits, decompressionRoot);
 }
 
-std::pair<int,std::string> Undo_and_redo::undo(std::string input,std::string result) {
-    if (undo_stack.empty())
-        return {2, ""};
 
-    std::pair<int, std::string> p = undo_stack.top();
-    undo_stack.pop();
-    if (p.first == 0)
-        redo_stack.push({0, input});
-    else
-        redo_stack.push({1, result});
 
-    return p;
-}
+
+
 
 std::pair<int, std::string> Undo_and_redo::redo(std::string input,std::string result) {
     if (redo_stack.empty())
