@@ -75,6 +75,7 @@ void Graph::add_user(int userId, User& user) {
 
 void Graph::add_follower(int userId, int followerId) {
     followersOfUser[userId].push_back(followerId);
+    following[followerId].push_back(userId);
     freq[followerId]++;
 }
 
@@ -112,17 +113,17 @@ std::vector<User> Graph::user_suggestion(User user){
     std::map<int,int> dis;
     q.push(id);
     dis[id] = 0;
-    while(!q.empty()){
+    while(!q.empty()) {
         int cur_user = q.front();
-        int cur_level = dis[cur_user]+1;
-        if(cur_level>=3)
+        int cur_level = dis[cur_user] + 1;
+        if (cur_level >= 3)
             break;
         q.pop();
-        for(auto ch : followersOfUser[cur_user]){
-            if(dis[ch] > cur_level || (!dis[ch]&&ch!=id)){
+        for (auto ch: followersOfUser[cur_user]) {
+            if (dis[ch] > cur_level || (!dis[ch] && ch != id)) {
                 dis[ch] = cur_level;
                 q.push(ch);
-                if(cur_level==2)
+                if (cur_level == 2 && (std::find(following[id].begin(), following[id].end(), ch) - following[id].begin()) == following[id].size())
                     ret.push_back(users[ch]);
             }
         }
@@ -132,7 +133,7 @@ std::vector<User> Graph::user_suggestion(User user){
 
 std::vector<User> Graph::mutual_followers(User user1 , User user2) {
     std::vector<User> ret;
-    std::vector<int> v1 = followersOfUser[user1.get_user_id()], v2 = followersOfUser[user2.get_user_id()];
+    std::vector<int> v1 = following[user1.get_user_id()], v2 = following[user2.get_user_id()];
 
     sort(v1.begin(), v1.end());
     sort(v2.begin(), v2.end());
@@ -361,7 +362,7 @@ std::string Network_Analysis::visualize_graph() {
     std::filesystem::path filePath = currentPath / "graph.dot";
 
     File::outputFile(filePath.string(), s);
-    system((currentPath.string() + "\\Graphviz\\dot -Tpng -O graph.dot").c_str());
+    system(("C:\\\"Program Files\"\\Graphviz\\bin\\dot -Tpng -O graph.dot"));
 
     return (currentPath /"graph.dot.png").string();
 }
