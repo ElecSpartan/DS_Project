@@ -361,7 +361,7 @@ std::string Network_Analysis::visualize_graph() {
     std::filesystem::path filePath = currentPath / "graph.dot";
 
     File::outputFile(filePath.string(), s);
-    system((currentPath.string() + "\\GraphViz\\dot -Tpng -O graph.dot").c_str());
+    system((currentPath.string() + "\\Graphviz\\dot -Tpng -O graph.dot").c_str());
 
     return (currentPath /"graph.dot.png").string();
 }
