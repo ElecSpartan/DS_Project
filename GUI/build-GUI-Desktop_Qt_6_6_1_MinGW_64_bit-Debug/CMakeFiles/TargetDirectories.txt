@@ -1,9 +1,0 @@
-D:/Senior 1/Data Structure and Algorithm/GUI/build-GUI-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/GUI.dir
-D:/Senior 1/Data Structure and Algorithm/GUI/build-GUI-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-D:/Senior 1/Data Structure and Algorithm/GUI/build-GUI-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-D:/Senior 1/Data Structure and Algorithm/GUI/build-GUI-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
-D:/Senior 1/Data Structure and Algorithm/GUI/build-GUI-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/install.dir
-D:/Senior 1/Data Structure and Algorithm/GUI/build-GUI-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
-D:/Senior 1/Data Structure and Algorithm/GUI/build-GUI-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
-D:/Senior 1/Data Structure and Algorithm/GUI/build-GUI-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/GUI_autogen_timestamp_deps.dir
-D:/Senior 1/Data Structure and Algorithm/GUI/build-GUI-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/GUI_autogen.dir
