@@ -1,0 +1,22 @@
+The system is: Windows - 10.0.19045 - AMD64
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: C:/Program Files/JetBrains/CLion 2022.2.1/bin/mingw/bin/g++.exe 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
+
+The CXX compiler identification is GNU, found in "C:/Users/Mazen/OneDrive/Documents/untitled1/cmake-build-debug/CMakeFiles/3.23.2/CompilerIdCXX/a.exe"
+
+Determining if the CXX compiler works passed with the following output:
+Change Dir: C:/Users/Mazen/OneDrive/Documents/untitled1/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/JetBrains/CLion 2022.2.1/bin/ninja/win/ninja.exe cmTC_97586 && [1/2] Building CXX object CMakeFiles/cmTC_97586.dir/testCXXCompiler.cxx.obj
+[2/2] Linking CXX executable cmTC_97586.exe
+
+
+

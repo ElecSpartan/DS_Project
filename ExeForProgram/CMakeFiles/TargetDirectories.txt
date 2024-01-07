@@ -1,0 +1,9 @@
+C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/CMakeFiles/GUI.dir
+C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/CMakeFiles/edit_cache.dir
+C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/CMakeFiles/rebuild_cache.dir
+C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/CMakeFiles/list_install_components.dir
+C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/CMakeFiles/install.dir
+C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/CMakeFiles/install/local.dir
+C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/CMakeFiles/install/strip.dir
+C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/CMakeFiles/GUI_autogen_timestamp_deps.dir
+C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/CMakeFiles/GUI_autogen.dir

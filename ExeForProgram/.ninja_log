@@ -1,0 +1,14 @@
+# ninja log v5
+1	1078	7263642627695638	GUI_autogen/timestamp	de2486da9e42bd56
+1	1078	7263642627695638	GUI_autogen/mocs_compilation.cpp	de2486da9e42bd56
+1	1078	7263642627695638	C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/GUI_autogen/timestamp	de2486da9e42bd56
+1	1078	7263642627695638	C:/Users/Mazen/OneDrive/Documents/build-untitled1-Desktop_Qt_6_6_1_MinGW_64_bit-Release/GUI_autogen/mocs_compilation.cpp	de2486da9e42bd56
+1101	2023	7263642638004260	CMakeFiles/GUI.dir/Node.cpp.obj	e472e18fa8b6e809
+1110	2100	7263642638772229	CMakeFiles/GUI.dir/File.cpp.obj	410027b89dbd1564
+1092	5247	7263642670239020	CMakeFiles/GUI.dir/main.cpp.obj	c55cd60980322a10
+1079	5264	7263642670418529	CMakeFiles/GUI.dir/GUI_autogen/mocs_compilation.cpp.obj	18e70c95317b8537
+1105	5638	7263642674164160	CMakeFiles/GUI.dir/graphwindow.cpp.obj	fdf5d7e486e95233
+1087	5964	7263642677415460	CMakeFiles/GUI.dir/mainwindow.cpp.obj	a6507b2eb4b55397
+1083	6358	7263642681354942	CMakeFiles/GUI.dir/xmlParser.cpp.obj	f52833badc396297
+1096	6856	7263642686337625	CMakeFiles/GUI.dir/Network_Analysis.cpp.obj	f05c0a71def24de9
+6856	7105	7263642688785380	GUI.exe	4d622686b84b3be6
