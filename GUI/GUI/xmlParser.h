@@ -95,9 +95,3 @@ public:
     static std::pair<int,std::string> redo(std::string input,std::string result);
     static void push_to_undo(int num, std::string s);
 };
-
-
-
-
-
-
