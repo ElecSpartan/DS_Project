@@ -10,12 +10,12 @@
 #include <filesystem>
 #include <algorithm>
 struct HuffmanNode {
-    int value;
-    int frequency;
-    HuffmanNode* left;
-    HuffmanNode* right;
+    int data;
+    int freq;
+    Node* left;
+    Node* right;
 
-    HuffmanNode(int val, int freq);
+    HuffmanNode(int d, int f);
 };
 
 struct CompareNodes {
@@ -56,15 +56,15 @@ private:
 
     static std::vector<std::string> values_correction(std::vector<std::string> &file);
 
-    static HuffmanNode* buildHuffmanTree(std::unordered_map<char, int>& frequencies); //to output the compressed file from the tree
+    static HuffmanNode* buildHuffmanTree(std::map<char, int>& frequencies); //to output the compressed file from the tree
 
     static void writeHuffmanTree(std::ofstream& outFile,HuffmanNode* root); //to build the tree from the compressed file
 
     static HuffmanNode* readHuffmanTree(std::ifstream& inFile);
 
-    static void buildHuffmanCodes(HuffmanNode* root,std::string code, std::unordered_map<char, std::string>& codes);
+    static void buildHuffmanCodes(HuffmanNode* root,std::string code, std::map<char, std::string>& codes);
 
-    static std::unordered_map<char, int> calculateFrequencies(std::string& in);
+    static std::map<char, int> calculateFrequencies(std::string& in);
 
     static std::string compress(std::string &input);
 
