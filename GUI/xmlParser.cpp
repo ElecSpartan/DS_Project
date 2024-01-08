@@ -316,21 +316,21 @@ std::pair<std::vector<std::string>,int> xmlParser::divide_string_for_correction(
     return {divided_file, start_line};
 }
 
-HuffmanNode::HuffmanNode(int val, int freq) : value(val), frequency(freq), left(nullptr), right(nullptr) {}
+HuffmanNode::HuffmanNode(int d, int f) : data(d), freq(f), left(nullptr), right(nullptr) {}
 
 bool CompareNodes::operator()(const HuffmanNode* a, const HuffmanNode* b) const {
-    return a->frequency > b->frequency;
+    return a->freq > b->freq;
 }
 
-std::unordered_map<char, int> xmlParser::calculateFrequencies(std::string& input) {
-    std::unordered_map<char, int> frequencies;
+std::map<char, int> xmlParser::calculateFrequencies(std::string& input) {
+    std::map<char, int> frequencies;
     for (char c : input) {
         frequencies[c]++;
     }
     return frequencies;
 }
 
-HuffmanNode* xmlParser::buildHuffmanTree(std::unordered_map<char, int>& frequencies) {
+HuffmanNode* xmlParser::buildHuffmanTree(std::map<char, int>& frequencies) {
     HuffmanPriorityQueue pq;
 
     for (const auto& pair : frequencies) {
@@ -343,7 +343,7 @@ HuffmanNode* xmlParser::buildHuffmanTree(std::unordered_map<char, int>& frequenc
         HuffmanNode* right = pq.top();
         pq.pop();
 
-        HuffmanNode* newNode = new HuffmanNode(0, left->frequency + right->frequency);
+        HuffmanNode* newNode = new HuffmanNode(0, left->freq + right->freq);
         newNode->left = left;
         newNode->right = right;
 
@@ -358,7 +358,7 @@ void xmlParser::buildHuffmanCodes(HuffmanNode* root, std::string code, std::unor
         return;
 
     if (!root->left && !root->right) {
-        codes[root->value] = code;
+        codes[root->data] = code;
         return;
     }
 
@@ -369,7 +369,7 @@ void xmlParser::buildHuffmanCodes(HuffmanNode* root, std::string code, std::unor
 void xmlParser::writeHuffmanTree(std::ofstream& outFile, HuffmanNode* root) {
     if (root) {
         outFile << '1';  // '1' indicates an internal node
-        outFile.write(reinterpret_cast<const char*>(&root->value), sizeof(root->value));
+        outFile.write(reinterpret_cast<const char*>(&root->data), sizeof(root->data));
         writeHuffmanTree(outFile, root->left);
         writeHuffmanTree(outFile, root->right);
     }
@@ -383,7 +383,7 @@ HuffmanNode* xmlParser::readHuffmanTree(std::ifstream& inFile) {
     inFile.get(bit);
     if (bit == '1') {
         HuffmanNode* newNode = new HuffmanNode(0, 0);
-        inFile.read(reinterpret_cast<char*>(&newNode->value), sizeof(newNode->value));
+        inFile.read(reinterpret_cast<char*>(&newNode->data), sizeof(newNode->data));
         newNode->left = readHuffmanTree(inFile);
         newNode->right = readHuffmanTree(inFile);
         return newNode;
@@ -394,10 +394,10 @@ HuffmanNode* xmlParser::readHuffmanTree(std::ifstream& inFile) {
 }
 
 std::string  xmlParser::compress(std::string& input) {
-    std::unordered_map<char, int> frequencies = calculateFrequencies(input);
+    std::map<char, int> frequencies = calculateFrequencies(input);
     HuffmanNode* root = buildHuffmanTree(frequencies);
 
-    std::unordered_map<char, std::string> codes;
+    std::map<char, std::string> codes;
     buildHuffmanCodes(root, "", codes);
 
     std::string compressed;
@@ -421,7 +421,7 @@ std::string xmlParser::decompress(const std::string& compressed, HuffmanNode* ro
         }
 
         if (!currentNode->left && !currentNode->right) {
-            decompressed += static_cast<char>(currentNode->value);
+            decompressed += static_cast<char>(currentNode->data);
             currentNode = root;
         }
     }
